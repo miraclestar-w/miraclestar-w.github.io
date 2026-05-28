@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Miracle</title>
+    <link>https://miraclestar-w.github.io</link>
+    <description>Welcome to Miracle</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 28 May 2026 00:00:00 +0800</lastBuildDate>
+    <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>AI Agent自动化运维实践</title>
+      <link>https://miraclestar-w.github.io/post/ai-agent-ops-automation/</link>
+      <description>深入探讨AI Agent在服务器自动化运维中的实际应用，包括故障自愈、智能告警、自动化巡检等核心场景，帮助运维团队迈向AIOps。</description>
+      <pubDate>Thu, 28 May 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/ai-agent-ops-automation/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
+      <title>服务器监控最佳实践</title>
+      <link>https://miraclestar-w.github.io/post/server-monitoring-best-practices/</link>
+      <description>全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。</description>
+      <pubDate>Wed, 27 May 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/server-monitoring-best-practices/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
+      <title>Docker容器化部署指南</title>
+      <link>https://miraclestar-w.github.io/post/docker-containerization-guide/</link>
+      <description>从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。</description>
+      <pubDate>Tue, 26 May 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/docker-containerization-guide/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+  </channel>
+</rss>
