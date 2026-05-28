@@ -60,7 +60,7 @@
   function openSearch() {
     resolveDOM();
     if (!overlay) return;
-    overlay.style.display = '';
+    overlay.style.display = 'flex';
     overlay.setAttribute('aria-hidden', 'false');
     input.value = '';
     activeIdx = -1;
