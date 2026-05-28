@@ -234,7 +234,7 @@
 
 /* 热力图主色：默认 GitHub 绿，可由 theme_config.heatmapColor 在 <head> 覆盖 */
 :root {
-  --heatmap-color: #39d353;
+  :root{--heatmap-color:#50fa7b}
 }
 
 /* 各等级：最深用主色本色，往下依次按比例向当前背景色混合，自动跟随深浅模式 */

@@ -315,7 +315,7 @@ body {
   color: var(--color-text-muted);
 }
 
-.theme-light .link-card:hover .link-card__arrow {
+.theme-light .link-card:hover .link-card__arrow{color:#282a36}
   color: #ffffff;
 }
 
