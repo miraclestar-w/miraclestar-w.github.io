@@ -239,20 +239,20 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 3px solid var(--accent, #6c5ce7);
+  border: 3px solid #bd93f9;
   margin-bottom: 24px;
-  box-shadow: 0 0 30px rgba(108, 92, 231, 0.3);
+  box-shadow: 0 0 30px rgba(189, 147, 249, 0.3);
 }
 
 .about-intro {
   font-size: 18px;
-  color: var(--text-secondary, #9898a6);
+  color: #6272a4;
   margin: 16px 0 32px;
 }
 
 .about-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent, #6c5ce7), transparent);
+  background: linear-gradient(90deg, transparent, #6272a4, transparent);
   margin: 40px 0;
 }
 
@@ -265,8 +265,8 @@
 }
 
 .tech-tag {
-  background: rgba(108, 92, 231, 0.15);
-  color: var(--accent-light, #a29bfe);
+  background: rgba(189, 147, 249, 0.15);
+  color: #bd93f9;
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -280,19 +280,25 @@
 }
 
 .contact-link {
-  background: var(--bg-card, #1e1e28);
-  border: 1px solid var(--border, #2a2a38);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(189, 147, 249, 0.1);
+  border: 1px solid rgba(189, 147, 249, 0.3);
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 8px;
   text-decoration: none;
-  color: var(--text-primary, #e8e8ed);
-  transition: all 0.3s ease;
+  color: #f8f8f2;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .contact-link:hover {
-  border-color: var(--accent, #6c5ce7);
+  background: rgba(189, 147, 249, 0.25);
+  border-color: #bd93f9;
+  color: #bd93f9;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(108, 92, 231, 0.2);
+  box-shadow: 0 4px 16px rgba(189, 147, 249, 0.3);
 }
 
 .about-footer {
