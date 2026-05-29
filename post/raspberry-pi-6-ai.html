@@ -1,0 +1,118 @@
+<!--
+title: Raspberry Pi 6来了：AI边缘计算的新硬件机遇
+date: 2026-05-29
+tags: AI,Agent
+description: Raspberry Pi 6来了：AI边缘计算的新硬件机遇
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<style>:root { --heatmap-color: #50fa7b; }</style>
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>Raspberry Pi 6来了：AI边缘计算的新硬件机遇 | Miracle</title>
+<meta name="description" content="Raspberry Pi 6来了：AI边缘计算的新硬件机遇">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/raspberry-pi-6-ai/">
+<meta property="og:title" content="Raspberry Pi 6来了：AI边缘计算的新硬件机遇">
+<meta property="og:description" content="Raspberry Pi 6来了：AI边缘计算的新硬件机遇">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/raspberry-pi-6-ai/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/raspberry-pi-6-ai/">
+<meta name="twitter:title" content="Raspberry Pi 6来了：AI边缘计算的新硬件机遇">
+<meta name="twitter:description" content="Raspberry Pi 6来了：AI边缘计算的新硬件机遇">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+<body class="flavor-theme">
+
+  <header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+      <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/memos">闪念</a>
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item" href="/post">博客</a>
+        <a class="nav-item" href="/archives">归档</a>
+        <a class="nav-item" href="/tags">标签</a>
+        <a class="nav-item" href="/post/about">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main class="site-main">
+    <article class="post">
+      <h1 class="post__title">Raspberry Pi 6来了：AI边缘计算的新硬件机遇</h1>
+      <div class="post__meta">
+        <time>2026-05-29</time>
+        <span class="post__tags"><a href="/tags/ai">AI</a>, <a href="/tags/agent">Agent</a></span>
+      </div>
+      <div class="post__content">
+        <p><h1>Raspberry Pi 6来了：AI边缘计算的新硬件机遇</p>
+<p>上个月树莓派官方放出了Raspberry Pi 6的消息，作为从Pi 3时代就开始折腾的运维老玩家，我第一时间翻完了技术文档和早期评测。这篇文章不吹不黑，聊聊这代产品到底值不值得关注。</p>
+<p>#<h1>硬件：这次是真升级</p>
+<p>先说芯片。Pi 6的SoC相比上一代有明显提升——CPU架构更新，主频也拉高了。但对我们搞AI的人来说，更关键的是内存和存储的变化。</p>
+<p>基础内存拉到了4GB起步，高配版到16GB。这个数字看起来不算炸裂，但对边缘推理意义很大。跑一个量化后的小模型，比如1.5B-3B参数的语言模型，4GB勉强能塞下权重加推理时的KV cache，8GB就比较舒服了。上一代2GB版基本只能跑分类和检测模型。</p>
+<p>另一个值得注意的是PCIe通道扩展。你可以外挂NVMe SSD，甚至接加速卡。对需要频繁读写模型文件或处理大量数据的场景，存储IO不再是瓶颈。</p>
+<p>#<h1>能跑什么AI</p>
+<p>**视觉推理**相对成熟。YOLOv8、MobileNet在Pi 6上没什么压力，帧率比上一代高30%-40%。做缺陷检测、人流计数、车牌识别，完全够用。</p>
+<p>**小语言模型**是这一代的新可能。得益于4GB+内存和更好的CPU性能，跑一个量化后的Qwen2.5-1.5B或Llama3.2-3B，推理速度约5-10 tokens/s。当然不能跟云端比，但做本地意图识别、文本分类、简单问答，已经够用了。</p>
+<p>需要明确的是，Pi 6没有专用NPU。树莓派基金会在AI加速单元上一直比较克制。所有推理走CPU，性能天花板有限。想跑大模型或要高吞吐量，还是得考虑Jetson或Hailo方案。</p>
+<p>#<h1>AI Agent在边缘设备的可能性</p>
+<p>这才是最有意思的方向。</p>
+<p>AI Agent的核心能力：感知环境、理解上下文、执行动作、反馈调整。其中感知和执行完全可以在边缘端完成，"理解上下文"这一层不一定需要很大的模型。</p>
+<p>比如搭一个智能家居Agent。Pi 6接传感器和执行器，传感器数据本地采集，用轻量模型做意图理解——"主人回家了""主人要睡觉了"——然后本地触发自动化流程。不需要云端参与，延迟低、隐私好、不依赖网络。</p>
+<p>运维领域也有类似需求。每个机房部署一台Pi 6作为边缘节点，本地跑轻量Agent，收集日志、做异常检测、发现可疑行为时本地告警甚至执行预定义的应急脚本。比把所有数据传到中心服务器高效得多，网络中断时还能独立工作。</p>
+<p>#<h1>落地建议</p>
+<p>1. **选对模型**。不要贪大，1.5B-3B的量化模型是甜点区。
+2. **用好ONNX Runtime**。树莓派官方有ARM优化构建版本，比直接跑PyTorch快不少。
+3. **散热别忽略**。AI推理是持续负载，至少加个被动散热片，长时间高负载上主动散热。
+4. **考虑外挂加速**。PCIe扩展是大优势，后面如果出了兼容的NPU扩展板，性能还能再上一个台阶。</p>
+<p>#<h1>写在最后</p>
+<p>Raspberry Pi 6不是革命性产品，但它是树莓派生态里第一款真正有能力跑本地AI推理的型号。对于想在边缘侧做轻量AI应用的开发者和运维人员来说，这是个不错的起点。不需要高预算，不需要复杂环境配置，开箱就能折腾。</p>
+<p>AI的未来不会只在云端。边缘计算加本地推理，会让很多场景变得更实用、更可靠。Pi 6证明了一件事：一块巴掌大的开发板，已经能做不少有意义的事情了。
+</p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
