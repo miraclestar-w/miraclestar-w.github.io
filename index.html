@@ -164,126 +164,288 @@
 
   <main class="site-main" role="main">
     <div class="container">
-  <div class="home-header">
-    <div class="home-avatar">
-      <img src="/images/avatar.png" alt="Miracle" class="home-avatar-img" />
-    </div>
-    <h1 class="home-title">Miracle</h1>
-    <p class="home-description">运维工程师 | AI爱好者 | 技术博主</p>
-    <div class="home-links">
-      <a href="/post" class="home-link">博客</a>
-      <a href="/tags" class="home-link">标签</a>
-      <a href="/post/about" class="home-link">关于</a>
+  <div class="home-hero">
+    <div class="home-hero-content">
+      <div class="home-avatar">
+        <img src="/images/avatar.png" alt="Miracle" class="home-avatar-img" />
+      </div>
+      <h1 class="home-title">Miracle</h1>
+      <p class="home-subtitle">运维工程师 · AI爱好者 · 技术博主</p>
+      <p class="home-desc">专注于AI Agent、自动化运维、DevOps工具链的技术探索与实践</p>
+      <div class="home-stats">
+        <div class="stat-item">
+          <span class="stat-number">12</span>
+          <span class="stat-label">篇文章</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15</span>
+          <span class="stat-label">个标签</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">AI</span>
+          <span class="stat-label">专注领域</span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="posts-section">
-    <h2 class="section-title">最新文章</h2>
-    <div class="posts-list">
-      <article class="post-item">
-        <div class="post-item__content">
-          <h2 class="post-item__title">
+  <div class="home-content">
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🔥</span>
+        最新文章
+      </h2>
+      <div class="featured-grid">
+        <article class="featured-card">
+          <div class="featured-card-header">
+            <span class="featured-tag">AI</span>
+            <span class="featured-date">2026-05-29</span>
+          </div>
+          <h3 class="featured-title">
             <a href="/post/claude-opus-4-8.html">Anthropic发布Claude Opus 4.8</a>
-          </h2>
-          <div class="post-item__meta">
-            <time datetime="2026-05-29">2026-05-29</time>
-            <span class="post-item__tags">
-              <a href="/tags/AI" class="tag">AI</a> 
-              <a href="/tags/Agent" class="tag">Agent</a> 
-            </span>
+          </h3>
+          <p class="featured-excerpt">分析新模型能力提升点，结合实际使用场景谈如何利用新模型提升工作效率和赚钱机会</p>
+          <a href="/post/claude-opus-4-8.html" class="featured-read">阅读全文 →</a>
+        </article>
+        <article class="featured-card">
+          <div class="featured-card-header">
+            <span class="featured-tag">MCP</span>
+            <span class="featured-date">2026-05-29</span>
           </div>
-          <p class="post-item__excerpt">分析新模型能力提升点，结合实际使用场景谈如何利用新模型提升工作效率和赚钱机会</p>
-        </div>
-      </article>
-      <article class="post-item">
-        <div class="post-item__content">
-          <h2 class="post-item__title">
+          <h3 class="featured-title">
             <a href="/post/mcp-ecosystem.html">MCP生态全面爆发</a>
-          </h2>
-          <div class="post-item__meta">
-            <time datetime="2026-05-29">2026-05-29</time>
-            <span class="post-item__tags">
-              <a href="/tags/MCP" class="tag">MCP</a> 
-              <a href="/tags/AI" class="tag">AI</a> 
-            </span>
+          </h3>
+          <p class="featured-excerpt">MCP协议从概念到落地，微软、讯飞、安全团队纷纷入局，分析生态现状和开发者介入时机</p>
+          <a href="/post/mcp-ecosystem.html" class="featured-read">阅读全文 →</a>
+        </article>
+        <article class="featured-card">
+          <div class="featured-card-header">
+            <span class="featured-tag">AI</span>
+            <span class="featured-date">2026-05-29</span>
           </div>
-          <p class="post-item__excerpt">MCP协议从概念到落地，微软、讯飞、安全团队纷纷入局，分析生态现状和开发者介入时机</p>
-        </div>
-      </article>
-      <article class="post-item">
-        <div class="post-item__content">
-          <h2 class="post-item__title">
+          <h3 class="featured-title">
             <a href="/post/karpathy-autoresearch.html">Karpathy的autoresearch</a>
-          </h2>
-          <div class="post-item__meta">
-            <time datetime="2026-05-29">2026-05-29</time>
-            <span class="post-item__tags">
-              <a href="/tags/Karpathy" class="tag">Karpathy</a> 
-              <a href="/tags/AI" class="tag">AI</a> 
-            </span>
+          </h3>
+          <p class="featured-excerpt">Karpathy最新力作用单卡训练nanochat + AI自动研究，技术架构拆解与复现指南</p>
+          <a href="/post/karpathy-autoresearch.html" class="featured-read">阅读全文 →</a>
+        </article>
+        <article class="featured-card">
+          <div class="featured-card-header">
+            <span class="featured-tag">运维</span>
+            <span class="featured-date">2026-05-29</span>
           </div>
-          <p class="post-item__excerpt">Karpathy最新力作用单卡训练nanochat + AI自动研究，技术架构拆解与复现指南</p>
-        </div>
-      </article>
-      <article class="post-item">
-        <div class="post-item__content">
-          <h2 class="post-item__title">
+          <h3 class="featured-title">
             <a href="/post/proxmox-gitops.html">Proxmox+GitOps</a>
-          </h2>
-          <div class="post-item__meta">
-            <time datetime="2026-05-29">2026-05-29</time>
-            <span class="post-item__tags">
-              <a href="/tags/Proxmox" class="tag">Proxmox</a> 
-              <a href="/tags/GitOps" class="tag">GitOps</a> 
-            </span>
-          </div>
-          <p class="post-item__excerpt">面向个人开发者的自托管方案，用Git管理Proxmox VE上的LXC容器，降低运维门槛</p>
-        </div>
-      </article>
-    </div>
-    <div class="see-more">
-      <a href="/post" class="see-more-link">查看全部文章 →</a>
-    </div>
+          </h3>
+          <p class="featured-excerpt">面向个人开发者的自托管方案，用Git管理Proxmox VE上的LXC容器，降低运维门槛</p>
+          <a href="/post/proxmox-gitops.html" class="featured-read">阅读全文 →</a>
+        </article>
+      </div>
+      <a href="/post" class="section-more">查看全部文章 →</a>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🏷️</span>
+        热门标签
+      </h2>
+      <div class="tags-cloud">
+        <a href="/tags/AI/" class="tag-cloud-item">AI</a>
+        <a href="/tags/Agent/" class="tag-cloud-item">Agent</a>
+        <a href="/tags/DevOps/" class="tag-cloud-item">DevOps</a>
+        <a href="/tags/Docker/" class="tag-cloud-item">Docker</a>
+        <a href="/tags/MCP/" class="tag-cloud-item">MCP</a>
+        <a href="/tags/Rust/" class="tag-cloud-item">Rust</a>
+      </div>
+    </section>
   </div>
 </div>
 
 <style>
-.home-header {
+.home-hero {
+  background: linear-gradient(135deg, rgba(189, 147, 249, 0.1) 0%, rgba(255, 121, 198, 0.1) 100%);
+  border-radius: 20px;
+  padding: 60px 40px;
+  margin-bottom: 50px;
   text-align: center;
-  padding: 60px 0 40px;
 }
 
 .home-avatar-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  border: 3px solid rgba(189, 147, 249, 0.5);
-  margin-bottom: 20px;
+  border: 4px solid rgba(189, 147, 249, 0.5);
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(189, 147, 249, 0.3);
 }
 
 .home-title {
-  font-size: 36px;
+  font-size: 42px;
   font-weight: 700;
   color: #f8f8f2;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.home-description {
+.home-subtitle {
+  font-size: 18px;
+  color: #bd93f9;
+  margin-bottom: 12px;
+}
+
+.home-desc {
   font-size: 16px;
   color: #6272a4;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.home-links {
+.home-stats {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 50px;
 }
 
-.home-link {
-  padding: 8px 20px;
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: #bd93f9;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6272a4;
+}
+
+.home-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #f8f8f2;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-icon {
+  font-size: 28px;
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.featured-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.featured-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(189, 147, 249, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.featured-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.featured-tag {
+  background: rgba(189, 147, 249, 0.2);
+  color: #bd93f9;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.featured-date {
+  color: #6272a4;
+  font-size: 13px;
+}
+
+.featured-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.featured-title a {
+  color: #f8f8f2;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.featured-title a:hover {
+  color: #bd93f9;
+}
+
+.featured-excerpt {
+  color: #6272a4;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.featured-read {
+  color: #bd93f9;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.featured-read:hover {
+  color: #ff79c6;
+}
+
+.section-more {
+  display: block;
+  text-align: center;
+  color: #bd93f9;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 24px;
+  transition: color 0.2s ease;
+}
+
+.section-more:hover {
+  color: #ff79c6;
+}
+
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tag-cloud-item {
   background: rgba(189, 147, 249, 0.1);
-  border: 1px solid rgba(189, 147, 249, 0.3);
+  border: 1px solid rgba(189, 147, 249, 0.2);
+  padding: 8px 20px;
   border-radius: 20px;
   color: #f8f8f2;
   text-decoration: none;
@@ -291,40 +453,24 @@
   transition: all 0.2s ease;
 }
 
-.home-link:hover {
+.tag-cloud-item:hover {
   background: rgba(189, 147, 249, 0.25);
   border-color: #bd93f9;
+  transform: translateY(-2px);
 }
 
-.posts-section {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 40px 0;
-}
-
-.section-title {
-  font-size: 24px;
-  font-weight: 600;
-  color: #f8f8f2;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid rgba(189, 147, 249, 0.3);
-}
-
-.see-more {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.see-more-link {
-  color: #bd93f9;
-  text-decoration: none;
-  font-size: 16px;
-  transition: color 0.2s ease;
-}
-
-.see-more-link:hover {
-  color: #ff79c6;
+@media (max-width: 768px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .home-hero {
+    padding: 40px 20px;
+  }
+  
+  .home-stats {
+    gap: 30px;
+  }
 }
 </style>
   </main>
