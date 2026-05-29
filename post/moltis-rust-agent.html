@@ -65,35 +65,42 @@ description: 自托管AI代理基础设施：moltis如何用Rust打造安全持�
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/ai">AI</a>, <a href="/tags/agent">Agent</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">AI, Agent</span>
       </div>
-      <div class="post__content">
-        <h1>自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent</h1>
+    </header>
 
+    <div class="article-content">
+      <h2>自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent</h2>
 <img src="/post-images/images/moltis-github.png" alt="moltis GitHub Repository" style="max-width:100%;">
-
-<h2>前言</h2>
-
+<h3>前言</h3>
 <p>最近在Hacker News上看到一个叫moltis的项目火了，2.7K星标。我花了一周时间在Mac Mini上跑起来，踩了不少坑，今天把这个项目的技术架构拆解一下。</p>
-
 <p>moltis的核心定位很明确：<strong>一个本地优先的持久化Agent服务器</strong>。它不是又一个需要Node.js运行时的Python框架，而是一个Rust写的单二进制文件，能在树莓派、Mac Mini或任何Linux服务器上跑，数据完全在你手里。</p>
-
-<h2>为什么是Rust？单二进制文件部署的实际意义</h2>
-
+<h3>为什么是Rust？单二进制文件部署的实际意义</h3>
 <p>做运维的都知道，依赖地狱有多可怕。今天装个Python包，明天Node.js版本不兼容，后天又冒出个npm的供应链攻击事件。moltis选择Rust写，最大的好处就是<strong>编译完就是一个二进制文件</strong>，没有运行时依赖。</p>
-
 <pre><code># 一行命令安装
 curl -fsSL https://www.moltis.org/install.sh | sh
 
@@ -102,82 +109,95 @@ brew install moltis-org/tap/moltis
 
 # Docker也行，多架构支持
 docker pull ghcr.io/moltis-org/moltis:latest</code></pre>
-
 <p>我实际在一台树莓派4B上测试过，<code>--no-default-features --features lightweight</code>编译出来大概20多MB，启动时间不到2秒。对比之前用Python写的Agent框架，光是pip install依赖就花了三分钟，版本冲突搞得人头疼。</p>
-
 <p>这个二进制文件包含59个Rust模块，总计约27万行代码。Agent核心循环和模型接口加起来才7500行，providers部分19000行。这个代码量对安全审计来说是可控的——不像某些框架动辄几百万行，根本看不过来。</p>
-
-<h2>沙箱执行环境：Agent执行命令的安全边界</h2>
-
+<h3>沙箱执行环境：Agent执行命令的安全边界</h3>
 <p>moltis的安全模型让我印象深刻。<strong>所有Agent执行的命令都运行在沙箱里，而不是你的宿主机上</strong>。它支持三种沙箱后端：</p>
-
-<li>Docker/Podman容器</li>
-<li>Apple Container（macOS专用）</li>
-<li>WASM沙箱</li>
-
+<ul>
+  <li>Docker/Podman容器</li>
+  <li>Apple Container（macOS专用）</li>
+  <li>WASM沙箱</li>
+</ul>
 <p>当Agent需要执行shell命令或运行代码时，它通过<code>sandboxed-exec</code>模块在隔离的容器中执行。即使Agent"发疯"了，最多也只能影响到沙箱内的环境，不会动到你的系统文件。</p>
-
 <p>moltis用<code>secrecy::Secret</code>库处理密钥，密钥在drop时自动清零，工具输出中的敏感信息也会被redacted。这种设计让我想起当年做运维时手动管理<code>.env</code>文件的痛苦——现在Agent自己就把这块管好了。</p>
-
-<h2>持久化存储：你的Agent记忆不会丢</h2>
-
+<h3>持久化存储：你的Agent记忆不会丢</h3>
 <p>moltis的存储层设计得很实用：</p>
-
-<li>**会话存储**：JSONL格式，支持自动压缩</li>
-<li>**记忆系统**：SQLite + FTS（全文搜索）+ 向量搜索</li>
-<li>**工作区记忆**：每个Agent有独立的记忆空间</li>
-
+<ul>
+  <li><strong>会话存储</strong>：JSONL格式，支持自动压缩</li>
+  <li><strong>记忆系统</strong>：SQLite + FTS（全文搜索）+ 向量搜索</li>
+  <li><strong>工作区记忆</strong>：每个Agent有独立的记忆空间</li>
+</ul>
 <p>你和Agent的对话历史、Agent学到的知识、长期记忆都会持久保存。不像有些云服务，关掉浏览器标签页数据就没了。</p>
-
 <p>我最满意的是<strong>跨会话召回（cross-session recall）</strong>功能。Agent能记住你上次让它做的事情，比如它知道我上周让它配置了Nginx的SSL证书，下次再问它相关问题时，它能直接引用上次的上下文。</p>
-
 <pre><code># 启动时可以指定数据目录
 moltis --config-dir /etc/moltis --data-dir /var/lib/moltis</code></pre>
-
 <p>我把它部署在VPS上，数据目录挂载在加密云盘上，配合Tailscale组网，从家里的笔记本也能访问，数据从来不离开我控制的机器。</p>
-
-<h2>多渠道接入：一个Agent，多个入口</h2>
-
+<h3>多渠道接入：一个Agent，多个入口</h3>
 <p>moltis支持的通信渠道相当全：Web UI、Telegram、Signal、Discord、Microsoft Teams、Slack、Matrix、Nostr，还有语音I/O（8种TTS + 7种STT）。</p>
-
 <p>我用的是Telegram频道，配置很简单，在Web UI里生成一个API Token，填到Telegram Bot的配置里就行。Agent能同时监听多个渠道，你在手机上用Telegram问它问题，回到电脑上用Web UI继续问，它能无缝衔接上下文。</p>
-
-<h2>MCP生态与可扩展性</h2>
-
+<h3>MCP生态与可扩展性</h3>
 <p>moltis内置了MCP（Model Context Protocol）服务器支持，支持stdio和HTTP/SSE两种模式。这意味着你可以接入任何MCP兼容的工具服务器，比如GitHub MCP、数据库MCP等。</p>
-
 <p>技能系统也做得不错——内置技能、工作区技能、以及从OpenClaw导入的技能，而且有<strong>自主改进</strong>能力，Agent能在执行任务的过程中优化自己的技能。</p>
-
 <p>安全方面还有一层保护：15个生命周期钩子事件，支持<code>BeforeToolCall</code>钩子，可以在Agent执行任何工具调用前进行检查和拦截。破坏性命令守卫会阻止Agent执行<code>rm -rf</code>之类的危险操作。</p>
-
-<h2>部署建议</h2>
-
+<h3>部署建议</h3>
 <p>对于想要自托管的开发者，我的建议：</p>
-
-<li>**个人使用**：Mac Mini或树莓派足够，用Homebrew或curl安装脚本</li>
-<li>**小团队**：VPS部署，配置Tailscale组网，数据加密存储</li>
-<li>**生产环境**：Docker部署，配置Prometheus监控和OpenTelemetry追踪</li>
-
+<ol>
+  <li><strong>个人使用</strong>：Mac Mini或树莓派足够，用Homebrew或curl安装脚本</li>
+  <li><strong>小团队</strong>：VPS部署，配置Tailscale组网，数据加密存储</li>
+  <li><strong>生产环境</strong>：Docker部署，配置Prometheus监控和OpenTelemetry追踪</li>
+</ol>
 <p>认证方面支持密码+Passkey（WebAuthn）+ API Key三种方式，还有速率限制和IP级别的节流保护。</p>
-
-<h2>写在最后</h2>
-
+<h3>写在最后</h3>
 <p>moltis让我看到了AI Agent基础设施的一个可能方向：<strong>本地优先、安全隔离、持久可靠</strong>。它不是又一个"玩具项目"，而是一个认真思考了安全边界和运维实践的生产级方案。</p>
-
 <p>如果你和我一样，对数据隐私有洁癖，又想在自己的机器上跑AI Agent，moltis值得一试。至少它不会像某些云服务那样，把你的对话记录卖给广告商。</p>
-
 <p>项目地址：https://github.com/moltis-org/moltis</p>
 <p>文档地址：https://docs.moltis.org</p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/AI/" class="tag-link">AI</a>, <a href="/tags/Agent/" class="tag-link">Agent</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
