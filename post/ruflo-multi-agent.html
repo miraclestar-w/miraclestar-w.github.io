@@ -65,63 +65,63 @@ description: Agent编排平台ruflo：Claude多Agent协作的最佳实践
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">Agent编排平台ruflo：Claude多Agent协作的最佳实践</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/ai">AI</a>, <a href="/tags/agent">Agent</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Agent编排平台ruflo：Claude多Agent协作的最佳实践</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">AI, Agent</span>
       </div>
-      <div class="post__content">
-        <h1>Agent编排平台ruflo：Claude多Agent协作的最佳实践</h1>
+    </header>
 
+    <div class="article-content">
+      <h2>Agent编排平台ruflo：Claude多Agent协作的最佳实践</h2>
 <img src="/post-images/images/ruflo-github.png" alt="ruflo GitHub 仓库" style="max-width:100%;">
-
 <blockquote>ruflo 是一个面向 Claude 的多Agent编排平台，支持部署智能多Agent群集、协调自主工作流，以及构建对话式AI系统。GitHub 星标 56.2k，Fork 6.4k。</blockquote>
-
-<h2>为什么单个Agent不够用了</h2>
-
+<h3>为什么单个Agent不够用了</h3>
 <p>做运维的朋友大概都有这种体验：用Claude处理一个具体任务——写个脚本、分析个日志、排查个问题——效果确实不错。但一旦事情复杂起来，比如要同时监控多个服务、自动修复告警、再出一份报告，单个Agent就有点力不从心了。</p>
-
 <p>问题出在哪？不是Claude不够聪明，而是一个Agent要同时扮演太多角色。它既要读日志，又要改配置，还要写总结，上下文窗口被塞得满满当当，输出质量自然就下来了。</p>
-
 <p>ruflo这个平台解决的就是这个问题——它让你把一个大任务拆成多个Claude Agent，各司其职，然后通过编排引擎把它们串起来。</p>
-
-<h2>ruflo的编排模型长什么样</h2>
-
+<h3>ruflo的编排模型长什么样</h3>
 <p>ruflo的核心思路其实很朴素：<strong>任务拆解 + Agent路由 + 结果聚合</strong>。</p>
-
 <p>一个典型的ruflo工作流长这样：</p>
-
-<li>**入口Agent**接收用户指令，做任务拆解</li>
-<li>**路由层**根据任务类型分发给对应的专项Agent</li>
-<li>**专项Agent**各自执行，返回结构化结果</li>
-<li>**聚合Agent**收集所有结果，生成最终输出</li>
-
+<ol>
+  <li><strong>入口Agent</strong>接收用户指令，做任务拆解</li>
+  <li><strong>路由层</strong>根据任务类型分发给对应的专项Agent</li>
+  <li><strong>专项Agent</strong>各自执行，返回结构化结果</li>
+  <li><strong>聚合Agent</strong>收集所有结果，生成最终输出</li>
+</ol>
 <p>比如你要做一次完整的故障排查，ruflo可能会这样编排：</p>
-
-<li>Agent-A 负责从Prometheus拉最近30分钟的指标数据</li>
-<li>Agent-B 负责解析Nginx和应用日志</li>
-<li>Agent-C 负责检查K8s Pod状态和事件</li>
-<li>Agent-D 作为汇总Agent，拿到前面三个的结果后做根因分析</li>
-
+<ul>
+  <li>Agent-A 负责从Prometheus拉最近30分钟的指标数据</li>
+  <li>Agent-B 负责解析Nginx和应用日志</li>
+  <li>Agent-C 负责检查K8s Pod状态和事件</li>
+  <li>Agent-D 作为汇总Agent，拿到前面三个的结果后做根因分析</li>
+</ul>
 <p>每个Agent只做一件事，上下文干净，输出质量高。这就是ruflo编排的价值。</p>
-
-<h2>多Agent协作的几个关键设计</h2>
-
+<h3>多Agent协作的几个关键设计</h3>
 <p>用了ruflo一段时间，踩过不少坑，总结几个实践中比较重要的点：</p>
-
-<h3>1. Agent之间的通信要标准化</h3>
-
+<h4>1. Agent之间的通信要标准化</h4>
 <p>最开始我让Agent之间直接传自然语言文本，结果问题很多——后面的Agent经常"理解错"前面的输出。后来统一改成JSON Schema定义的结构化消息，虽然写起来麻烦点，但稳定性好了太多。</p>
-
 <pre><code>{
   "agent_id": "metrics-collector",
   "status": "success",
@@ -135,71 +135,88 @@ description: Agent编排平台ruflo：Claude多Agent协作的最佳实践
     "source": "prometheus"
   }
 }</code></pre>
-
-<h3>2. 给每个Agent明确的System Prompt和边界</h3>
-
+<h4>2. 给每个Agent明确的System Prompt和边界</h4>
 <p>ruflo允许你给每个Agent配置独立的system prompt。这一步千万别偷懒。一个什么都知道的Agent，不如一个只懂日志分析的Agent来得靠谱。</p>
-
 <p>我现在的做法是：给每个Agent的prompt里写清楚三件事——你是谁、你能做什么、你不该做什么。尤其是"不该做什么"，能有效防止Agent越界操作。</p>
-
-<h3>3. 错误处理和降级策略</h3>
-
+<h4>3. 错误处理和降级策略</h4>
 <p>多Agent系统最怕的是链式失败——一个Agent挂了，后面全跟着挂。ruflo支持设置fallback agent，当前置Agent失败时自动切换。我在运维场景里一般会配置两层降级：</p>
-
-<li>第一层：换一个备用Agent重试（比如主Agent超时了，换一个轻量级的）</li>
-<li>第二层：返回预设的降级结果，不让整个流程卡死</li>
-
-<h3>4. 控制并发和资源</h3>
-
+<ul>
+  <li>第一层：换一个备用Agent重试（比如主Agent超时了，换一个轻量级的）</li>
+  <li>第二层：返回预设的降级结果，不让整个流程卡死</li>
+</ul>
+<h4>4. 控制并发和资源</h4>
 <p>ruflo默认是并行执行所有独立Agent，这在大部分场景下没问题。但要注意API rate limit。我一般会设置一个并发上限（比如同时不超过3个Agent调用Claude API），避免被限流。</p>
-
-<h2>对运维自动化的启示</h2>
-
+<h3>对运维自动化的启示</h3>
 <p>ruflo的编排模式，说白了就是把运维自动化从"写脚本"升级到了"编排Agent"。两者的区别在哪？</p>
-
 <p><strong>脚本是确定性的。</strong> 你写一个Ansible playbook，它每次执行的路径是一样的。遇到没预料到的情况，它要么报错，要么做错误的事。</p>
-
 <p><strong>Agent编排是适应性的。</strong> Claude能理解上下文、处理模糊输入、根据实际情况调整策略。日志格式变了？它能自己适应。告警内容和以往不一样？它能判断。</p>
-
 <p>这意味着运维自动化的很多"硬编码"逻辑可以被Agent的推理能力替代：</p>
-
-<li>故障排查不需要穷举所有case，让Agent自己分析</li>
-<li>变更回滚不需要写死判断条件，让Agent根据当前状态决策</li>
-<li>容量规划不需要固定公式，让Agent综合多维度数据给出建议</li>
-
+<ul>
+  <li>故障排查不需要穷举所有case，让Agent自己分析</li>
+  <li>变更回滚不需要写死判断条件，让Agent根据当前状态决策</li>
+  <li>容量规划不需要固定公式，让Agent综合多维度数据给出建议</li>
+</ul>
 <p>当然，这不意味着脚本就没用了。ruflo里的Agent本质上也是通过MCP协议调用各种工具——那些工具还是得用传统方式写。Agent负责"思考"和"决策"，脚本负责"执行"，这才是合理的分工。</p>
-
-<h2>一些实际数据</h2>
-
+<h3>一些实际数据</h3>
 <p>在我们的生产环境里，用ruflo编排的故障排查流程跑了一个季度，数据大致是这样：</p>
-
-<li>平均故障发现时间从15分钟降到了3分钟（主要是监控Agent持续运行）</li>
-<li>根因分析的准确率在70%左右，剩下30%还是需要人工介入</li>
-<li>单次排查的API调用成本大概在0.5-1.5美元，取决于问题复杂度</li>
-
+<ul>
+  <li>平均故障发现时间从15分钟降到了3分钟（主要是监控Agent持续运行）</li>
+  <li>根因分析的准确率在70%左右，剩下30%还是需要人工介入</li>
+  <li>单次排查的API调用成本大概在0.5-1.5美元，取决于问题复杂度</li>
+</ul>
 <p>坦白说，70%的准确率不算高，但这70%的case是不需要人参与的。省下来的时间和精力，投入到那30%真正棘手的问题上，整体效率提升还是很明显的。</p>
-
-<h2>最后说几句</h2>
-
+<h3>最后说几句</h3>
 <p>ruflo现在还是相对早期的阶段，文档和社区都不算丰富。但"多Agent编排"这个方向是对的——单个Agent的能力天花板摆在那里，想要处理复杂的生产环境问题，必须让多个Agent协作。</p>
-
 <p>对运维团队来说，与其等着一个全能的AI出现，不如现在就开始尝试把任务拆细、让多个Agent各干各的。ruflo提供了一个不错的起点，至少它把Agent之间的通信、调度、错误处理这些脏活累活都封装好了。</p>
-
 <p>你可以把精力花在真正重要的事情上——定义好每个Agent的职责，设计好协作流程，让机器去处理那些重复但必要的运维工作。</p>
-
 <hr>
-
 <p><em>铁蛋运维 | 让运维少加班</em></p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/AI/" class="tag-link">AI</a>, <a href="/tags/Agent/" class="tag-link">Agent</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
