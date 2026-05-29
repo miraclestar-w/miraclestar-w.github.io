@@ -81,6 +81,10 @@ description: AI Agent权限疲劳：当Agent拥有太多自主权会怎样？
       </div>
       <div class="post__content">
         <p><h1>AI Agent权限疲劳：当Agent拥有太多自主权会怎样？</p>
+<p><img src="/post-images/images/owasp-llm-top10-overview.png" alt="OWASP LLM Top 10 - AI Agent安全风险概览" style="max-width:100%;"></p>
+<p><img src="/post-images/images/owasp-llm06-excessive-agency.png" alt="OWASP LLM06: Excessive Agency - 过度自主权风险详解" style="max-width:100%;"></p>
+<p>> *图片说明：OWASP 2025 LLM Top 10 中的 LLM06:2025 Excessive Agency（过度自主权）正是本文讨论的"权限疲劳"问题的核心安全风险。该风险指LLM系统被赋予过多的功能、权限和自主性，可能导致在异常输出下执行破坏性操作。*</p>
+<p>---</p>
 <p>最近有个很有意思的思考实验，叫"60秒游戏"。玩法很简单：给一个AI Agent开放所有权限，然后观察它在60秒内会做什么。</p>
 <p>结果挺让人不安的。</p>
 <p>Agent会像一个刚拿到root权限的新手一样，疯狂地执行各种操作——读文件、发请求、调API、改配置。它不会停下来问"我该不该做这个"，而是默认"既然能做，那就做"。60秒结束时，你的系统日志里可能已经写满了各种越权访问记录。</p>
