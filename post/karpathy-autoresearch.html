@@ -65,81 +65,78 @@ description: Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/ai">AI</a>, <a href="/tags/agent">Agent</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">AI, Agent</span>
       </div>
-      <div class="post__content">
-        <h1>Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析</h1>
+    </header>
 
+    <div class="article-content">
+      <h2>Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析</h2>
 <img src="/post-images/images/karpathy-autoresearch-github.png" alt="karpathy/autoresearch GitHub仓库" style="max-width:100%;">
-
 <p>2026年3月，Andrej Karpathy在GitHub上扔出了一个叫 <code>autoresearch</code> 的项目。简单说就是：给AI agent一台带GPU的机器，让它自己跑研究实验——改代码、训练、看结果、保留或丢弃、循环往复。你睡觉去了，早上起来看实验日志就行。</p>
-
 <p>这个项目现在已经拿了8万多星，热度相当夸张。今天来拆解一下它的技术架构，顺便讲讲怎么在你自己的机器上跑起来。</p>
-
-<h2>核心设计：三个文件撑起一个研究框架</h2>
-
+<h3>核心设计：三个文件撑起一个研究框架</h3>
 <p>autoresearch的设计哲学极其克制——整个仓库真正有意义的只有三个文件：</p>
-
-<li>**`prepare.py`**：数据准备脚本。负责下载训练数据、训练BPE tokenizer，同时提供dataloader和评估函数。这个文件是只读的，agent不能改。</li>
-<li>**`train.py`**：这是唯一被agent修改的文件。完整的GPT模型定义、优化器（Muon + AdamW）、训练循环全在这里。模型架构、超参、batch size、优化器策略——什么都能改。</li>
-<li>**`program.md`**：给AI agent的指令文档。类似一个"研究组织章程"，告诉agent实验流程、约束条件和记录格式。这个文件由人类编辑和迭代。</li>
-
+<ul>
+  <li><strong><code>prepare.py</code></strong>：数据准备脚本。负责下载训练数据、训练BPE tokenizer，同时提供dataloader和评估函数。这个文件是只读的，agent不能改。</li>
+  <li><strong><code>train.py</code></strong>：这是唯一被agent修改的文件。完整的GPT模型定义、优化器（Muon + AdamW）、训练循环全在这里。模型架构、超参、batch size、优化器策略——什么都能改。</li>
+  <li><strong><code>program.md</code></strong>：给AI agent的指令文档。类似一个"研究组织章程"，告诉agent实验流程、约束条件和记录格式。这个文件由人类编辑和迭代。</li>
+</ul>
 <p>训练基于一个简化的单GPU实现版本的nanochat。每次实验固定跑5分钟（wall clock时间，不含启动和编译），评估指标是 <strong>val_bpb</strong>（validation bits per byte），越低越好。这个指标和词表大小无关，所以架构变更的对比是公平的。</p>
-
-<h2>实验循环：自主研究的闭环</h2>
-
+<h3>实验循环：自主研究的闭环</h3>
 <p>整个自主研究的流程是一个死循环，agent被要求永远不要停下来：</p>
-
-<li>看当前git状态</li>
-<li>修改 `train.py`，实现一个实验想法</li>
-<li>git commit</li>
-<li>执行 `uv run train.py > run.log 2>&1`，把输出重定向（避免撑爆agent的上下文窗口）</li>
-<li>从日志里grep出 `val_bpb` 和 `peak_vram_mb`</li>
-<li>如果跑崩了，看trace尝试修复；修不好就记录crash继续下一个</li>
-<li>把结果写进 `results.tsv`（TSV格式，不要提交这个文件到git）</li>
-<li>val_bpb降低了就保留commit，没降就 `git reset` 回去</li>
-
+<ol>
+  <li>看当前git状态</li>
+  <li>修改 <code>train.py</code>，实现一个实验想法</li>
+  <li>git commit</li>
+  <li>执行 <code>uv run train.py > run.log 2>&1</code>，把输出重定向（避免撑爆agent的上下文窗口）</li>
+  <li>从日志里grep出 <code>val_bpb</code> 和 <code>peak_vram_mb</code></li>
+  <li>如果跑崩了，看trace尝试修复；修不好就记录crash继续下一个</li>
+  <li>把结果写进 <code>results.tsv</code>（TSV格式，不要提交这个文件到git）</li>
+  <li>val_bpb降低了就保留commit，没降就 <code>git reset</code> 回去</li>
+</ol>
 <p>设计上有个很聪明的地方：每次实验5分钟，每小时约12次实验，睡一觉大概能跑100次。5分钟的固定时间预算让不同架构的实验直接可比——不管agent把模型改多大或多小，训练时间都是一样的。</p>
-
-<h2>技术细节：模型架构</h2>
-
+<h3>技术细节：模型架构</h3>
 <p><code>train.py</code> 里的模型是标准的GPT架构，但用了一些现代tricks：</p>
-
-<li>**RMSNorm**（而非LayerNorm）</li>
-<li>**RoPE旋转位置编码**</li>
-<li>**GQA**（Grouped Query Attention），`n_kv_head` 可以小于 `n_head`</li>
-<li>**Value Embedding**：每隔一层交替使用，来自最近的一些研究工作</li>
-<li>**Flash Attention 3**：Hopper GPU用varunneal的实现，非Hopper用kernels-community的fallback</li>
-<li>**窗口注意力**：默认模式是"SSSL"，即三个局部窗口加一个全局注意力层</li>
-
+<ul>
+  <li><strong>RMSNorm</strong>（而非LayerNorm）</li>
+  <li><strong>RoPE旋转位置编码</strong></li>
+  <li><strong>GQA</strong>（Grouped Query Attention），<code>n_kv_head</code> 可以小于 <code>n_head</code></li>
+  <li><strong>Value Embedding</strong>：每隔一层交替使用，来自最近的一些研究工作</li>
+  <li><strong>Flash Attention 3</strong>：Hopper GPU用varunneal的实现，非Hopper用kernels-community的fallback</li>
+  <li><strong>窗口注意力</strong>：默认模式是"SSSL"，即三个局部窗口加一个全局注意力层</li>
+</ul>
 <p>优化器用的是 <strong>Muon + AdamW</strong>的组合，这也是Karpathy近期力推的训练策略。</p>
-
-<h2>为什么这个项目有意思</h2>
-
+<h3>为什么这个项目有意思</h3>
 <p>从技术上看，autoresearch解决了一个很实际的问题：<strong>怎么把AI agent真正用到工程研究里，而不是只做代码补全</strong>。它不是让AI帮你写代码，而是让AI自己做实验、评估结果、决定下一步。这是一个完整的自动化研究闭环。</p>
-
 <p>从运维角度看，这个项目的部署门槛极低。你只需要一台带NVIDIA GPU（测试环境是H100）的机器、Python 3.10+和uv包管理器。安装依赖一条 <code>uv sync</code>，数据准备一条 <code>uv run prepare.py</code>，然后启动你的coding agent（Claude、Codex之类的），指向 <code>program.md</code> 就完事了。</p>
-
 <p>Karpathy自己也说了，设计原则就是"单GPU、单文件、单指标"。没有分布式训练，没有复杂的配置系统，没有任何花哨的东西。这种极简主义反而让项目的可复现性极好。</p>
-
-<h2>复现指南：在自己的机器上跑起来</h2>
-
+<h3>复现指南：在自己的机器上跑起来</h3>
 <p><strong>硬件要求</strong>：单张NVIDIA GPU，H100最佳，其他卡也能跑但速度不同。</p>
-
 <p><strong>环境准备</strong>：</p>
-
 <pre><code># 安装uv包管理器
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
@@ -151,30 +148,59 @@ uv run prepare.py
 
 # 手动跑一次实验验证环境（约5分钟）
 uv run train.py</code></pre>
-
 <p>如果上面都跑通了，就可以进入自主研究模式了。启动你的coding agent（确保关掉了所有权限限制），然后跟它说：</p>
-
 <blockquote>Hi have a look at program.md and let's kick off a new experiment! let's do the setup first.</blockquote>
-
 <p>agent会自动创建git分支、读取上下文文件、开始实验循环。</p>
-
 <p><strong>小显存机器的适配建议</strong>：如果你想在MacBook或者小显存的卡上跑，Karpathy在README里给了具体的调参建议——换TinyStories数据集、降低 <code>vocab_size</code>、缩短 <code>MAX_SEQ_LEN</code>、减少 <code>DEPTH</code> 等。社区已经有了macOS、Windows、AMD的fork。</p>
-
-<h2>写在最后</h2>
-
+<h3>写在最后</h3>
 <p>autoresearch真正有意思的地方不是它用了多厉害的技术，而是它提出了一个范式：<strong>把研究过程本身变成一个可以被AI agent执行的任务</strong>。<code>program.md</code> 就是这个范式的灵魂——你用Markdown定义研究流程，agent按照流程自主执行。</p>
-
 <p>8万星不是白来的。在AI coding工具已经满天飞的2026年，这个项目指向了一个更远的方向：AI不只是帮你写代码，它能自己做研究。</p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/AI/" class="tag-link">AI</a>, <a href="/tags/Agent/" class="tag-link">Agent</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
