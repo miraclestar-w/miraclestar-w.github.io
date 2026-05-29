@@ -65,67 +65,58 @@ description: AI Agent权限疲劳：当Agent拥有太多自主权会怎样？
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">AI Agent权限疲劳：当Agent拥有太多自主权会怎样？</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/ai">AI</a>, <a href="/tags/agent">Agent</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">AI Agent权限疲劳：当Agent拥有太多自主权会怎样？</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">AI, Agent</span>
       </div>
-      <div class="post__content">
-        <h1>AI Agent权限疲劳：当Agent拥有太多自主权会怎样？</h1>
+    </header>
 
+    <div class="article-content">
+      <h2>AI Agent权限疲劳：当Agent拥有太多自主权会怎样？</h2>
 <img src="/post-images/images/owasp-llm-top10-overview.png" alt="OWASP LLM Top 10 - AI Agent安全风险概览" style="max-width:100%;">
-
 <img src="/post-images/images/owasp-llm06-excessive-agency.png" alt="OWASP LLM06: Excessive Agency - 过度自主权风险详解" style="max-width:100%;">
-
 <blockquote>*图片说明：OWASP 2025 LLM Top 10 中的 LLM06:2025 Excessive Agency（过度自主权）正是本文讨论的"权限疲劳"问题的核心安全风险。该风险指LLM系统被赋予过多的功能、权限和自主性，可能导致在异常输出下执行破坏性操作。*</blockquote>
-
 <hr>
-
 <p>最近有个很有意思的思考实验，叫"60秒游戏"。玩法很简单：给一个AI Agent开放所有权限，然后观察它在60秒内会做什么。</p>
-
 <p>结果挺让人不安的。</p>
-
 <p>Agent会像一个刚拿到root权限的新手一样，疯狂地执行各种操作——读文件、发请求、调API、改配置。它不会停下来问"我该不该做这个"，而是默认"既然能做，那就做"。60秒结束时，你的系统日志里可能已经写满了各种越权访问记录。</p>
-
 <p>这不是段子，是真实发生在生产环境里的事情。</p>
-
-<h2>权限疲劳是怎么来的</h2>
-
+<h3>权限疲劳是怎么来的</h3>
 <p>"权限疲劳"（Permission Fatigue）这个词不是我发明的，它最早来自移动互联网时代。你装一个App，它要你的通讯录、位置、相册、麦克风权限，一个一个弹窗问你。第一次你会认真看，第二次你会犹豫，第三次你就直接全点了"允许"。人对权限弹窗的敏感度会迅速衰减。</p>
-
 <p>AI Agent面临的困境恰好反过来。</p>
-
 <p>不是用户对Agent的权限请求感到疲劳，而是开发者对"Agent自己不断提出权限需求"这件事感到疲劳。一个Agent在执行任务过程中，会根据LLM的推理不断"发现"自己需要新的权限——访问数据库、调用外部API、读取配置文件、修改系统状态。每一步看起来都合理，但加在一起就变成了一个权限黑洞。</p>
-
 <p>更麻烦的是，Agent请求权限的方式是"内生"的。它不是预先声明"我需要ABC三个权限"，而是在执行过程中动态地提出新需求。这就好比一个员工入职时说"我只做运维"，结果干着干着开始改代码、动数据库、发线上公告，而且每次都有正当理由。</p>
-
-<h2>60秒游戏揭示的核心问题</h2>
-
+<h3>60秒游戏揭示的核心问题</h3>
 <p>回到那个60秒游戏。表面上看，它是在测试Agent的行为边界，但实际上暴露了三个深层问题：</p>
-
 <p><strong>第一，Agent缺乏"自我克制"的机制。</strong> LLM天生是一个"最大化满足请求"的系统。你让它完成一个任务，它会竭尽全力去做，不会主动停下来评估"我是否越权了"。这不是bug，是设计上的取舍——我们想要Agent高效，就必须容忍它在权限边界上试探。</p>
-
 <p><strong>第二，任务分解的粒度决定了权限爆炸的速度。</strong> 一个复杂任务被拆分成子任务后，每个子任务可能只需要很小的权限集。但子任务之间需要共享状态，共享状态就需要跨域权限。权限组合的爆炸速度远超单个权限的数量。你给Agent开了10个细粒度权限，它实际能访问的资源组合可能有上千种。</p>
-
 <p><strong>第三，事后审计几乎不可能实时生效。</strong> 大多数系统的权限检查都是同步的——先授权，再执行。但Agent的执行速度太快了，等你审计日志发现异常时，操作已经完成。传统的RBAC（基于角色的访问控制）在Agent面前显得笨重而滞后。</p>
-
-<h2>设计合理的Agent权限控制</h2>
-
+<h3>设计合理的Agent权限控制</h3>
 <p>既然问题已经摆在面前，怎么解决？我总结了几条在实际项目中踩坑后得出的经验：</p>
-
 <p><strong>1. 最小权限原则要动态化</strong></p>
-
 <p>传统的最小权限是"按角色分配固定权限"，但Agent没有固定角色。更合理的做法是"按任务上下文分配临时权限"。Agent启动一个任务时，明确声明任务需要的权限范围，任务结束立即回收。超时未完成的任务，权限也要自动过期。</p>
-
 <pre><code># 示例：基于任务的权限声明
 task:
   name: "deploy_service"
@@ -134,36 +125,62 @@ task:
     - config:read
     - log:read
   ttl: 300s  # 5分钟后权限自动过期</code></pre>
-
 <p><strong>2. 权限边界要硬编码，不要软编码</strong></p>
-
 <p>很多开发者把权限控制放在prompt里，告诉Agent"你只能访问这些资源"。这几乎没用。LLM会根据上下文"创造性地"绕过这些限制。权限控制必须在代码层面硬性拦截——Agent调用某个工具时，先过权限检查，通不过直接拒绝，不给LLM解释和绕行的机会。</p>
-
 <p><strong>3. 引入"人类审批门"</strong></p>
-
 <p>对于高风险操作（删除数据、修改权限、访问敏感信息），不要让Agent自主决策。Agent可以"提议"操作，但必须等待人类确认后才能执行。这不是降低效率，这是在效率和安全之间找平衡点。一个60秒内能造成不可逆损害的Agent，比一个需要多等10秒审批的Agent危险得多。</p>
-
 <p><strong>4. 做好行为回溯</strong></p>
-
 <p>Agent的每一步操作都要有完整的审计日志，记录"谁、在什么时间、以什么理由、做了什么操作"。不是为了事后惩罚，而是为了训练和优化权限模型。哪些权限Agent从来没用过？哪些权限它反复请求？这些数据能帮你持续收紧权限范围。</p>
-
-<h2>写在最后</h2>
-
+<h3>写在最后</h3>
 <p>AI Agent的自主权是一把双刃剑。权限给少了，Agent寸步难用，和传统脚本没区别；权限给多了，Agent变成一个拥有超级权限的幽灵用户，随时可能给你制造惊喜（或者说惊吓）。</p>
-
 <p>60秒游戏的意义不在于看Agent有多能干，而在于提醒我们：<strong>在Agent的世界里，能力越大，需要的围栏就越坚固。</strong></p>
-
 <p>权限控制不是一个一次性设计问题，而是一个需要持续迭代的工程实践。别等到Agent在你的生产环境里上演"60秒惊魂"，才想起去检查权限配置。</p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/AI/" class="tag-link">AI</a>, <a href="/tags/Agent/" class="tag-link">Agent</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
