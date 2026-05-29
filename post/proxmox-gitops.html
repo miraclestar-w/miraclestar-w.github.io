@@ -95,7 +95,7 @@ description: Proxmox+GitOps：用代码管理虚拟化基础设施的自动化�
 
     <div class="article-content">
       <h2>Proxmox + GitOps：用代码管理虚拟化基础设施的自动化框架</h2>
-<img src="/post-images/images/proxmox-dashboard.png" alt="Proxmox VE Dashboard" style="max-width:100%;">
+<img src="/post-images/proxmox-dashboard.png" alt="Proxmox VE Dashboard" style="max-width:100%;">
 <h3>前言</h3>
 <p>搞自托管的人都有这个痛点：Proxmox VE 装好之后，LXC 容器一个一个手动创建，配置文件散落在各处，哪天硬盘挂了或者要迁移，回忆"当时到底装了啥"比重建还累。</p>
 <p>我去年把自己的 home lab 从手动管理迁移到了 GitOps 模式。整个方案基于三样东西：Proxmox VE 的 API、一套简单的声明式配置文件、一个 Git 仓库。用了半年，稳定性超出预期，迁移一台新宿主机从半天缩短到 20 分钟。这篇文章把核心思路和踩过的坑都记一下。</p>
