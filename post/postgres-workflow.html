@@ -65,45 +65,49 @@ description: Postgres不只是数据库：用PostgreSQL构建持久化工作流�
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/postgresql">PostgreSQL</a>, <a href="/tags/数据库">数据库</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">PostgreSQL, 数据库</span>
       </div>
-      <div class="post__content">
-        <p><p align="center"></p>
-<p>  <img src="images/postgres-elephant-wiki.png" alt="PostgreSQL Logo" width="120"></p>
+    </header>
+
+    <div class="article-content">
+      <p><p align="center"></p>
+<p><img src="images/postgres-elephant-wiki.png" alt="PostgreSQL Logo" width="120"></p>
 <p></p></p>
-
-<h1>Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎</h1>
-
+<h2>Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎</h2>
 <p><p align="center"></p>
-<p>  <img src="images/postgres-workflow-diagram.png" alt="PostgreSQL Workflow Engine Architecture" width="600"></p>
+<p><img src="images/postgres-workflow-diagram.png" alt="PostgreSQL Workflow Engine Architecture" width="600"></p>
 <p></p></p>
-
 <blockquote>*图：PostgreSQL 工作流引擎架构 —— 客户端通过 Postmaster 连接到后端 Worker 进程，Worker 通过 `SELECT FOR UPDATE SKIP LOCKED` 机制安全地从 `workflow_tasks` 表中抢取任务。*</blockquote>
-
-<h2>一、为什么要折腾这事儿</h2>
-
+<h3>一、为什么要折腾这事儿</h3>
 <p>做过运维的同学应该都有这种体会：技术栈每多一个组件，半夜被闹钟叫醒的概率就多一分。Kafka要调，RabbitMQ要看集群状态，ZooKeeper动不动挂掉……对于中小团队来说，维护一套消息中间件的成本往往被严重低估。</p>
-
 <p>我之前在项目里就遇到过这种尴尬：业务方要求加一个异步审批流，我第一反应是上Redis+Celery。结果光是部署和调优就花了两天，上线后又发现任务偶尔丢失——Redis挂了没持久化好。后来痛定思痛，琢磨出一个方案：既然PostgreSQL已经跑了，为什么不用它来当工作流引擎？</p>
-
 <p>你没看错，就是那个你每天都在用的Postgres。</p>
-
-<h2>二、核心思路：用一张表搞定任务队列</h2>
-
+<h3>二、核心思路：用一张表搞定任务队列</h3>
 <p>整个方案的核心很简单——建一张任务表，把工作流拆成一个个"任务步骤"，用状态机来驱动执行。</p>
-
 <pre><code>CREATE TABLE workflow_tasks (
     id          BIGSERIAL PRIMARY KEY,
     task_type   VARCHAR(64) NOT NULL,
@@ -121,13 +125,9 @@ description: Postgres不只是数据库：用PostgreSQL构建持久化工作流�
 
 CREATE INDEX idx_tasks_pending ON workflow_tasks (status, scheduled_at, priority DESC)
     WHERE status IN ('pending', 'retry');</code></pre>
-
 <p>看到没有？没有消费组，没有偏移量，没有分区。就是一张表，加上几个索引。PostgreSQL原生的MVCC和事务隔离已经帮你解决了并发控制问题——多个worker同时抢任务也不会出事。</p>
-
-<h2>三、抢任务的关键：SELECT FOR UPDATE SKIP LOCKED</h2>
-
+<h3>三、抢任务的关键：SELECT FOR UPDATE SKIP LOCKED</h3>
 <p>这个方案能跑起来的核心武器是PostgreSQL 9.5引入的<code>SKIP LOCKED</code>语法。它让多个worker可以安全地并发抢任务，而不会互相阻塞：</p>
-
 <pre><code>BEGIN;
 
 SELECT id, task_type, payload
@@ -147,13 +147,9 @@ SET status = 'processing',
 WHERE id = <拿到的id>;
 
 COMMIT;</code></pre>
-
 <p><code>SKIP LOCKED</code>的妙处在于：如果worker-01正在抢某条记录，worker-02会自动跳过它去抢下一条，而不是傻等锁释放。这比之前用<code>NOWAIT</code>然后捕获异常的方案优雅多了，而且性能差距在高并发场景下能有数量级的提升。</p>
-
-<h2>四、失败重试与死信处理</h2>
-
+<h3>四、失败重试与死信处理</h3>
 <p>真实的生产环境里，任务执行失败是常态。我设计了一个简单的重试策略：</p>
-
 <pre><code>-- 任务执行失败时
 UPDATE workflow_tasks
 SET status = CASE
@@ -165,13 +161,9 @@ SET status = CASE
     locked_by = NULL,
     locked_at = NULL
 WHERE id = <task_id>;</code></pre>
-
 <p>指数退避，简单直接。<code>failed</code>状态的任务会被定期捞出来人工处理或发告警——相当于消息队列里的死信队列，但你不需要额外部署任何东西。</p>
-
-<h2>五、worker实现：一个Python脚本就够了</h2>
-
+<h3>五、worker实现：一个Python脚本就够了</h3>
 <p>别把这事想复杂了。一个worker的核心循环大概长这样：</p>
-
 <pre><code>import psycopg2
 import json
 import time
@@ -193,57 +185,78 @@ def run_worker(worker_id, poll_interval=1):
             mark_failed(conn, task['id'], str(e))
         
         conn.commit()</code></pre>
-
 <p>对，就是个无限循环：抢任务、执行、更新状态。没有worker pool的概念，没有broker连接，连消息序列化都是PostgreSQL原生支持的JSONB。整个worker进程只依赖一个psycopg2连接，资源占用极低。</p>
-
 <p>如果你用Go写，配合<code>pgx</code>驱动，一个worker goroutine的内存占用可以控制在几MB以内。我们线上跑了几十个worker实例，总资源消耗还比不上一个Redis集群的零头。</p>
-
-<h2>六、工作流编排：状态机模式</h2>
-
+<h3>六、工作流编排：状态机模式</h3>
 <p>单个任务只是基础，真正有价值的是多步骤工作流。比如一个典型的部署流程：代码审核→构建镜像→推送仓库→部署到staging→集成测试→部署到production。</p>
-
 <p>我的做法是在任务表里加一个<code>workflow_id</code>字段，把同一流程的步骤串起来：</p>
-
 <pre><code>CREATE TABLE workflow_definitions (
     id          SERIAL PRIMARY KEY,
     name        VARCHAR(64) UNIQUE NOT NULL,
     steps       JSONB NOT NULL
 );</code></pre>
-
 <p><code>steps</code>字段用JSONB存储有序步骤定义，每完成一步，worker根据定义自动创建下一步的任务。整个流程的进度可以通过<code>workflow_id</code>随时查询，出了问题也能精确回溯到哪一步卡住了。</p>
-
-<h2>七、踩过的坑</h2>
-
+<h3>七、踩过的坑</h3>
 <p>说几句实话。这个方案不是银弹，有几个坑你得知道：</p>
-
 <p><strong>性能天花板</strong>：单表并发写入在千万级数据量后会明显下降。我们的解法是定期归档已完成任务到历史表，把热表控制在百万行以内。</p>
-
 <p><strong>没有延迟消息原生支持</strong>：<code>scheduled_at</code>只能轮询，不如Kafka的延迟队列精确。对于精度要求高的场景（比如毫秒级定时任务），还是得用专门的工具。</p>
-
 <p><strong>Worker心跳缺失</strong>：如果worker挂了，<code>locked_by</code>会一直挂着。我写了个定时任务，每5分钟清理锁定超过10分钟的任务，把它改回<code>pending</code>状态。</p>
-
-<h2>八、什么时候该用这个方案</h2>
-
+<h3>八、什么时候该用这个方案</h3>
 <p>说到底，这套方案适合这些场景：</p>
-
-<li>项目初期，团队小，运维人手紧张</li>
-<li>异步任务量不大（日均几万到几十万级）</li>
-<li>希望减少技术栈复杂度，降低故障面</li>
-<li>已经重度依赖PostgreSQL，不想引入新的中间件</li>
-
+<ul>
+  <li>项目初期，团队小，运维人手紧张</li>
+  <li>异步任务量不大（日均几万到几十万级）</li>
+  <li>希望减少技术栈复杂度，降低故障面</li>
+  <li>已经重度依赖PostgreSQL，不想引入新的中间件</li>
+</ul>
 <p>如果你已经有成熟的Kafka集群，任务量日均过千万，那该用还是用。但对于绝大多数中小项目来说，PostgreSQL已经足够好了——它不只是存数据的，它是你最被低估的基础设施。</p>
-
 <p>少一个组件，多一分安宁。这话做运维的应该都懂。</p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/PostgreSQL/" class="tag-link">PostgreSQL</a>, <a href="/tags/数据库/" class="tag-link">数据库</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
