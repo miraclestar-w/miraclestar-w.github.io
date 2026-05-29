@@ -65,53 +65,54 @@ description: Proxmox+GitOps：用代码管理虚拟化基础设施的自动化�
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 20 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 18.7534 3.8323 18.3629 4.22283 18.3629Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </header>
 
-  <main class="site-main">
-    <article class="post">
-      <h1 class="post__title">Proxmox+GitOps：用代码管理虚拟化基础设施的自动化框架</h1>
-      <div class="post__meta">
-        <time>2026-05-29</time>
-        <span class="post__tags"><a href="/tags/proxmox">Proxmox</a>, <a href="/tags/虚拟化">虚拟化</a></span>
+<main class="site-main" role="main">
+    <div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Proxmox+GitOps：用代码管理虚拟化基础设施的自动化框架</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-05-29</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Proxmox, 虚拟化</span>
       </div>
-      <div class="post__content">
-        <h1>Proxmox + GitOps：用代码管理虚拟化基础设施的自动化框架</h1>
+    </header>
 
+    <div class="article-content">
+      <h2>Proxmox + GitOps：用代码管理虚拟化基础设施的自动化框架</h2>
 <img src="/post-images/images/proxmox-dashboard.png" alt="Proxmox VE Dashboard" style="max-width:100%;">
-
-<h2>前言</h2>
-
+<h3>前言</h3>
 <p>搞自托管的人都有这个痛点：Proxmox VE 装好之后，LXC 容器一个一个手动创建，配置文件散落在各处，哪天硬盘挂了或者要迁移，回忆"当时到底装了啥"比重建还累。</p>
-
 <p>我去年把自己的 home lab 从手动管理迁移到了 GitOps 模式。整个方案基于三样东西：Proxmox VE 的 API、一套简单的声明式配置文件、一个 Git 仓库。用了半年，稳定性超出预期，迁移一台新宿主机从半天缩短到 20 分钟。这篇文章把核心思路和踩过的坑都记一下。</p>
-
-<h2>为什么是 LXC 而不是 VM</h2>
-
+<h3>为什么是 LXC 而不是 VM</h3>
 <p>先说结论：个人开发者自托管，LXC 比 VM 实用得多。</p>
-
 <p>LXC 容器共享宿主机内核，资源开销极低。同样的硬件，跑 10 个 LXC 容器和跑 3 个虚拟机完全不是一个概念。我的 N100 小主机上跑着 12 个 LXC 容器——Gitea、PostgreSQL、Nginx、Jellyfin、Home Assistant——日常内存占用不到 60%。</p>
-
 <p>而且 LXC 的配置文件是纯文本，存放在 <code>/etc/pve/lxc/</code> 下面，天然适合版本管理。这为后面的 GitOps 方案打下了基础。</p>
-
-<h2>GitOps 的核心思路</h2>
-
+<h3>GitOps 的核心思路</h3>
 <p>GitOps 说白了就一句话：<strong>Git 仓库是唯一的事实来源，实际状态应该和仓库保持一致。</strong></p>
-
 <p>在 Kubernetes 的世界里，ArgoCD 和 Flux 是成熟的 GitOps 工具。但 Proxmox 没有官方的 GitOps 工具链，所以我们需要自己搭。好在思路不复杂：</p>
-
-<li>用 YAML 声明每个容器应该是什么状态</li>
-<li>写脚本读取 YAML，调用 Proxmox API 执行创建/更新/删除</li>
-<li>把这个仓库管好，每次变更走 Git 流程</li>
-
-<h2>具体实现</h2>
-
-<h3>项目结构</h3>
-
+<ol>
+  <li>用 YAML 声明每个容器应该是什么状态</li>
+  <li>写脚本读取 YAML，调用 Proxmox API 执行创建/更新/删除</li>
+  <li>把这个仓库管好，每次变更走 Git 流程</li>
+</ol>
+<h3>具体实现</h3>
+<h4>项目结构</h4>
 <pre><code>proxmox-infra/
 ├── inventories/
 │   └── homelab.yaml          # 宿主机清单
@@ -126,11 +127,8 @@ description: Proxmox+GitOps：用代码管理虚拟化基础设施的自动化�
 │   └── apply.py              # 执行引擎
 ├── .env.example              # API token 模板
 └── Makefile                  # 常用命令封装</code></pre>
-
-<h3>容器声明文件</h3>
-
+<h4>容器声明文件</h4>
 <p>每个容器一个 YAML 文件，结构尽量简单：</p>
-
 <pre><code># containers/gitea.yaml
 name: gitea
 host: pve-main
@@ -152,13 +150,9 @@ packages:
   - git
   - curl
   - apt-transport-https</code></pre>
-
 <p>这里没有用 Terraform 也没有用 Pulumi，而是直接手写了一层薄薄的封装。原因很简单：这些工具对 Proxmox 的支持要么是社区维护的 provider，要么需要额外装 provider 插件，对个人场景来说引入的复杂度大于收益。直接调 Proxmox 的 REST API（<code>pve-api-extension</code>）反而更可控。</p>
-
-<h3>执行引擎</h3>
-
+<h4>执行引擎</h4>
 <p>核心脚本 <code>apply.py</code> 做三件事：</p>
-
 <pre><code># 伪代码，展示核心逻辑
 def apply(container_config):
     current = get_container_state(container_config.name)
@@ -171,19 +165,12 @@ def apply(container_config):
         print(f"[update] {container_config.name}")
     else:
         print(f"[ok] {container_config.name}")</code></pre>
-
 <p><code>needs_update</code> 函数做 diff：对比当前状态和声明状态的差异。Proxmox API 可以查询容器的 CPU、内存、磁盘、网络配置，逐项对比即可。有差异就更新，没差异就跳过。</p>
-
 <p>创建容器时，先从模板克隆，再通过 API 逐步 apply 配置——设置 CPU/内存、挂载磁盘、配置网络、安装软件包。这个过程完全幂等，跑多少次结果都一样。</p>
-
-<h3>自动化流程</h3>
-
+<h4>自动化流程</h4>
 <p>把脚本放进 Git 仓库之后，流程变成：</p>
-
 <pre><code>改 YAML → git commit → git push → CI 触发 → apply 脚本执行</code></pre>
-
 <p>CI 用的是 Gitea Actions（本身就是自托管的，不用 GitHub Actions 的公共额度）。工作流很简单：</p>
-
 <pre><code># .gitea/workflows/apply.yaml
 name: Apply Infrastructure
 on:
@@ -198,44 +185,66 @@ jobs:
       - run: make apply
         env:
           PROXMOX_API_TOKEN: ${{ secrets.PROXMOX_API_TOKEN }}</code></pre>
-
 <p>那个 <code>self-hosted, proxmox</code> runner 也跑在 Proxmox 的一个 LXC 容器里，算是真正的自举。</p>
-
-<h2>几个踩坑记录</h2>
-
+<h3>几个踩坑记录</h3>
 <p><strong>权限问题</strong>：Proxmox 的 API Token 权限需要单独配。我最初给了 <code>PVEAuditor</code> 角色，结果发现创建容器需要 <code>PVEVMAdmin</code>。建议单独建一个 <code>infra-apply</code> 角色，只给需要的权限，别用超级管理员的 token。</p>
-
 <p><strong>Template ID 问题</strong>：<code>pveam list local</code> 查模板 ID，但不同版本的 Proxmox 模板 ID 可能变化。我在配置文件里加了 <code>template_id</code> 字段显式指定，避免被"自动发现"坑。</p>
-
 <p><strong>网络配置冲突</strong>：声明式管理最怕的是"漂移"——你在 Web UI 里手动改了 IP，但 YAML 里还是旧的。我加了一个 <code>preflight check</code> 步骤，apply 之前先检查有没有和声明不一致的容器，有就报警而不是静默覆盖，防止把正在运行的服务打挂。</p>
-
 <p><strong>LXC 特性依赖</strong>：部分应用（比如 Docker-in-LXC）需要开启 <code>nesting</code> 和 <code>fuse</code> 特性，这些在创建之后没法热修改，必须先停容器再改。所以声明文件里写清楚 features 很重要。</p>
-
-<h2>这套方案的局限</h2>
-
+<h3>这套方案的局限</h3>
 <p>说句实话，这套方案不适合团队协作的生产环境。没有 RBAC、没有审批流、没有状态机、没有回滚机制。对于团队场景，还是建议上 Terraform Provider 或者直接用 Kubernetes。</p>
-
 <p>但对个人开发者来说，它解决了一个真实的问题：<strong>基础设施的可重复性和可恢复性。</strong> 我的 Proxmox 配置全部在 Gitea 仓库里，哪天宿主机挂了，换一台新机器，装好 Proxmox，clone 仓库，跑一下 <code>make apply</code>，20 分钟所有容器全部恢复。这种确定性带来的安全感，比任何监控工具都实在。</p>
-
-<h2>写在最后</h2>
-
+<h3>写在最后</h3>
 <p>GitOps 不是什么新概念，但把它用在 Proxmox LXC 管理上确实是个小众场景。市面上的资料不多，我也是摸着石头过河。如果你也在搞自托管，不妨试试这个思路——不用一步到位，先把几个关键容器声明化，体验一下"用 Git 管基础设施"的感觉。</p>
-
 <p>代码仓库我放在了 Gitea 上，暂时没开源，等整理干净了再放。有问题可以评论区交流。</p>
-
 <hr>
-
 <p><em>铁蛋运维 | 每周更新自托管实战经验</em></p>
+    </div>
 
-      </div>
-    </article>
+    <div class="article-header__tags">
+      <a href="/tags/Proxmox/" class="tag-link">Proxmox</a>, <a href="/tags/虚拟化/" class="tag-link">虚拟化</a>
+    </div>
+  </article>
+</div>
   </main>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <p>&copy; 2026 Miracle. All rights reserved.</p>
+  <div class="footer-inner">
+
+    
+    <nav class="footer-nav" aria-label="页脚导航">
+      
+      <a class="footer-nav__link" href="/memos">闪念</a>
+      
+      <a class="footer-nav__link" href="/">首页</a>
+      
+      <a class="footer-nav__link" href="/post">博客</a>
+      
+      <a class="footer-nav__link" href="/archives">归档</a>
+      
+      <a class="footer-nav__link" href="/tags">标签</a>
+      
+      
+      <a class="footer-nav__link" href="/post/about">关于</a>
+      
+    </nav>
+
+
+    <div class="footer-social">
+      
+      
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"></path>
+        </svg>
+      </a>
+      
     </div>
-  </footer>
+
+    <p class="footer-copy">© 2026 <a href="https://miraclestar-w.github.io">Miracle</a>. All rights reserved.</p>
+
+  </div>
+</footer>
 
 </body>
 </html>
