@@ -1,5 +1,18 @@
 [
   {
+    "title": "769个PR/月，AI替你Review代码：人机协同的PR审查实战指南",
+    "url": "/post/ai-code-review-automation",
+    "content": "当AI Review AI提交的代码成为现实，你的团队准备好了吗？深入探讨AI Code Review的工作流、系统架构和实战案例。",
+    "date": "2026-05-31",
+    "tags": [
+      "AI",
+      "Code Review",
+      "代码审查",
+      "自动化",
+      "DevOps"
+    ]
+  },
+  {
     "title": "AI Agent自动化运维实践",
     "url": "https://miraclestar-w.github.io/post/ai-agent-ops-automation/",
     "content": "深入探讨AI Agent在服务器自动化运维中的实际应用，包括故障自愈、智能告警、自动化巡检等核心场景，帮助运维团队迈向AIOps。",
