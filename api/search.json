@@ -1,5 +1,18 @@
 [
   {
+    "title": "你的LLM在裸奔：推理窃取攻击如何偷走你的模型资产",
+    "url": "/post/ai-inference-theft-security",
+    "content": "LLM API端点的新型安全漏洞——推理窃取(Inference Theft)，你的模型可能正在被人悄悄'抄作业'。攻击流程拆解、检测信号与全栈防御策略。",
+    "date": "2026-06-01",
+    "tags": [
+      "AI",
+      "安全",
+      "LLM",
+      "推理安全",
+      "模型安全"
+    ]
+  },
+  {
     "title": "给AI Agent一张信用卡，5小时它能花出去吗",
     "url": "/post/ai-agent-shopping-experiment",
     "content": "波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。",
