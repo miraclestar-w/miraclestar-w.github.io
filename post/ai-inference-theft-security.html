@@ -144,7 +144,7 @@ description: LLM API端点的新型安全漏洞——推理窃取(Inference Thef
       <p>传统的AI安全话题我们已经听过太多：数据投毒、对抗样本、提示注入……但有一个威胁一直在暗处滋长，直到最近才引起广泛关注——<strong>推理窃取（Inference Theft）</strong>。</p>
       <p>简单说，推理窃取就是：攻击者通过大量调用你公开的LLM API，收集输入-输出配对数据，然后用这些数据训练一个功能近似的"克隆模型"。整个过程中，攻击者不需要访问你的训练数据、模型权重、甚至不需要知道你的模型架构——他只需要能调API。</p>
       <p>这就像什么呢？你开了一家私房菜馆，秘方从不外传。但有个聪明人连续三个月每天来吃饭，点遍了每道菜，然后根据味道逆向推导出了你的烹饪方法，自己开了一家味道几乎一样的分店。你菜谱没泄露，厨师没跳槽，但你的核心竞争力已经被人"品尝"走了。</p>
-      <img src="/post-images/attack_flow_simple.png" alt="模型窃取攻击流程" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+      <img src="/post-images/ai_brain.jpg" alt="AI大脑" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
 
       <h2>为什么推理窃取现在才成为问题？</h2>
       <p>三个趋势的交汇让推理窃取从理论变成了现实威胁：</p>
@@ -202,7 +202,7 @@ def detect_inference_theft(query_logs):
       <p>定期用已知prompt测试API的输出，同时监控是否有第三方服务返回高度相似的回复。这种"镜像检测"虽然成本较高，但对高价值模型来说值得投入。</p>
 
       <h2>防御策略：从架构到运营的全栈防护</h2>
-      <img src="/post-images/defense_mechanisms.png" alt="防御机制" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+      <img src="/post-images/security_shield.jpg" alt="网络安全" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
 
       <p>推理窃取没有银弹，但多层防御可以显著提高攻击成本：</p>
       <h3>架构层防御</h3>
