@@ -1,5 +1,17 @@
 [
   {
+    "title": "给AI Agent一张信用卡，5小时它能花出去吗",
+    "url": "/post/ai-agent-shopping-experiment",
+    "content": "波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。",
+    "date": "2026-06-01",
+    "tags": [
+      "AI",
+      "Agent",
+      "电子商务",
+      "自动化"
+    ]
+  },
+  {
     "title": "769个PR/月，AI替你Review代码：人机协同的PR审查实战指南",
     "url": "/post/ai-code-review-automation",
     "content": "当AI Review AI提交的代码成为现实，你的团队准备好了吗？深入探讨AI Code Review的工作流、系统架构和实战案例。",

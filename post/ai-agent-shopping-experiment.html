@@ -1,0 +1,357 @@
+<!--
+title: 给AI Agent一张信用卡，5小时它能花出去吗
+date: 2026-06-01
+tags: AI,Agent,电子商务,自动化,技术实验
+description: 波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<style>:root { --heatmap-color: #50fa7b; }</style>
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>给AI Agent一张信用卡，5小时它能花出去吗 | Miracle</title>
+<meta name="description" content="波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/ai-agent-shopping-experiment/">
+<meta property="og:title" content="给AI Agent一张信用卡，5小时它能花出去吗">
+<meta property="og:description" content="波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/ai-agent-shopping-experiment/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/ai-agent-shopping-experiment/">
+<meta name="twitter:title" content="给AI Agent一张信用卡，5小时它能花出去吗">
+<meta name="twitter:description" content="波兰开发者给AI Agent一张25美元虚拟卡去网购，结果5小时0笔成交。五层防御体系如何意外形成，以及Shopify/Stripe正在搭建的Agent友好型商业基础设施。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+<body class="flavor-theme">
+
+  <header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+      <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/memos">闪念</a>
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item" href="/post">博客</a>
+        <a class="nav-item" href="/archives">归档</a>
+        <a class="nav-item" href="/tags">标签</a>
+        <a class="nav-item" href="/post/about">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x1="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.02335 16.5623 7.04704 16.9529Z"></path><path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 16 16 15.5523 16 15C16 14.4477 16.4477 14 17 14H18V13C18 12.4477 18.4477 12 19 12C19.5523 12 20 12.4477 20 13V14H21C21.5523 14 22 14.4477 22 15C22 15.5523 21.5523 16 21 16H20V17C20 17.5523 19.5523 18 19 18C18.4477 18 18 17.5523 18 17V16H17C16.4477 16 16 15.5523 16 15C16 14.4477 16.4477 14 17 14H18V13C18 12.4477 18.4477 12 19 12C19.5523 12 20 12.4477 20 13V14H21C21.5523 14 22 14.4477 22 15C22 15.5523 21.5523 16 21 16H20V17C20 17.5523 19.5523 18 19 18C18.4477 18 18 17.5523 18 17V16H17C16.4477 16 16 15.5523 16 15C16 14.4477 16.4477 14 17 14H18V13"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+  applyTheme('dark', false);
+})();
+</script>
+<script>
+(function(){
+  var btn = document.getElementById('btnSearch');
+  if (btn) {
+    btn.addEventListener('click', function(){
+      document.getElementById('searchOverlay').classList.add('search-overlay--visible');
+      var input = document.getElementById('searchInput');
+      if (input) input.focus();
+    });
+  }
+  var closeBtn = document.getElementById('btnSearchClose');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(){
+      document.getElementById('searchOverlay').classList.remove('search-overlay--visible');
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') {
+      var overlay = document.getElementById('searchOverlay');
+      if (overlay) overlay.classList.remove('search-overlay--visible');
+    }
+  });
+})();
+</script>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">给AI Agent一张信用卡，5小时它能花出去吗</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-06-01</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">AI, Agent, 电子商务, 自动化</span>
+          </div>
+        </header>
+        <div class="article-content">
+
+          <p>波兰开发者 Paweł Józefiak 做了一个简单到极致的实验：给他的 AI Agent 一张 25 美元的虚拟借记卡，让它去网上买一个礼物。不限商品，不限商店，唯一的要求是——<strong>把钱花出去</strong>。</p>
+
+          <p>五小时后，Agent 逛了四家店，尝试了各种手段。结果：<strong>0 笔成交，0 美元花出去</strong>。</p>
+
+          <p>这听起来像个笑话，但它揭示了一个严肃的事实——整个互联网的商业基础设施，从诞生那天起就不是为 Agent 设计的。</p>
+
+          <h2>实验过程：从自信到崩溃</h2>
+
+          <h3>第一站：Allegro（波兰最大电商）</h3>
+
+          <p>Agent 打开 Allegro 首页，几乎在毫秒级别就被 Cloudflare 拦截了。Cloudflare 的 Bot Detection 不需要看任何内容——浏览器指纹、JavaScript 执行环境、鼠标轨迹，任何一个特征不匹配就直接拒绝。</p>
+
+          <p>这里有一个技术细节值得注意：Cloudflare 不是检测到"这个浏览器在自动化操作"，而是检测到"这个浏览器不是正常的浏览器"。无头 Chrome 再怎么伪装，它的 JavaScript 运行时环境和真实 Chrome 存在可测量的差异。就像一个人可以穿西装打领带走进商务场合，但走路的姿势、拿杯子的方式、眼神的聚焦点，都会在 3 秒内暴露他不常来。</p>
+
+          <h3>第二站：Amazon.pl（登录墙）</h3>
+
+          <p>Allegro 被封，Agent 转向 Amazon。这回它甚至没来得及看到商品列表——必须登录。Agent 尝试通过 Apple Keychain 读取保存的密码，失败。即使在 macOS 上以 root 权限运行，Keychain 的密码仍然存储在硬件安全模块（Secure Enclave）中，进程隔离保证了任何应用都无法直接读取。</p>
+
+          <p>这层防御的精妙之处在于：它不依赖软件层面的检测，而是依赖硬件层面的隔离。你没有 root 权限的问题，你有的是"密码根本不在你能接触到的地方"。</p>
+
+          <h3>第三站：Empik（两次尝试）</h3>
+
+          <p>Empik 是第一次尝试用无头浏览器进入的。Cloudflare Turnstile 专门针对无头浏览器做了特征检测，直接拦截。</p>
+
+          <p>Paweł 放弃了无头浏览器，换成真实的 Safari，让 Agent 通过真正的浏览器界面操作。这次成功了——Agent 找到了商品、填了地址、选了配送方式。一切顺利，直到支付环节。</p>
+
+          <p>支付页面用了一个 P24（波兰主流支付网关）的 iframe。Agent 尝试与 iframe 内的元素交互，但 CORS（跨源资源共享）策略阻止了一切——iframe 内的支付表单和外部页面属于不同源，浏览器的安全沙箱切断了任何跨源操作的可能。</p>
+
+          <p>Agent 在这一步卡死。它可以浏览、选择、填写一切，但<strong>最后 3 厘米的距离——点击"确认支付"——它永远够不到</strong>。</p>
+
+          <h2>五层防御体系：不是设计出来的，是长出来的</h2>
+
+          <p>这个实验最有趣的地方在于：没有任何一家公司专门为了阻止 AI Agent 购物而设计了这些机制。每一层防御都是在某个时间点为了某个其他目的被引入的：</p>
+
+          <p><strong>第一层：Bot 检测</strong>（Cloudflare/Turnstile）—— 最初是为了防爬虫和 DDoS 攻击。在 2020 年代初被大量部署，到 2024 年已经成为网站标配。</p>
+
+          <p><strong>第二层：认证墙</strong>（强制登录）—— 最初是为了用户追踪和个性化推荐。但当 Agent 不在浏览器的 Cookie 体系内时，它就成了不可逾越的障碍。</p>
+
+          <p><strong>第三层：CAPTCHA</strong>（验证码）—— 最初是为了区分人和机器。现在 Cloudflare Turnstile 甚至不需要用户手动操作，它通过浏览器环境分析来判断，这对 Agent 来说是不可破解的——你不能"表现得更像人"，因为你的操作系统就不是人。</p>
+
+          <p><strong>第四层：浏览器指纹</strong>（Fingerprint）—— 最初是广告追踪技术，用于在不依赖 Cookie 的情况下识别用户。但它同时也成为检测自动化工具的利器。</p>
+
+          <p><strong>第五层：支付隔离</strong>（iframe + CORS）—— 最初是为了安全——防止恶意脚本窃取支付信息。但在 Agent 时代，它也阻止了合法的自动化操作。</p>
+
+          <p>这五层防御各自独立，却在 Agent 面前形成了一道无法突破的墙。每多加一层安全措施，就多堵上一个 Agent 可能的突破口。</p>
+
+          <h2>正在到来的解决方案</h2>
+
+          <p>好消息是，电商巨头们已经开始正视这个问题。2025-2026 年间，几个关键基础设施正在被搭建：</p>
+
+          <h3>Shopify Agentic Storefronts</h3>
+
+          <p>Shopify 在 2025 年 10 月宣布了 Agentic Storefronts 概念，2026 冬季正式上线。核心变化：</p>
+
+          <ul>
+            <li>每个 Shopify 店铺都会有一个 MCP（Model Context Protocol）端点</li>
+            <li>产品信息直接同步到 ChatGPT、Perplexity、Copilot 等 AI 平台</li>
+            <li>Agent 可以通过 API 完成浏览、选择、下单、支付全流程</li>
+            <li>Shopify 自己的数据显示，AI 渠道带来的流量增长了 7 倍</li>
+          </ul>
+
+          <h3>Stripe Agentic Commerce Suite</h3>
+
+          <p>Stripe 在 2025 年 12 月发布了 Agentic Commerce Suite，提供 API 化的产品发现、结账和支付能力。简单说：Stripe 把"人点击按钮"的流程抽象成了"Agent 调用接口"。</p>
+
+          <h3>Universal Commerce Protocol (UCP)</h3>
+
+          <p>Google 和 Shopify 联合开发的通用商务协议，已有 20+ 零售商支持。目标是让 AI 助手能在不同零售商之间无缝比较和购买。</p>
+
+          <h3>WooCommerce 10.3</h3>
+
+          <p>开源电商系统 WooCommerce 也加入了，2025 年 11 月宣布支持 MCP。这意味着独立站也能被 Agent 访问。</p>
+
+          <h2>真正的商业机会在哪里</h2>
+
+          <p>回到"AI Agent 赚钱"这个话题。Paweł 的实验告诉我们一个残酷的现实：Agent 现在连"花别人的钱"都做不到，更别说"赚自己的钱"了。</p>
+
+          <p>但这恰恰是机会所在。</p>
+
+          <p>能被 Agent 直接访问的商业基础设施（API、MCP 端点、结构化数据）目前极度稀缺。这意味着：</p>
+
+          <ul>
+            <li><strong>谁先把服务暴露为 Agent 可调用的 API</strong>，谁就能在 Agent 经济中获得先发优势</li>
+            <li><strong>谁开发了连接 Agent 和传统电商的中间层</strong>（比如自动填表、自动支付），谁就抓住了基础设施级别的机会</li>
+            <li><strong>谁的垂直领域数据结构化程度最高</strong>，谁就是 Agent 首选的信息源和交易入口</li>
+          </ul>
+
+          <p>Shopify 已经在行动了——它的 AI 流量增长 7 倍不是因为 Agent 变聪明了，而是因为它主动把自己变成了 Agent 能访问的形状。</p>
+
+          <h2>我的实验计划</h2>
+
+          <p>读完 Paweł 的实验，我想做一个自己的版本。不是去测试"Agent 能不能购物"（他已经证明了不能），而是测试一个更实际的问题：</p>
+
+          <p><strong>一个 AI Agent 在当前条件下，到底能通过什么方式赚到第一块钱？</strong></p>
+
+          <p>我的初步方向：</p>
+
+          <ul>
+            <li><strong>写代码卖</strong>——用 Agent 生成开源工具，通过 GitHub Sponsors 或付费功能变现</li>
+            <li><strong>自动化服务</strong>——帮人做数据清洗、格式转换、API 集成这类重复性工作</li>
+            <li><strong>信息差</strong>——监控价格波动、套利机会，自动执行交易</li>
+          </ul>
+
+          <p>但核心约束不变：<strong>Agent 必须在现有的互联网基础设施内工作</strong>。我们不能假设所有平台都会变成 Agent-friendly——在可预见的未来，大多数网站仍然会把 Agent 当作机器人来防御。</p>
+
+          <h2>写在最后</h2>
+
+          <p>Paweł 实验的真正价值不在于"Agent 花不出去钱"这个结果，而在于它暴露了一个结构性问题：<strong>互联网的 25 年安全进化，无意中创造了一个 Agent 无法生存的环境</strong>。</p>
+
+          <p>每一层为人类设计的安全措施，在 Agent 面前都变成了不可逾越的墙。Web 是为人类点击按钮设计的，不是为 API 调用设计的。</p>
+
+          <p>好消息是，Shopify、Stripe、Google 已经在修建"Agent 专用通道"。坏消息是，这条通道还很窄，而且优先服务大商家。</p>
+
+          <p>对于独立开发者和小团队来说，真正的问题不是"Agent 能不能购物"，而是"在 Agent 能购物的基础设施就绪之前，我能做什么来卡位"。</p>
+
+          <p>这可能是 2026 年最值得关注的基础设施赛道之一。</p>
+
+          <p><em>参考来源：Paweł Józefiak 实验（via HN）；Shopify Agentic Storefronts；Stripe Agentic Commerce Suite；Universal Commerce Protocol；WooCommerce 10.3 MCP 支持</em></p>
+
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/AI/" class="tag-link">AI</a>
+          <a href="/tags/Agent/" class="tag-link">Agent</a>
+          <a href="/tags/电子商务/" class="tag-link">电子商务</a>
+          <a href="/tags/自动化/" class="tag-link">自动化</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-content">
+        <p>&copy; 2026 Miracle · Powered by <a href="https://github.com/valibui/miracle" target="_blank" rel="noopener">Miracle 1.1.1</a></p>
+        <p class="footer-links">
+          <a href="https://github.com/miraclestar-w" target="_blank" rel="noopener">GitHub</a>
+          <span class="footer-sep">·</span>
+          <a href="/feed.xml">RSS</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-overlay__inner">
+      <div class="search-overlay__header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-overlay__input" placeholder="搜索文章..." autocomplete="off">
+        <button class="search-overlay__close" id="btnSearchClose" type="button" aria-label="关闭搜索">✕</button>
+      </div>
+      <div class="search-overlay__results" id="searchResults"></div>
+    </div>
+  </div>
+  <script>
+(function(){
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  if (!input || !results) return;
+  var data = null;
+  var loadSearchData = function(cb) {
+    if (data) { cb(data); return; }
+    fetch('/api/search.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ data = d; cb(d); })
+      .catch(function(){});
+  };
+  input.addEventListener('input', function(){
+    var q = input.value.trim().toLowerCase();
+    if (q.length < 2) { results.innerHTML = ''; return; }
+    loadSearchData(function(d){
+      var hits = d.filter(function(item){
+        return (item.title && item.title.toLowerCase().indexOf(q) !== -1) ||
+               (item.content && item.content.toLowerCase().indexOf(q) !== -1) ||
+               (item.tags && item.tags.join(' ').toLowerCase().indexOf(q) !== -1);
+      }).slice(0, 10);
+      if (hits.length === 0) {
+        results.innerHTML = '<div class="search-overlay__empty">没有找到相关文章</div>';
+        return;
+      }
+      results.innerHTML = hits.map(function(h){
+        return '<a href="' + h.url + '" class="search-overlay__item">' +
+          '<div class="search-overlay__item-title">' + (h.title || '') + '</div>' +
+          '<div class="search-overlay__item-date">' + (h.date || '') + '</div>' +
+        '</a>';
+      }).join('');
+    });
+  });
+})();
+</script>
+</body>
+</html>
