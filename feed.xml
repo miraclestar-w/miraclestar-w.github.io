@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 31 May 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>113亿美元估值背后：OpenRouter如何用模型路由重塑AI基础设施</title>
+      <link>https://miraclestar-w.github.io/post/openrouter-113m-series-b/</link>
+      <description>OpenRouter完成$113M Series B融资，从LLM代理到AI基础设施平台的跃迁。深入拆解模型路由的技术架构、商业模式和行业影响。</description>
+      <pubDate>Tue, 02 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/openrouter-113m-series-b/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>Meta的AI客服搞砸了：从Instagram账号接管事件看Agent安全防护</title>
       <link>https://miraclestar-w.github.io/post/meta-ai-agent-guardrails/</link>
       <description>Meta的AI客服被prompt injection攻破，导致大量Instagram账号被接管。从这起事件出发，聊聊AI Agent的权限失控问题和实战防护方案。</description>

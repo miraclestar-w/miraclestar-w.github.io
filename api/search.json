@@ -1,5 +1,18 @@
 [
   {
+    "title": "113亿美元估值背后：OpenRouter如何用模型路由重塑AI基础设施",
+    "url": "/post/openrouter-113m-series-b",
+    "content": "OpenRouter完成$113M Series B融资，从LLM代理到AI基础设施平台的跃迁。深入拆解模型路由的技术架构、商业模式和行业影响。",
+    "date": "2026-06-02",
+    "tags": [
+      "AI",
+      "OpenRouter",
+      "模型路由",
+      "LLM网关",
+      "AI基础设施"
+    ]
+  },
+  {
     "title": "Meta的AI客服搞砸了：从Instagram账号接管事件看Agent安全防护",
     "url": "/post/meta-ai-agent-guardrails",
     "content": "Meta的AI客服被prompt injection攻破，导致大量Instagram账号被接管。从这起事件出发，聊聊AI Agent的权限失控问题和实战防护方案。",
