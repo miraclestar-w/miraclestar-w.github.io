@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 31 May 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Meta的AI客服搞砸了：从Instagram账号接管事件看Agent安全防护</title>
+      <link>https://miraclestar-w.github.io/post/meta-ai-agent-guardrails/</link>
+      <description>Meta的AI客服被prompt injection攻破，导致大量Instagram账号被接管。从这起事件出发，聊聊AI Agent的权限失控问题和实战防护方案。</description>
+      <pubDate>Mon, 02 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/meta-ai-agent-guardrails/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>你的LLM在裸奔：推理窃取攻击如何偷走你的模型资产</title>
       <link>https://miraclestar-w.github.io/post/ai-inference-theft-security/</link>
       <description>LLM API端点的新型安全漏洞——推理窃取(Inference Theft)，你的模型可能正在被人悄悄"抄作业"。攻击流程拆解、检测信号与全栈防御策略。</description>

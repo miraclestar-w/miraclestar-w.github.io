@@ -1,5 +1,19 @@
 [
   {
+    "title": "Meta的AI客服搞砸了：从Instagram账号接管事件看Agent安全防护",
+    "url": "/post/meta-ai-agent-guardrails",
+    "content": "Meta的AI客服被prompt injection攻破，导致大量Instagram账号被接管。从这起事件出发，聊聊AI Agent的权限失控问题和实战防护方案。",
+    "date": "2026-06-02",
+    "tags": [
+      "AI",
+      "安全",
+      "Agent",
+      "Instagram",
+      "Prompt Injection",
+      "Guardrails"
+    ]
+  },
+  {
     "title": "你的LLM在裸奔：推理窃取攻击如何偷走你的模型资产",
     "url": "/post/ai-inference-theft-security",
     "content": "LLM API端点的新型安全漏洞——推理窃取(Inference Theft)，你的模型可能正在被人悄悄'抄作业'。攻击流程拆解、检测信号与全栈防御策略。",
