@@ -1,5 +1,18 @@
 [
   {
+    "title": "Agent记忆系统正在标准化：从私有方案到记忆OS的演进之路",
+    "url": "/post/ai-agent-memory-standardization",
+    "content": "Agent记忆正在从「每个框架各搞一套」走向标准化。Mnemosyne等项目提出了零LLM调用的记忆OS概念，这可能彻底改变Agent的上下文管理方式。",
+    "date": "2026-06-04",
+    "tags": [
+      "AI Agent",
+      "记忆系统",
+      "Mnemosyne",
+      "Agent架构",
+      "标准化"
+    ]
+  },
+  {
     "title": "GitHub热榜精选：5个值得关注的开源项目（2026.06.03）",
     "url": "/post/github-trending-daily-20260603",
     "content": "Trendshift热榜精选，今日5个值得关注的开源项目——自托管AI工作区、Agent记忆层、编码工作流、桌面Agent和GPU交换空间。",
