@@ -1,5 +1,12 @@
 [
   {
+    "title": "声波也能黑电脑：用扬声器突破物理隔离的安全漏洞深度解析",
+    "url": "/post/pwnd-blaster-acoustic-badusb-attack/",
+    "date": "2026-06-04",
+    "tags": "安全, 侧信道攻击, 运维",
+    "excerpt": "攻击者通过电脑扬声器向麦克风发送恶意指令。USENIX Security 2026论文+开源工具链深度拆解，含防御实战指南。"
+  },
+  {
     "title": "GitHub热榜精选：AI交易Agent、爬虫框架、代码知识图谱……这5个项目值得关注",
     "url": "/post/trendshift-日报",
     "content": "Trendshift每日热榜精选，5个值得关注的开源项目：Vibe-Trading AI交易Agent、Scrapling自适应爬虫、CodeGraph代码知识图谱、OpenCut开源视频编辑、SuperMemory AI记忆引擎。",
