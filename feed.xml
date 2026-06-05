@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 04 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 05 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>用eBPF透视AI Agent到底在干啥：AgentSight实战指南</title>
+      <link>https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/</link>
+      <description>现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。</description>
+      <pubDate>Thu, 05 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>GitHub热榜精选：AI交易Agent、爬虫框架、代码知识图谱……这5个项目值得关注</title>
       <link>https://miraclestar-w.github.io/post/trendshift-日报/</link>

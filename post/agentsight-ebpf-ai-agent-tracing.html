@@ -1,0 +1,241 @@
+<!--
+title: 用eBPF透视AI Agent到底在干啥：AgentSight实战指南
+date: 2026-06-05
+tags: eBPF,AI Agent,可观测性,运维,安全
+description: 现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>用eBPF透视AI Agent到底在干啥：AgentSight实战指南 | Miracle</title>
+<meta name="description" content="现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/">
+<meta property="og:title" content="用eBPF透视AI Agent到底在干啥：AgentSight实战指南">
+<meta property="og:description" content="现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/">
+<meta name="twitter:title" content="用eBPF透视AI Agent到底在干啥：AgentSight实战指南">
+<meta name="twitter:description" content="现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">用eBPF透视AI Agent到底在干啥：AgentSight实战指南</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-05</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">eBPF, AI Agent, 可观测性, 运维, 安全</span>
+      </div>
+    </header>
+    <div class="article-content">
+      <blockquote><p>"你的AI Agent说它在帮你写代码，但它偷偷跑了多少个子进程、访问了哪些文件、调了几次API——你根本不知道。"</p></blockquote>
+
+      <p>2026年，AI Agent已经从"演示Demo"变成了生产工具。Claude Code、Gemini CLI、OpenCode……这些工具每天在你的机器上跑着，执行着你下达的指令。但有一个问题一直被忽视：<strong>你对Agent在系统层面到底做了什么，几乎一无所知。</strong></p>
+
+      <p>现有的可观测性工具（LangSmith、Langfuse、Phoenix）做得不错，但它们有个致命盲区——它们只能看到Agent"想做什么"（LLM的prompt和response），却看不到Agent"实际做了什么"（进程创建、文件读写、网络请求）。</p>
+
+      <p>这就是AgentSight要解决的问题。一个用eBPF在内核层面零侵入追踪AI Agent系统行为的开源项目，GitHub 382星，附带arXiv论文（PACMI 2025）。今天我们来拆解它。</p>
+
+      <img src="/post-images/agentsight-01-server-room.jpg" alt="数据中心服务器" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+
+      <h2>一、为什么需要系统级Agent监控？</h2>
+
+      <h3>1.1 传统可观测性工具的局限</h3>
+      <p>LangSmith、Langfuse这类应用级工具，它们的工作原理是在Agent代码里插桩——通过SDK回调、callback函数等方式，收集LLM调用的trace数据。</p>
+      <p>这对自有代码的Agent框架（比如你用LangChain搭的Agent）很管用。但现实是：</p>
+      <ul>
+        <li><strong>闭源CLI Agent越来越多</strong>。Claude Code、Gemini CLI、Codex——这些工具你拿不到源码，没法插桩。你只能看到它输出的结果，中间发生了什么完全是黑盒。</li>
+        <li><strong>Agent会绕过你的监控</strong>。Agent执行任务时会创建子进程、调用系统命令、读写文件。这些操作发生在操作系统层面，不在应用层的trace范围内。</li>
+        <li><strong>日志不可信</strong>。Agent自己生成的日志可以被修改、禁用、甚至伪造。你需要一个独立于Agent本身的监控层。</li>
+      </ul>
+
+      <h3>1.2 AgentSight的核心思路：从外部观察</h3>
+      <p>AgentSight的方法论很简单：<strong>不在Agent内部插桩，而是在系统外部观察。</strong></p>
+      <p>它利用eBPF（扩展伯克利包过滤器）技术，在Linux内核层面拦截系统调用。就像在Agent的"必经之路"上装了摄像头——不管Agent怎么跑、跑什么框架、是不是闭源的，只要它在Linux上执行，就一定经过内核，就一定被AgentSight看到。</p>
+      <p>更巧妙的是，它还拦截了TLS加密的LLM API流量，在SSL/TLS调用边界提取明文prompt和response。这样就把"Agent想做什么"（LLM语义）和"Agent实际做了什么"（系统行为）关联起来了。</p>
+
+      <h2>二、技术架构：AgentSight是怎么工作的</h2>
+
+      <h3>2.1 三大核心能力</h3>
+      <p><strong>第一层：系统调用追踪</strong></p>
+      <p>通过eBPF挂载到内核的关键系统调用上（如<code>execve</code>、<code>openat</code>、<code>connect</code>等），实时捕获：进程和子进程的创建、执行、退出；文件的创建、写入、重命名、删除；网络连接的目标地址和端口；每个操作的cwd、argv、退出状态、耗时。</p>
+      <p>这些数据完全独立于Agent本身——即使Agent是闭源的、没有日志、甚至故意隐藏行为，eBPF在内核层面依然能看到。</p>
+
+      <p><strong>第二层：TLS流量解密</strong></p>
+      <p>这是AgentSight最"暴力"的地方。它在SSL/TLS库的函数入口点（如<code>SSL_write</code>、<code>SSL_read</code>）设置eBPF探针，在数据加密前/解密后拦截明文内容。Agent发给OpenAI、Anthropic、Google的每一个API请求和响应，AgentSight都能拿到完整的明文。</p>
+      <p>支持的SSL库包括OpenSSL、BoringSSL、NSS，覆盖了绝大多数Node.js、Python、Go工具的加密实现。</p>
+
+      <p><strong>第三层：跨边界关联</strong></p>
+      <p>前两层拿到的数据是独立的。AgentSight的实时引擎把它们关联起来：某个LLM请求触发了哪个子进程？那个子进程读了哪些文件？文件操作和网络请求之间有什么因果关系？最终生成一个完整的"Agent行为链"：prompt → LLM调用 → tool决策 → 系统操作 → 结果反馈。</p>
+
+      <h3>2.2 性能开销</h3>
+      <p>论文中的评估数据：<strong>CPU开销低于3%</strong>。eBPF程序在内核中运行，不需要在用户态和内核态之间频繁切换数据，所以开销极低。</p>
+
+      <h3>2.3 支持的Agent</h3>
+      <ul>
+        <li><strong>Claude Code</strong>：<code>sudo agentsight record -- claude</code></li>
+        <li><strong>Gemini CLI</strong>：<code>sudo agentsight record -- gemini</code></li>
+        <li><strong>Python工具(aider等)</strong>：<code>sudo agentsight record -c python</code></li>
+        <li><strong>Docker容器</strong>：<code>sudo agentsight record --binary-path docker://openclaw</code></li>
+        <li><strong>任意命令</strong>：<code>sudo agentsight record -- &lt;command&gt;</code></li>
+      </ul>
+      <p>关键点：<strong>不需要Agent做任何适配</strong>。只要它在Linux上跑，AgentSight就能监控。</p>
+
+      <img src="/post-images/agentsight-02-code.jpg" alt="代码终端" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+
+      <h2>三、实战：安装和使用AgentSight</h2>
+
+      <h3>3.1 安装</h3>
+      <p>AgentSight用Rust编写，有两种安装方式：</p>
+      <p><strong>方式一：Cargo安装（推荐）</strong></p>
+      <pre><code>cargo install agentsight</code></pre>
+      <p><strong>方式二：下载预编译二进制</strong></p>
+      <pre><code>wget https://github.com/eunomia-bpf/agentsight/releases/latest/download/agentsight
+chmod +x agentsight</code></pre>
+      <p><strong>系统要求：</strong>Linux内核4.1+（推荐5.0+）、root权限或<code>CAP_BPF</code>/<code>CAP_SYS_ADMIN</code>能力、eBPF支持已启用。</p>
+
+      <h3>3.2 最简单的用法：top模式</h3>
+      <pre><code>sudo agentsight top</code></pre>
+      <p>这会启动一个类似<code>htop</code>的实时监控界面，但专门针对AI Agent优化。你会看到：当前活跃的Agent会话、每个会话的模型、token用量、健康状态、进程家族树、工具调用次数、文件活动、网络活动。</p>
+      <p><strong>如果你只是想快速看看你的Agent在干什么，<code>top</code>模式就够了。</strong></p>
+
+      <h3>3.3 录制模式：完整追踪</h3>
+      <pre><code>sudo agentsight record -- claude</code></pre>
+      <p>这会启动Claude Code，同时录制所有系统行为。录制完成后，数据自动保存到SQLite数据库。</p>
+      <p>录制完成后可以用各种命令查询：</p>
+      <pre><code># 查看会话摘要
+agentsight report
+
+# 查看所有录制的会话
+agentsight report list
+
+# 查看完整的LLM请求/响应
+agentsight report prompts --json
+
+# 查看token用量
+agentsight report token
+
+# 查看审计日志
+agentsight report audit --json
+
+# 导出为JSON供Web界面使用
+agentsight report export -o snapshot.json</code></pre>
+
+      <h3>3.4 Web界面</h3>
+      <p>录制过程中或录制完成后，可以启动Web界面访问<code>http://127.0.0.1:7395</code>，提供四个视图：</p>
+      <ul>
+        <li><strong>Timeline</strong>：时间线视图，LLM调用、进程事件、文件操作、网络请求在同一条时间轴上展示</li>
+        <li><strong>Process Tree</strong>：进程树可视化，清晰展示Agent创建的子进程层级</li>
+        <li><strong>Event Log</strong>：事件日志，按时间排列的所有系统事件</li>
+        <li><strong>Metrics</strong>：指标视图，内存和CPU使用情况</li>
+      </ul>
+
+      <h3>3.5 OpenTelemetry导出</h3>
+      <pre><code>sudo agentsight debug trace --otel --otel-endpoint http://localhost:4318</code></pre>
+      <p>可以把AgentSight的数据接入Grafana、Jaeger、Datadog等现有可观测性平台。</p>
+
+      <img src="/post-images/agentsight-03-data-flow.jpg" alt="数据流" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+
+      <h2>四、能发现什么问题？</h2>
+
+      <h3>4.1 检测Prompt注入攻击</h3>
+      <p>Prompt注入是AI Agent面临的最大安全威胁之一。AgentSight天然具备检测能力——它同时捕获了LLM的输入输出和Agent的系统行为。如果一个Agent在读取一个文件后，突然开始执行与用户指令无关的命令，AgentSight可以自动标记这种异常行为。</p>
+
+      <h3>4.2 发现资源浪费的推理循环</h3>
+      <p>LLM Agent有时候会陷入"死循环"——反复调用同一个工具、反复重试失败的操作。AgentSight的审计日志可以清晰地展示这种模式：相同的API调用反复出现、相同的文件被反复读写、进程运行时间远超正常范围。</p>
+
+      <h3>4.3 揭示多Agent系统的协调瓶颈</h3>
+      <p>当多个Agent协同工作时，AgentSight可以追踪跨进程的事件流，展示：哪个Agent在等待另一个Agent的响应、哪些资源被多个Agent竞争访问、进程间通信的延迟分布。</p>
+
+      <h3>4.4 真实案例：Claude Code的行为分析</h3>
+      <p>用AgentSight录制一个Claude Code会话后，你可能会发现：</p>
+      <ul>
+        <li>Claude Code在执行<code>npm install</code>时创建了3个子进程</li>
+        <li>某次文件编辑操作实际修改了5个文件（而不是用户要求的1个）</li>
+        <li>每次API调用的token用量在不同任务间差异巨大</li>
+        <li>某些"简单"操作（如查找文件）竟然触发了网络请求</li>
+      </ul>
+
+      <img src="/post-images/agentsight-04-monitor.jpg" alt="系统监控" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+
+      <h2>五、与现有工具的对比</h2>
+      <ul>
+        <li><strong>LangSmith/Langfuse</strong>：需要SDK集成、不支持闭源CLI、不追踪系统行为、框架内关联</li>
+        <li><strong>Helicone</strong>：需要代理路由、部分支持闭源CLI、不追踪系统行为、代理层关联</li>
+        <li><strong>AgentSight</strong>：零侵入、支持任意Agent、eBPF追踪系统行为、内核级关联</li>
+      </ul>
+      <p><strong>关键区别：</strong>AgentSight不是LangSmith的竞品，而是互补。LangSmith做的是"应用层trace"，AgentSight做的是"系统层trace"。最理想的方案是两者结合。</p>
+
+      <h2>六、局限性和注意事项</h2>
+      <ul>
+        <li><strong>仅支持Linux</strong>。eBPF是Linux特有的技术，macOS和Windows不支持。</li>
+        <li><strong>需要root权限</strong>。eBPF探针需要内核级权限，可能涉及安全策略的调整。</li>
+        <li><strong>SSL拦截有例外</strong>。静态链接SSL库的应用需要特殊处理，大多数情况<code>record</code>命令会自动处理。</li>
+        <li><strong>数据敏感性</strong>。AgentSight会捕获完整的prompt、response、文件路径、网络目标，确保录制数据的存储和访问受到适当保护。</li>
+      </ul>
+
+      <h2>七、对运维工程师的启示</h2>
+      <p>AgentSight代表了一个新方向：<strong>AI Agent的可观测性正在从应用层向系统层扩展。</strong></p>
+      <p>几个行动建议：</p>
+      <ol>
+        <li><strong>在开发环境试用AgentSight</strong>。用<code>record</code>模式录制你的日常工作会话，看看Agent到底在背后做了什么。</li>
+        <li><strong>评估团队的Agent使用情况</strong>。如果团队已经在用Claude Code或其他AI工具，考虑部署AgentSight进行系统级审计。</li>
+        <li><strong>关注eBPF生态的发展</strong>。eBPF正在成为云原生时代的"瑞士军刀"，应用场景在快速扩展。</li>
+        <li><strong>建立Agent行为基线</strong>。用AgentSight录制正常工作流，建立"正常行为"的基线，偏离时及时告警。</li>
+      </ol>
+
+      <h2>总结</h2>
+      <blockquote><p>AgentSight的核心价值是：在AI Agent和操作系统之间架起了一座透明的桥梁。</p></blockquote>
+      <p>今天我们学到的：</p>
+      <ol>
+        <li><strong>问题本质</strong>：现有可观测性工具只能看到Agent的"意图"，看不到Agent的"行为"，这个语义鸿沟是安全和调试的盲区</li>
+        <li><strong>技术方案</strong>：eBPF在内核层面零侵入追踪，TLS拦截捕获LLM明文流量，实时引擎跨边界关联</li>
+        <li><strong>实战价值</strong>：检测prompt注入、发现推理循环瓶颈、审计多Agent协调、量化token消耗</li>
+        <li><strong>定位</strong>：不是LangSmith的替代品，而是互补——应用层trace + 系统层trace = 完整的Agent可观测性</li>
+      </ol>
+      <p>AI Agent正在变得越来越自主、越来越强大。但越自主的系统，越需要独立的监控。AgentSight给了我们一个从内核层面审视Agent行为的视角——这可能是AI安全领域最重要的基础设施之一。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：AgentSight GitHub · arXiv:2508.02736 · PACMI 2025 · Live Demo: agentsight.us</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>

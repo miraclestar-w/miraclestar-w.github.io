@@ -1,5 +1,12 @@
 [
   {
+    "title": "用eBPF透视AI Agent到底在干啥：AgentSight实战指南",
+    "url": "/post/agentsight-ebpf-ai-agent-tracing/",
+    "date": "2026-06-05",
+    "tags": "eBPF, AI Agent, 可观测性, 运维, 安全",
+    "excerpt": "现有可观测性工具只能看到Agent的意图，看不到Agent的行为。AgentSight用eBPF在内核层面零侵入追踪AI Agent的系统行为。"
+  },
+  {
     "title": "声波也能黑电脑：用扬声器突破物理隔离的安全漏洞深度解析",
     "url": "/post/pwnd-blaster-acoustic-badusb-attack/",
     "date": "2026-06-04",
