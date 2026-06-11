@@ -56,7 +56,7 @@ description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开�
     </header>
     <div class="article-content">
 
-      <img src="/post-images/claude-desktop-hero.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Desktop Hyper-V 问题">
+      <img src="/post-images/claude-desktop-github-issue.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="GitHub Issue #29045: Claude Desktop spawns 1.8GB VM">
 
       <p>有个Windows用户发现了一件怪事。他的笔记本16GB内存，什么都没干，光打开Claude Desktop就占了62%的内存。打开任务管理器一看，一个叫Vmmem的进程默默吃掉了1.8GB。</p>
 
@@ -64,7 +64,7 @@ description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开�
 
       <h2>一台聊天软件为什么要开虚拟机</h2>
 
-      <img src="/post-images/claude-desktop-laptop.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="开发者笔记本">
+      <img src="/post-images/claude-desktop-interface.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Official Interface">
 
       <p>事情发生在2026年2月底。一个用Razer Blade 15的开发者在GitHub上提了个bug报告，标题直白得吓人：<strong>Claude Desktop spawns 1.8 GB Hyper-V VM on every launch, even for chat-only use</strong>。</p>
 
@@ -74,7 +74,7 @@ description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开�
 
       <p>每次启动应用，Claude Desktop会通过一个RPC接口事件触发Windows的vmcompute服务，然后vmwp.exe进程就蹦出来了，带着一个1.8GB的虚拟机。哪怕用户只想聊天，根本没碰过什么Cowork模式或者agent模式，这个虚拟机照样启动。</p>
 
-      <img src="/post-images/claude-desktop-architecture.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Desktop 虚拟机启动流程图">
+      <img src="/post-images/claude-desktop-github-issue.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="GitHub Issue Detail">
 
       <p>更离谱的是Hyper-V管理日志里一直在报错：</p>
 
@@ -84,7 +84,7 @@ description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开�
 
       <h2>2689个幽灵会话</h2>
 
-      <img src="/post-images/claude-desktop-memory.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="内存芯片">
+      <img src="/post-images/claude-desktop-logo.svg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Logo">
 
       <p>这个开发者用PowerShell做了一轮诊断，发现了一些更奇怪的东西。</p>
 
@@ -98,7 +98,7 @@ description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开�
 
       <h2>一个不必要却无法关闭的功能</h2>
 
-      <img src="/post-images/claude-desktop-vm.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="数据中心服务器">
+      <img src="/post-images/claude-desktop-github-issue.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="GitHub Issue Discussion">
 
       <p>Claude Desktop的聊天功能和这个虚拟机没有任何关系。虚拟机是用来支持Cowork和agent模式的，这些功能需要在本地跑代码、操作文件，所以需要一个沙盒环境。但如果你只是想跟Claude聊天，这些东西完全用不上。</p>
 
