@@ -127,6 +127,90 @@
     ]
   },
   {
+    "title": "Raspberry Pi 6来了：AI边缘计算的新硬件机遇",
+    "url": "/post/raspberry-pi-6-ai/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "Raspberry Pi 6来了：AI边缘计算的新硬件机遇"
+  },
+  {
+    "title": "Agent编排平台ruflo：Claude多Agent协作的最佳实践",
+    "url": "/post/ruflo-multi-agent/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "Agent编排平台ruflo：Claude多Agent协作的最佳实践"
+  },
+  {
+    "title": "MCP生态全面爆发：Microsoft官方MCP Server发布，AI Agent工具链成熟",
+    "url": "/post/mcp-ecosystem/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "MCP生态全面爆发：Microsoft官方MCP Server发布，AI Agent工具链成熟"
+  },
+  {
+    "title": "RPA+AI Agent实战：讯飞astron-rpa让个人开发者也能做自动化",
+    "url": "/post/xunfei-astron-rpa/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "RPA+AI Agent实战：讯飞astron-rpa让个人开发者也能做自动化"
+  },
+  {
+    "title": "Anthropic发布Claude Opus 4.8：AI模型再进化，开发者如何抓住新机遇",
+    "url": "/post/claude-opus-4-8/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "Anthropic发布Claude Opus 4.8：AI模型再进化，开发者如何抓住新机遇"
+  },
+  {
+    "title": "自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent",
+    "url": "/post/moltis-rust-agent/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "自托管AI代理基础设施：moltis如何用Rust打造安全持久的个人Agent"
+  },
+  {
+    "title": "Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎",
+    "url": "/post/postgres-workflow/",
+    "date": "2026-05-29",
+    "tags": "PostgreSQL, 数据库",
+    "excerpt": "Postgres不只是数据库：用PostgreSQL构建持久化工作流引擎"
+  },
+  {
+    "title": "从零构建AI DevOps工具链：免费课程AI Dev Tools Zoomcamp",
+    "url": "/post/ai-dev-tools-zoomcamp/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "从零构建AI DevOps工具链：免费课程AI Dev Tools Zoomcamp"
+  },
+  {
+    "title": "Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析",
+    "url": "/post/karpathy-autoresearch/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "Karpathy的autoresearch：单GPU实现AI自动研究，开源前沿项目解析"
+  },
+  {
+    "title": "浏览器自动化新选择：vercel-labs/agent-browser让AI Agent操控浏览器",
+    "url": "/post/agent-browser-vercel/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "浏览器自动化新选择：vercel-labs/agent-browser让AI Agent操控浏览器"
+  },
+  {
+    "title": "AI Agent权限疲劳：当Agent拥有太多自主权会怎样？",
+    "url": "/post/agent-permission-fatigue/",
+    "date": "2026-05-29",
+    "tags": "AI, Agent",
+    "excerpt": "AI Agent权限疲劳：当Agent拥有太多自主权会怎样？"
+  },
+  {
+    "title": "Proxmox+GitOps：用代码管理虚拟化基础设施的自动化框架",
+    "url": "/post/proxmox-gitops/",
+    "date": "2026-05-29",
+    "tags": "Proxmox, 虚拟化",
+    "excerpt": "Proxmox+GitOps：用代码管理虚拟化基础设施的自动化框架"
+  },
+  {
     "title": "AI Agent自动化运维实践",
     "url": "https://miraclestar-w.github.io/post/ai-agent-ops-automation/",
     "content": "深入探讨AI Agent在服务器自动化运维中的实际应用，包括故障自愈、智能告警、自动化巡检等核心场景，帮助运维团队迈向AIOps。",
