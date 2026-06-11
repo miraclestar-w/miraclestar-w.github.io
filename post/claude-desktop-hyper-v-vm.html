@@ -1,0 +1,147 @@
+<!--
+title: Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用
+date: 2026-06-11
+tags: Claude,Anthropic,Hyper-V,Windows,内存泄漏,桌面应用
+description: 一个Windows用户发现Claude Desktop每次启动都会偷偷开一个1.8GB的Hyper-V虚拟机，删了2689个幽灵会话文件也没用，Anthropic至今未回应。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用 | Miracle</title>
+<meta name="description" content="一个Windows用户发现Claude Desktop每次启动都会偷偷开一个1.8GB的Hyper-V虚拟机，删了2689个幽灵会话文件也没用，Anthropic至今未回应。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/">
+<meta property="og:title" content="Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用">
+<meta property="og:description" content="一个Windows用户发现Claude Desktop每次启动都会偷偷开一个1.8GB的Hyper-V虚拟机，删了2689个幽灵会话文件也没用，Anthropic至今未回应。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/">
+<meta name="twitter:title" content="Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用">
+<meta name="twitter:description" content="一个Windows用户发现Claude Desktop每次启动都会偷偷开一个1.8GB的Hyper-V虚拟机，删了2689个幽灵会话文件也没用，Anthropic至今未回应。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-11</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Claude, Anthropic, Hyper-V, Windows, 内存泄漏</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/claude-desktop-hero.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Desktop Hyper-V 问题">
+
+      <p>有个Windows用户发现了一件怪事。他的笔记本16GB内存，什么都没干，光打开Claude Desktop就占了62%的内存。打开任务管理器一看，一个叫Vmmem的进程默默吃掉了1.8GB。</p>
+
+      <p>这不是什么服务器端的问题。这是Anthropic的桌面客户端，一个聊天软件，在本地偷偷开了一个完整的虚拟机。</p>
+
+      <h2>一台聊天软件为什么要开虚拟机</h2>
+
+      <img src="/post-images/claude-desktop-laptop.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="开发者笔记本">
+
+      <p>事情发生在2026年2月底。一个用Razer Blade 15的开发者在GitHub上提了个bug报告，标题直白得吓人：<strong>Claude Desktop spawns 1.8 GB Hyper-V VM on every launch, even for chat-only use</strong>。</p>
+
+      <p>他的环境很干净。Windows 11 Pro，Hyper-V没装，Docker没装，WSL没装，Windows Sandbox也关了。唯一开着的是VirtualMachinePlatform——这个功能是Windows用来支持WSL2和一些虚拟化特性的，平时不声不响，大多数用户根本不知道它的存在。</p>
+
+      <p>问题是，Claude Desktop用上了它。</p>
+
+      <p>每次启动应用，Claude Desktop会通过一个RPC接口事件触发Windows的vmcompute服务，然后vmwp.exe进程就蹦出来了，带着一个1.8GB的虚拟机。哪怕用户只想聊天，根本没碰过什么Cowork模式或者agent模式，这个虚拟机照样启动。</p>
+
+      <img src="/post-images/claude-desktop-architecture.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Claude Desktop 虚拟机启动流程图">
+
+      <p>更离谱的是Hyper-V管理日志里一直在报错：</p>
+
+      <blockquote><p>The specified property query is invalid: The virtual machine or container JSON document is invalid. (0xC037010D, 'Invalid JSON document '$'')</p></blockquote>
+
+      <p>这个错误从2026年2月19号就开始了，每次开机、每次启动应用都会触发。虚拟机起来了，但它好像并不知道自己该干什么。</p>
+
+      <h2>2689个幽灵会话</h2>
+
+      <img src="/post-images/claude-desktop-memory.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="内存芯片">
+
+      <p>这个开发者用PowerShell做了一轮诊断，发现了一些更奇怪的东西。</p>
+
+      <p>在 <code>%APPDATA%\Claude\local-agent-mode-sessions\</code> 目录下，躺着2689个会话文件。文件名都是Docker风格的随机命名——nifty-dreamy-volta、tender-vigilant-goodall、admiring-elegant-johnson——全是之前Cowork会话留下来的垃圾。没有被清理过。</p>
+
+      <p>他把这2689个文件全删了，杀掉了vmcompute和vmwp进程，然后重新打开Claude Desktop。</p>
+
+      <p>虚拟机又回来了。1.8GB的Vmmem进程重新出现在任务管理器里，好像什么都没发生过。</p>
+
+      <p>在一台16GB的笔记本上，光是这一个进程就让内存占用从50%飙到62%。再加上Chrome、IDE这些日常应用，总占用轻松到70%-75%。机器明显变卡。</p>
+
+      <h2>一个不必要却无法关闭的功能</h2>
+
+      <img src="/post-images/claude-desktop-vm.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="数据中心服务器">
+
+      <p>Claude Desktop的聊天功能和这个虚拟机没有任何关系。虚拟机是用来支持Cowork和agent模式的，这些功能需要在本地跑代码、操作文件，所以需要一个沙盒环境。但如果你只是想跟Claude聊天，这些东西完全用不上。</p>
+
+      <p>Claude Desktop的做法是：不管你用不用，我先给你开好。宁可错杀，不可放过。</p>
+
+      <p>用户在issue里列了三条期望：</p>
+      <ul>
+        <li>聊天模式不要启动虚拟机</li>
+        <li>Cowork基础设施应该按需初始化，用的时候再开</li>
+        <li>旧会话文件应该自动清理</li>
+      </ul>
+
+      <p>目前唯一的解决办法是关掉VirtualMachinePlatform。但关掉之后，Cowork功能也就废了。或者每次启动后手动杀进程——但聊天功能其实不需要这些进程，杀掉之后聊天照常工作。</p>
+
+      <p>这个issue在Hacker News上拿了348分、243条评论。很多人觉得不可思议：一个聊天客户端而已，至于吗？</p>
+
+      <h2>Anthropic还没回应</h2>
+
+      <p>到2026年2月底这个issue被提交的时候，Anthropic还没有给出官方回复。用户只能用PowerShell脚本每次启动后手动清理：</p>
+
+<pre><code>Stop-Process -Name vmwp -Force
+Stop-Process -Name vmcompute -Force</code></pre>
+
+      <p>每次重启电脑或者重新打开应用，都得再来一遍。</p>
+
+      <p>对于一个标榜"agentic AI"的公司来说，这个bug暴露的问题不小：你的桌面客户端在用户不知情的情况下，调动了操作系统级别的虚拟化资源，占用了大量内存，留下了几千个垃圾文件，而且用户关不掉。</p>
+
+      <p>Claude的聊天界面很干净，反应也很快。但任务管理器里那个1.8GB的Vmmem进程一直在那儿，0% CPU，1800MB内存，安安静静，等着你发现它。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：GitHub Issue #xxx · Claude Desktop for Windows · Hacker News 讨论</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>

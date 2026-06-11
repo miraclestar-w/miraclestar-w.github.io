@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 05 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用</title>
+      <link>https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/</link>
+      <description>Windows用户发现Claude Desktop每次启动偷偷开1.8GB Hyper-V虚拟机，删了2689个幽灵会话也没用，Anthropic至今未回应。</description>
+      <pubDate>Thu, 11 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>用eBPF透视AI Agent到底在干啥：AgentSight实战指南</title>
       <link>https://miraclestar-w.github.io/post/agentsight-ebpf-ai-agent-tracing/</link>

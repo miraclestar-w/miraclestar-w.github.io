@@ -1,5 +1,12 @@
 [
   {
+    "title": "Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用",
+    "url": "/post/claude-desktop-hyper-v-vm/",
+    "date": "2026-06-11",
+    "tags": "Claude, Anthropic, Hyper-V, Windows, 内存泄漏, 桌面应用",
+    "excerpt": "Windows用户发现Claude Desktop每次启动偷偷开1.8GB Hyper-V虚拟机，删了2689个幽灵会话也没用，Anthropic至今未回应。"
+  },
+  {
     "title": "用eBPF透视AI Agent到底在干啥：AgentSight实战指南",
     "url": "/post/agentsight-ebpf-ai-agent-tracing/",
     "date": "2026-06-05",
