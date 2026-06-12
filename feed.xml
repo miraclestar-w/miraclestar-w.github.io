@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 11 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 12 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司</title>
+      <link>https://miraclestar-w.github.io/post/shinyhunters-peoplesoft-0day/</link>
+      <description>40GB学生数据被扒光，诺丁汉大学只是第一个。Oracle PeopleSoft零日漏洞CVSS 9.8，远程无需认证直接接管，100多家机构中招68%是大学，Oracle补丁还没出。</description>
+      <pubDate>Sat, 12 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/shinyhunters-peoplesoft-0day/</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>Anthropic的Claude Desktop每次启动偷吃1.8GB内存，删了2689个文件也没用</title>
       <link>https://miraclestar-w.github.io/post/claude-desktop-hyper-v-vm/</link>

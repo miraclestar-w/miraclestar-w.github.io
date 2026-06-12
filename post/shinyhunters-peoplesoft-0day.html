@@ -1,0 +1,138 @@
+<!--
+title: Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司
+date: 2026-06-12
+tags: 安全,ShinyHunters,Oracle,PeopleSoft,零日漏洞
+description: 40GB学生数据被扒光，诺丁汉大学只是第一个。Oracle PeopleSoft零日漏洞CVSS 9.8，远程无需认证直接接管，100多家机构中招68%是大学，Oracle补丁还没出。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司 | Miracle</title>
+<meta name="description" content="40GB学生数据被扒光，诺丁汉大学只是第一个。Oracle PeopleSoft零日漏洞CVSS 9.8，远程无需认证直接接管，100多家机构中招68%是大学，Oracle补丁还没出。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/shinyhunters-peoplesoft-0day/">
+<meta property="og:title" content="Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司">
+<meta property="og:description" content="40GB学生数据被扒光，诺丁汉大学只是第一个。Oracle PeopleSoft零日漏洞CVSS 9.8，远程无需认证直接接管，100多家机构中招68%是大学，Oracle补丁还没出。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/shinyhunters-peoplesoft-0day/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/shiny_cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/shinyhunters-peoplesoft-0day/">
+<meta name="twitter:title" content="Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司">
+<meta name="twitter:description" content="40GB学生数据被扒光，诺丁汉大学只是第一个。Oracle PeopleSoft零日漏洞CVSS 9.8，远程无需认证直接接管，100多家机构中招68%是大学，Oracle补丁还没出。">
+<meta name="twitter:image" content="/post-images/shiny_cover.jpg">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Oracle还没出补丁，ShinyHunters已经用一个漏洞黑了100多家公司</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-12</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">安全, ShinyHunters, Oracle, PeopleSoft, 零日漏洞</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/shiny_cover.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="ShinyHunters入侵Oracle PeopleSoft">
+
+      <h2>40GB学生数据被扒光，诺丁汉大学只是第一个</h2>
+
+      <p>6月11日，The Register报道了一件事：黑客组织ShinyHunters利用Oracle PeopleSoft的一个零日漏洞（CVE-2026-35273），入侵了100多家机构。诺丁汉大学是第一个被公开点名的——40GB的个人数据和账单记录被偷走，涉及数十万在校和毕业学生。</p>
+
+      <p>ShinyHunters在周二就把诺丁汉大学挂上了数据泄露网站，同一天就公布了偷来的文件。原因很直接：学校没付赎金。</p>
+
+      <p>Google威胁情报团队同天发布报告，证实了ShinyHunters的说法。Google说他们在5月27日到6月9日之间检测到恶意活动，和CVE-2026-35273的利用特征一致，然后通知了100多家全球机构。其中68%是高等教育机构，大部分在美国。</p>
+
+      <h2>PeopleSoft是个什么东西</h2>
+
+      <img src="/post-images/shiny_body1.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="PeopleSoft漏洞影响范围">
+
+      <p>PeopleSoft是Oracle的企业软件套件，主要用来管HR、工资单、财务、学生记录这些事。美国很多大学、大公司都在用。</p>
+
+      <p>这个漏洞的CVSS评分是9.8。什么意思呢——远程、无需认证、通过HTTP就能利用，直接拿到PeopleSoft Enterprise PeopleTools的完整控制权。用大白话说：你只要能访问到这个系统的网络入口，就能把它完全接管。</p>
+
+      <p>300个有漏洞的实例被扫了出来，100多家机构中招。</p>
+
+      <h2>Oracle的反应</h2>
+
+      <img src="/post-images/shiny_body2.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Oracle的回应">
+
+      <p>诺丁汉大学被黑两天后，Oracle才发了一个紧急安全公告。但到发稿为止，补丁还没出来。</p>
+
+      <p>Mandiant的CTO Charles Carmakal在LinkedIn上发了个简短警告，说PeopleSoft是目前两个被野外利用的零-day之一。另一个是Cisco Catalyst SD-WAN Manager的漏洞。他说"Oracle已经发布了缓解措施，补丁应该很快会来"。</p>
+
+      <p>"应该很快"——这句话在安全圈里的意思大家都懂。</p>
+
+      <p>The Register去问Oracle要说法，没收到回复。</p>
+
+      <h2>ShinyHunters是谁</h2>
+
+      <p>ShinyHunters不是什么新面孔。这个组织之前搞过不少事，包括2020年那次针对GitLab、Microsoft Azure、Canva等平台的大规模凭证泄露。他们的套路一直很稳定：找到漏洞，批量扫，偷数据，挂泄露网站，然后找受害者谈"生意"。</p>
+
+      <p>这次他们的 spokesperson 跟The Register说："诺丁汉大学只是第一个公开确认的事件。我们刚开始联系受影响的机构，正在和他们谈。"</p>
+
+      <p>100多家机构，68%是大学。这个比例有点意思——大学的IT系统出了名的难管，PeopleSoft这种老系统在高校里特别多，因为整个学生管理流程都绑在上面，换也换不掉。</p>
+
+      <h2>真正让人不安的地方</h2>
+
+      <img src="/post-images/shiny_body3.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="数据泄露时间线">
+
+      <p>Google在5月27日就检测到了异常活动。6月9日通知了100多家机构。但Oracle的紧急公告是6月10日才发的——在诺丁汉大学的数据已经被公开泄露之后。</p>
+
+      <p>也就是说，从漏洞被发现到Oracle公开响应，中间隔了差不多两周。在这两周里，ShinyHunters有足够的时间把300个有漏洞的实例扫一遍。</p>
+
+      <p>而到现在，补丁还是没有。</p>
+
+      <p>Carmakal说"补丁应该很快"。但PeopleSoft这种企业级系统的补丁流程向来慢，要测试、要兼容、要走审批。在这期间，那100多家被通知的机构只能靠缓解措施顶着——如果他们愿意听的话。</p>
+
+      <p>诺丁汉大学大概率是没听。</p>
+
+      <h2>后续怎么发展</h2>
+
+      <p>ShinyHunters说了，他们"刚开始联系受影响的机构"。意思很明白：还有100多个目标等着谈。谈不拢就公布数据。</p>
+
+      <p>这些机构里有多少会付钱，不好说。但有一点是确定的：CVE-2026-35273的利用窗口还没关闭。Oracle没补丁，PeopleSoft的300个有漏洞实例就还是敞开的。</p>
+
+      <p>对于用PeopleSoft的机构来说，现在最该做的一件事：查一下自己的PeopleTools版本，看是否在受影响范围内，然后立刻上缓解措施。别等Oracle的补丁了，那东西的时间表不归你控制。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：The Register · Google Threat Intelligence · Mandiant Advisory</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>
