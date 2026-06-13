@@ -9,10 +9,10 @@
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年</title>
-      <link>https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent/</link>
+      <link>https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent.html</link>
       <description>depthfirst的安全团队让一个AI Agent审计FFmpeg代码，花了一千美元挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。</description>
       <pubDate>Fri, 13 Jun 2026 00:00:00 +0800</pubDate>
-      <guid isPermaLink="true">https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent/</guid>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent.html</guid>
       <dc:creator>Miracle</dc:creator>
     </item>
     <item>

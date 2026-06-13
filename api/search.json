@@ -1,7 +1,7 @@
 [
   {
     "title": "AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年",
-    "url": "/post/ffmpeg-21-zero-days-ai-agent/",
+    "url": "/post/ffmpeg-21-zero-days-ai-agent.html",
     "date": "2026-06-13",
     "tags": "FFmpeg, 零日漏洞, 安全, AI Agent, CVE",
     "excerpt": "depthfirst的AI Agent审计FFmpeg代码，花1000美元挖出21个零日漏洞，其中最老的一个藏了23年。"
