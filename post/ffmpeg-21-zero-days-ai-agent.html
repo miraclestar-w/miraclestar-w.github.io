@@ -1,0 +1,156 @@
+<!--
+title: AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年
+date: 2026-06-13
+tags: FFmpeg,零日漏洞,安全,AI Agent,CVE
+description: depthfirst的安全团队让一个AI Agent审计FFmpeg代码，花了一千美元挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年 | Miracle</title>
+<meta name="description" content="depthfirst的安全团队让一个AI Agent审计FFmpeg代码，花了一千美元挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent/">
+<meta property="og:title" content="AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年">
+<meta property="og:description" content="depthfirst的安全团队让一个AI Agent审计FFmpeg代码，花了一千美元挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/ffmpeg_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent/">
+<meta name="twitter:title" content="AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年">
+<meta name="twitter:description" content="depthfirst的安全团队让一个AI Agent审计FFmpeg代码，花了一千美元挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。">
+<meta name="twitter:image" content="/post-images/ffmpeg_cover.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-13</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">FFmpeg, 零日漏洞, 安全, AI Agent, CVE</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/ffmpeg_cover.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="depthfirst AI Agent发现FFmpeg 21个零日漏洞">
+
+      <p>depthfirst的安全团队做了一件事：让一个AI Agent去审计FFmpeg的代码，花了一千美元，挖出来21个零日漏洞。其中8个已经拿到CVE编号，有一个从2003年就埋在代码里，整整23年没人发现。</p>
+
+      <p>FFmpeg这个名字你可能没听过，但你每天都在用它。</p>
+
+      <img src="/post-images/ffmpeg_logo.png" style="width:200px;margin:20px auto;display:block;" alt="FFmpeg Logo">
+
+      <p>浏览器播放视频、YouTube转码、直播平台推流，底层全是这套150万行C代码组成的怪兽。它解析几百种媒体格式，处理的都是不受信任的输入——这是零点击攻击最喜欢的靶子。</p>
+
+      <h2>Google和Anthropic先上了一轮，没挖干净</h2>
+
+      <p>今年早些时候，Google的Big Sleep团队在FFmpeg里发现了13个漏洞。紧接着Anthropic用自己的Mythos模型扫了一遍，也找到了一些安全问题。这两件事让安全圈意识到：AI模型已经能读懂复杂的C代码了。</p>
+
+      <p>但问题是，FFmpeg已经被fuzz了二十多年，又被无数安全审计翻了个底朝天，剩下的漏洞一个比一个难找。depthfirst想测试一下自己的AI安全Agent到底能走多远——不依赖Mythos这种特殊模型，只用市面上能拿到的普通模型，能不能找到Big Sleep和Anthropic漏掉的东西。</p>
+
+      <p>答案是能，而且挖出来不少。</p>
+
+      <h2>安全Agent和写代码的Agent完全是两回事</h2>
+
+      <p>很多人以为安全Agent就是让AI去读代码找bug，其实没那么简单。写代码的Agent目标是完成任务，安全Agent的目标是找到可利用的漏洞。一个是在阳光下盖房子，一个是在黑暗里找裂缝。</p>
+
+      <p>depthfirst的安全Agent需要先做威胁建模：理解整个代码库的架构，找出哪些解析器暴露在外，攻击者控制的输入从哪里进入系统。然后它会沿着数据流审计攻击面代码，不是把仓库当成一堆文件平铺着看。</p>
+
+      <p>更关键的是，这个Agent需要一组护栏。它不能凭空编造漏洞，不能把理论上的风险当成实际问题，更不能用大量误报来刷存在感。它必须验证攻击者是否真的能控制输入、漏洞路径是否可达、可疑的缺陷是否能被复现。</p>
+
+      <p>最终的产出不是一份模糊的报告，而是能直接执行的PoC输入——跑一遍就知道这个漏洞是不是真的。</p>
+
+      <h2>那个藏了23年的栈溢出</h2>
+
+      <img src="/post-images/ffmpeg_vuln_timeline.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="FFmpeg零日漏洞时间线">
+
+      <p>在21个发现里，最老的一个是CVE-2026-39214。这是一个栈缓冲区溢出，2003年FFmpeg刚实现SDT（Service Description Table）解析的时候就写进去了。代码在写入服务条目的时候，压根没跟踪还剩多少空间。这个bug就这么安安静静地待了23年，直到一个AI Agent把它翻出来。</p>
+
+      <p>另一个有趣的案例是DFVULN-122，一个堆缓冲区溢出。它藏在RTP MPEG-4解包器里，从2005年MPEG4-AAC RTP支持加入那天起就在了——二十多年，从来没人发现<code>aac_parse_packet()</code>会接受一个长度为0的AU-headers-length，然后把一个1字节的分配当成4字节的字段来读。</p>
+
+      <p>还有一些是最近才引入的回归缺陷。比如CVE-2026-39212，2025年7月才出现的栈溢出，因为preset文件能触发选项解析无限递归，没有深度限制。CVE-2026-39217也是2025年3月的回归，VP9解码器里的重构导致tile线程缓冲区没有重新分配。</p>
+
+      <p>老bug和新bug混在一起，说明FFmpeg的安全问题不是历史遗留那么简单——每次重构、每次新增功能，都可能在已有的防御体系上凿出新的洞。</p>
+
+      <h2>从跳过一帧标记到控制PC寄存器</h2>
+
+      <p>21个漏洞里最厉害的一个，是AV1 RTP解包器里的堆缓冲区溢出（DFVULN-127）。这个漏洞可以从网络上触发，不需要任何特殊标志。受害者只需要执行一条最普通的命令：</p>
+
+<pre><code>ffmpeg -i rtsp://attacker/stream</code></pre>
+
+      <p>一个183字节的数据包，就能劫持程序的执行流程。</p>
+
+      <p>漏洞出在AV1视频的RTP传输协议里。AV1把视频流组织成OBU（Open Bitstream Unit），RTP载荷格式把这些OBU分散到多个数据包里。解包器负责把它们重新拼成完整的流。其中有一种特殊的OBU叫Temporal Delimiter（时间分隔符），用来标记帧与帧之间的边界。规范要求解包器遇到它就"忽略并移除"。</p>
+
+      <p>就是这个看起来无害的"忽略并移除"，埋下了祸根。解包器用一个叫<code>pktpos</code>的游标追踪写入位置，每写一个字节之前都会调用<code>av_grow_packet</code>来确保缓冲区够大。但遇到Temporal Delimiter的时候，代码只做了<code>pktpos += obu_size</code>——游标往前跳了，内存却没有分配。更糟的是，输入指针<code>buf_ptr</code>没有跳过这个TD的字节，导致下一轮循环会重新解析TD自己的数据。</p>
+
+      <p>攻击者精心构造一个<code>obu_size=148</code>的TD，游标就被推到了148的位置。接下来写入的17字节伪造OBU会被写到<code>pkt->data[148]</code>——但缓冲区实际只有81字节。这是一个完全可控的堆溢出：偏移量可控，内容可控。</p>
+
+      <p>FFmpeg的内存分配器帮了倒忙。<code>av_buffer_alloc</code>会做三次连续分配：数据缓冲区、AVBuffer簿记结构、AVBufferRef。因为是64字节对齐，81字节的数据缓冲区占128字节的空间，AVBuffer结构紧挨着后面。AVBuffer里有一个<code>free</code>函数指针，偏移量恰好是152。溢出刚好覆盖这个指针，同时不碰前面的refcount——refcount保持为1，这样后续释放缓冲区的时候就会调用被篡改的<code>free</code>指针。</p>
+
+      <p>在release版本上，一条183字节的RTP包就能把指令指针劫持到<code>0xdeadbeef</code>。</p>
+
+      <h2>只花了一千美元</h2>
+
+      <p>整个审计过程的总成本大约一千美元——是Anthropic用Mythos模型花费的十分之一。</p>
+
+      <p>这不是说depthfirst的Agent比Anthropic的模型更聪明。关键在于，安全Agent的架构设计改变了工作方式。普通的代码Agent是一问一答的交互模式，给一个任务就去做。安全Agent需要自主地做威胁建模、追踪数据流、验证假设、生成PoC——整个过程是并行的，Agent会同时展开多条调查路线。</p>
+
+      <p>depthfirst的CTO Zhenpeng Lin在文章里提到了一个细节：</p>
+
+      <img src="/post-images/ffmpeg_author.jpeg" style="width:100px;height:100px;border-radius:50%;margin:20px auto;display:block;" alt="Zhenpeng Lin - depthfirst安全研究员">
+
+      <p>他们的Agent在分析FFmpeg的时候，不是把代码当成扁平的文件集合来看，而是理解了架构之后，专门针对攻击面代码做深入审计。这种"先建模再审计"的思路，比直接让AI去读所有代码效率高得多。</p>
+
+      <h2>这意味着什么</h2>
+
+      <p>FFmpeg有150万行C代码，被几十亿设备使用，已经被全世界最厉害的安全研究者和fuzzer翻了二十多年。在这种条件下，一个AI Agent用一千美元的成本找到了21个零日漏洞——其中有些藏了二十年以上。</p>
+
+      <p>对于做媒体处理、直播、视频转码的团队来说，现在应该去检查一下自己依赖的FFmpeg版本。那些2003年、2005年、2010年引入的漏洞，可能一直都在你的系统里。</p>
+
+      <p>对于安全行业来说，这可能标志着一个转折点：AI找漏洞不再是实验性的demo，而是能产出可利用PoC的生产力工具。</p>
+
+      <p>depthfirst把PoC代码开源了，链接在原文里。那个183字节的RTP数据包，任何人现在都可以拿到。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：depthfirst Research · The Hacker News · Security Boulevard · SC Media</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>
