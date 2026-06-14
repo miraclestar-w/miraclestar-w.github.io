@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 13 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Arch Linux的AUR被黑了，1579个包藏着恶意代码，志愿者半夜爬起来删commit</title>
+      <link>https://miraclestar-w.github.io/post/arch-linux-aur-malware-1579-packages.html</link>
+      <description>Arch Linux AUR遭遇史上最大规模恶意包攻击，1579个包被植入恶意代码，三名志愿者深夜手动删除恶意commit</description>
+      <pubDate>Sat, 14 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/arch-linux-aur-malware-1579-packages.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年</title>
       <link>https://miraclestar-w.github.io/post/ffmpeg-21-zero-days-ai-agent.html</link>

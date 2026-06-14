@@ -1,5 +1,12 @@
 [
   {
+    "title": "Arch Linux的AUR被黑了，1579个包藏着恶意代码，志愿者半夜爬起来删commit",
+    "url": "/post/arch-linux-aur-malware-1579-packages.html",
+    "date": "2026-06-14",
+    "tags": "Arch Linux, AUR, Security, Malware, Open Source",
+    "excerpt": "Arch Linux AUR遭遇史上最大规模恶意包攻击，1579个包被植入恶意代码，三名志愿者深夜手动删除恶意commit。"
+  },
+  {
     "title": "AI安全Agent花1000美元在FFmpeg里挖出21个零日漏洞，其中一个藏了23年",
     "url": "/post/ffmpeg-21-zero-days-ai-agent.html",
     "date": "2026-06-13",
