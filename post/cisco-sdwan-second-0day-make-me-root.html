@@ -1,0 +1,111 @@
+<!--
+title: Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root
+date: 2026-06-16
+tags: Cisco,SD-WAN,零日漏洞,安全,CVE-2026-20262
+description: Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让攻击者从低权限用户直接拿到root，CISA已加进KEV目录。文件上传漏洞的本质是输入验证缺失，SD-WAN作为企业网络总开关成了攻击重灾区。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root | Miracle</title>
+<meta name="description" content="Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让攻击者从低权限用户直接拿到root，CISA已加进KEV目录。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html">
+<meta property="og:title" content="Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root">
+<meta property="og:description" content="Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让攻击者从低权限用户直接拿到root，CISA已加进KEV目录。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/cisco_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html">
+<meta name="twitter:title" content="Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root">
+<meta name="twitter:description" content="Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让攻击者从低权限用户直接拿到root，CISA已加进KEV目录。">
+<meta name="twitter:image" content="/post-images/cisco_cover.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-16</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Cisco, SD-WAN, 零日漏洞, 安全</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/cisco_cover.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Cisco SD-WAN零日漏洞">
+
+      <p>6月15日，Cisco给SD-WAN Manager打了个补丁。补丁修的是CVE-2026-20262，一个能让攻击者拿到root权限的漏洞。</p>
+
+      <p>问题是——这个漏洞已经被利用了。</p>
+
+      <h2>漏洞长什么样</h2>
+
+      <p>CVE-2026-20262出在Cisco Catalyst SD-WAN Manager的Web UI里。具体来说，软件在处理文件上传的时候，没有好好验证用户输入。</p>
+
+      <p>攻击者只需要一个低权限的单任务用户账号，就能发一个精心构造的HTTP请求到受影响的API端点。如果漏洞利用成功，攻击者可以在底层操作系统上创建或覆盖任何文件。有了这个能力，提权到root就是顺手的事。</p>
+
+      <p>CVSS评分6.8，中等严重。但别被评分骗了——能拿到root就是root。</p>
+
+      <h2>这已经是本月第二次了</h2>
+
+      <img src="/post-images/cisco_kev_stats.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="CISA KEV目录统计">
+
+      <p>往回翻两周。6月4日，Cisco刚披露过另一个SD-WAN漏洞：CVE-2026-20245。那个是高严重级别的，披露的时候还没有补丁。6月12日才补上。</p>
+
+      <p>一个月内两个0-day，都出在同一个产品上。</p>
+
+      <p>CISA已经把CVE-2026-20262加进了Known Exploited Vulnerabilities目录，给了联邦机构两周的补丁期限。截至现在，今年已经有8个Cisco SD-WAN漏洞出现在这个目录里了。</p>
+
+      <h2>文件上传的坑</h2>
+
+      <img src="/post-images/cisco_attack_flow.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="文件上传漏洞攻击流程">
+
+      <p>这个漏洞的本质是输入验证缺失。文件上传功能在Web应用里太常见了，但也是最容易出问题的地方。</p>
+
+      <p>正常流程：用户上传文件 → 服务端验证文件名、类型、大小 → 存到指定目录。</p>
+
+      <p>出问题的流程：用户上传文件 → 服务端直接用文件名拼路径 → 攻击者构造<code>../../etc/cron.d/evil</code>这样的文件名 → 文件被写到系统目录。</p>
+
+      <p>Cisco这次的情况更严重——不只是路径穿越，是"可以创建或覆盖任何文件"。这意味着攻击者可以写SSH公钥、写定时任务、写启动脚本，想写什么写什么。</p>
+
+      <h2>为什么SD-WAN这么招攻击</h2>
+
+      <p>SD-WAN是企业网络的"总开关"。它管理着分支机构到总部的连接，控制着流量走向，配置着安全策略。拿下SD-WAN Manager，就等于拿到了整个企业网络的控制权。</p>
+
+      <p>Cisco的SD-WAN（现在叫Catalyst SD-WAN）市场份额不小。企业采购的时候看重的是Cisco的品牌和生态，但今年8个漏洞进CISA目录，平均不到两个月一个。</p>
+
+      <h2>补丁和应对</h2>
+
+      <img src="/post-images/cisco_recommendations.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="企业应对建议">
+
+      <p>这次没有workaround，只能升级。Cisco建议所有受影响的部署类型都升级到修复版本。</p>
+
+      <p>对于已经部署了SD-WAN Manager的企业来说，这意味着要安排维护窗口、做升级测试、准备回滚方案。如果已经被攻击了，还得做取证分析，看攻击者在系统里写了什么文件。</p>
+
+      <p>CISA给了两周期限，但很多企业的补丁周期比这长得多。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：Cisco Security Advisory · CISA KEV · SecurityWeek</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>

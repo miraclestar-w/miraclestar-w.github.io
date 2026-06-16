@@ -1,5 +1,12 @@
 [
   {
+    "title": "Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root",
+    "url": "/post/cisco-sdwan-second-0day-make-me-root.html",
+    "date": "2026-06-16",
+    "tags": "Cisco, SD-WAN, 零日漏洞, 安全, CVE-2026-20262",
+    "excerpt": "Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让低权限用户直接拿到root，CISA已加进KEV目录。"
+  },
+  {
     "title": "Arch Linux的AUR被黑了，1579个包藏着恶意代码，志愿者半夜爬起来删commit",
     "url": "/post/arch-linux-aur-malware-1579-packages.html",
     "date": "2026-06-14",

@@ -8,6 +8,14 @@
     <lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root</title>
+      <link>https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html</link>
+      <description>Cisco Catalyst SD-WAN Manager一个月内爆出第二个零日漏洞，CVE-2026-20262能让攻击者从低权限用户直接拿到root，CISA已加进KEV目录。</description>
+      <pubDate>Mon, 16 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>Arch Linux的AUR被黑了，1579个包藏着恶意代码，志愿者半夜爬起来删commit</title>
       <link>https://miraclestar-w.github.io/post/arch-linux-aur-malware-1579-packages.html</link>
       <description>Arch Linux AUR遭遇史上最大规模恶意包攻击，1579个包被植入恶意代码，三名志愿者深夜手动删除恶意commit</description>
