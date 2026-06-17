@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 14 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 17 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>微软紧急修复！M365 Copilot被黑客用一个链接偷走所有2FA验证码</title>
+      <link>https://miraclestar-w.github.io/post/m365-copilot-searchleak.html</link>
+      <description>微软M365 Copilot存在SearchLeak漏洞，攻击者通过URL参数注入恶意指令，利用流式输出时序缺陷绕过代码块保护，窃取企业邮件和2FA验证码。</description>
+      <pubDate>Tue, 17 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/m365-copilot-searchleak.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root</title>
       <link>https://miraclestar-w.github.io/post/cisco-sdwan-second-0day-make-me-root.html</link>

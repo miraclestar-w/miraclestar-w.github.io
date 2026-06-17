@@ -1,5 +1,12 @@
 [
   {
+    "title": "微软紧急修复！M365 Copilot被黑客用一个链接偷走所有2FA验证码",
+    "url": "/post/m365-copilot-searchleak.html",
+    "date": "2026-06-17",
+    "tags": "Microsoft, Copilot, 零日漏洞, 安全, 提示注入, SearchLeak",
+    "excerpt": "微软M365 Copilot存在SearchLeak漏洞，攻击者通过URL参数注入恶意指令，利用流式输出时序缺陷绕过代码块保护，窃取企业邮件和2FA验证码。"
+  },
+  {
     "title": "Cisco一个月内第二次被0-day：这个漏洞名叫make-me-root",
     "url": "/post/cisco-sdwan-second-0day-make-me-root.html",
     "date": "2026-06-16",
