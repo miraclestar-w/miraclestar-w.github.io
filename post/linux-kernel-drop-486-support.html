@@ -1,0 +1,122 @@
+<!--
+title: Linux内核砍掉了486，14万行代码说删就删
+date: 2026-06-18
+tags: Linux,Kernel,486,开源,硬件
+description: Linux 7.1正式删除Intel 486处理器支持代码，14万行代码一个补丁清零。从1989年到2026年，486在Linux内核里活了37年。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Linux内核砍掉了486，14万行代码说删就删 | Miracle</title>
+<meta name="description" content="Linux 7.1正式删除Intel 486处理器支持代码，14万行代码一个补丁清零。从1989年到2026年，486在Linux内核里活了37年。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/linux-kernel-drop-486-support.html">
+<meta property="og:title" content="Linux内核砍掉了486，14万行代码说删就删">
+<meta property="og:description" content="Linux 7.1正式删除Intel 486处理器支持代码，14万行代码一个补丁清零。从1989年到2026年，486在Linux内核里活了37年。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/linux-kernel-drop-486-support.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/linus-torvalds.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/linux-kernel-drop-486-support.html">
+<meta name="twitter:title" content="Linux内核砍掉了486，14万行代码说删就删">
+<meta name="twitter:description" content="Linux 7.1正式删除Intel 486处理器支持代码，14万行代码一个补丁清零。从1989年到2026年，486在Linux内核里活了37年。">
+<meta name="twitter:image" content="/post-images/linus-torvalds.jpg">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Linux内核砍掉了486，14万行代码说删就删</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-18</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Linux, Kernel, 486, 开源, 硬件</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/linus-torvalds.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Intel 486处理器">
+
+      <p>2026年6月14日，Linus Torvalds在邮件列表里发了一封邮件，宣布Linux 7.1正式发布。邮件很短，跟以往每个版本一样平淡。但这个版本里藏着一件大事：Intel 486处理器的支持代码，被彻底删了。14万行。</p>
+
+      <h2>486活了多久</h2>
+
+      <p>Intel 486是1989年发布的。那一年柏林墙还没倒，互联网还是军方的玩具。486是第一款内置数学协处理器的x86芯片，在90年代初是高端PC的标配。</p>
+
+      <p>Linux内核从一开始就是给x86写的。1991年Linus写出第一个版本的时候，486就是当时能跑的主流硬件。所以486的支持代码从第一天就在内核里。</p>
+
+      <p>后来的事情大家都知道。Intel出了Pentium、Pentium Pro、Core系列，486在1990年代末就停产了。但Linux内核一直留着它的支持代码。37年。</p>
+
+      <img src="/post-images/chip-closeup.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="CPU芯片特写">
+
+      <h2>为什么一直没删</h2>
+
+      <p>不是没人想过删。内核社区每隔几年就会有人提起这件事。但每次讨论到最后都搁置了——原因很实际。</p>
+
+      <p>内核代码之间有耦合。486的支持代码不只是"486能跑"这么简单，它涉及到x86架构的基础定义、中断处理、内存管理的一些底层接口。删掉486可能会影响其他CPU的代码，比如某些嵌入式平台或者老旧的工控设备。内核维护者不想冒这个险。</p>
+
+      <p>所以这些代码就一直躺在那儿。没人用，但也没人敢动。</p>
+
+      <h2>去年差点删了</h2>
+
+      <p>2025年5月，有人提交了一个补丁，要把486支持从内核6.15里移除。补丁准备得很充分，讨论也基本通过了。结果在合并前的最后关头被撤回来了——有维护者发现影响范围比预想的大，需要更多时间评估。</p>
+
+      <p>今年4月，Linus自己把这个补丁重新提交到了主线。这次他没等，直接合并了。</p>
+
+      <h2>14万行都删了什么</h2>
+
+      <p>删掉的不只是486的驱动代码。一起被清理的还有：</p>
+
+      <ul>
+        <li>俄罗斯Baikal处理器的支持代码。这个系列是俄罗斯自研的ARM芯片，2014年加入Linux，2021年还更新过。现在也没人维护了。</li>
+        <li>古老的总线鼠标端口驱动。那是PS/2接口之前的接口标准，1980年代的产物。你可能从来没见过那种鼠标——一个方方的盒子，连着一根粗线，串口接在电脑背后。</li>
+      </ul>
+
+      <p>14万行代码，一个补丁删干净。内核相关子系统的代码量减少了大约40%。</p>
+
+      <img src="/post-images/linux-github.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Linux内核GitHub页面">
+
+      <h2>为什么现在删</h2>
+
+      <p>Linus没有公开解释原因。但从社区讨论来看，主要驱动力是维护成本。</p>
+
+      <p>每一行代码都需要有人审核、测试、修复安全漏洞。没有人用的代码，花的每一分钟都是浪费。更重要的是，旧代码会拖累新代码的开发。你想优化x86的内存管理子系统，结果发现被30年前的486兼容性逻辑绑住了手脚。每次改动都要确保不影响那些已经没人用的代码路径。</p>
+
+      <p>删掉之后，维护者终于可以放开手脚重构相关子系统了。</p>
+
+      <h2>同一个版本里还有几个值得注意的变化</h2>
+
+      <p><strong>NTFS终于能写了。</strong> 韩国开发者Namjae Jeon把90年代那个只能读的NTFS驱动重写了一遍。新的NTFSplus驱动现在能读、能写、还能修复一部分NTFS文件系统损坏。这可能意味着Linux终于能当Windows的急救盘用了——SystemRescue、GParted Live这些工具大概率会很快跟进。</p>
+
+      <p><strong>eBPF和io_uring合体了。</strong> 这两个都是2022年引入的重要功能，现在eBPF代码可以直接处理io_uring的调度任务。对搞高性能网络编程的人来说，这是个好消息。</p>
+
+      <p><strong>可扩展调度器进了主线。</strong> 之前只有Oracle Linux的私有内核才有这个功能，现在所有发行版都能用了。</p>
+
+      <p><strong>Intel FRED默认开启。</strong> 这个功能在6.9版本就有了，但一直是可选的。现在默认打开，AMD处理器也受益。</p>
+
+      <img src="/post-images/server-room.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="服务器机房">
+
+      <h2>还没删干净</h2>
+
+      <p>14万行是第一批。Linus在邮件里提到，剩下的部分会在后续版本继续清理。具体还有多少，他没说。但可以确定的是，486的故事还没完全结束。</p>
+
+      <p>从1989年到2026年，486在Linux内核里活了37年。作为对比，IBM PC的原版BIOS在2002年就退役了，MS-DOS的官方支持在2001年就结束了。486在Linux里的寿命比它在任何商业产品里的都长。</p>
+
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Linux/" class="tag-link">Linux</a>
+      <a href="/tags/Kernel/" class="tag-link">Kernel</a>
+      <a href="/tags/486/" class="tag-link">486</a>
+      <a href="/tags/开源/" class="tag-link">开源</a>
+      <a href="/tags/硬件/" class="tag-link">硬件</a>
+    </div>
+  </article>
+</div>
+</main>
+</body>
+</html>
