@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 18 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>苹果耳机被曝窃听漏洞，藏了整整一年才修</title>
+      <link>https://miraclestar-w.github.io/post/apple-beats-buds-bluetooth-eavesdropping-cve-2025-20701.html</link>
+      <description>Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。漏洞去年就公开了，苹果拖了整整12个月才出补丁。</description>
+      <pubDate>Fri, 19 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/apple-beats-buds-bluetooth-eavesdropping-cve-2025-20701.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>Linux内核砍掉了486，14万行代码说删就删</title>
       <link>https://miraclestar-w.github.io/post/linux-kernel-drop-486-support.html</link>

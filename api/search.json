@@ -1,5 +1,12 @@
 [
   {
+    "title": "苹果耳机被曝窃听漏洞，藏了整整一年才修",
+    "url": "/post/apple-beats-buds-bluetooth-eavesdropping-cve-2025-20701.html",
+    "date": "2026-06-19",
+    "tags": "Apple, 蓝牙, 安全漏洞, Beats, CVE-2025-20701, Airoha",
+    "excerpt": "Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。漏洞去年就公开了，苹果拖了整整12个月才出补丁。"
+  },
+  {
     "title": "Linux内核砍掉了486，14万行代码说删就删",
     "url": "/post/linux-kernel-drop-486-support.html",
     "date": "2026-06-18",
