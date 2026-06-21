@@ -5,8 +5,24 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 19 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片</title>
+      <link>https://miraclestar-w.github.io/post/apple-bluetooth-eavesdropping-chip-root-cause.html</link>
+      <description>Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，根源在Airoha芯片。同期WhisperPair漏洞群影响更广，Sony、Google等10+厂商中招。</description>
+      <pubDate>Sun, 21 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/apple-bluetooth-eavesdropping-chip-root-cause.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
+      <title>微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语</title>
+      <link>https://miraclestar-w.github.io/post/microsoft-crypto-clipper-usb-worm.html</link>
+      <description>微软安全团队发现新型USB蠕虫Crypto Clipper，通过U盘.lnk文件传播，实时监控剪贴板窃取加密货币钱包种子短语，利用便携版Tor实现完全匿名通信。</description>
+      <pubDate>Sat, 20 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/microsoft-crypto-clipper-usb-worm.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
     <item>
       <title>苹果耳机被曝窃听漏洞，藏了整整一年才修</title>
       <link>https://miraclestar-w.github.io/post/apple-beats-buds-bluetooth-eavesdropping-cve-2025-20701.html</link>

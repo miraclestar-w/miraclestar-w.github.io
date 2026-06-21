@@ -1,0 +1,126 @@
+<!--
+title: 微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语
+date: 2026-06-20
+tags: Microsoft,USB蠕虫,安全,CryptoClipper,加密货币,Tor
+description: 微软安全团队发现新型USB蠕虫Crypto Clipper，通过U盘.lnk文件传播，实时监控剪贴板窃取加密货币钱包种子短语，利用便携版Tor实现完全匿名通信。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语 | Miracle</title>
+<meta name="description" content="微软安全团队发现新型USB蠕虫Crypto Clipper，通过U盘.lnk文件传播，实时监控剪贴板窃取加密货币钱包种子短语，利用便携版Tor实现完全匿名通信。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/microsoft-crypto-clipper-usb-worm.html">
+<meta property="og:title" content="微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语">
+<meta property="og:description" content="微软安全团队发现新型USB蠕虫Crypto Clipper，通过U盘.lnk文件传播，实时监控剪贴板窃取加密货币钱包种子短语，利用便携版Tor实现完全匿名通信。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/microsoft-crypto-clipper-usb-worm.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/crypto_clipper_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/microsoft-crypto-clipper-usb-worm.html">
+<meta name="twitter:title" content="微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语">
+<meta name="twitter:description" content="微软安全团队发现新型USB蠕虫Crypto Clipper，通过U盘.lnk文件传播，实时监控剪贴板窃取加密货币钱包种子短语，利用便携版Tor实现完全匿名通信。">
+<meta name="twitter:image" content="/post-images/crypto_clipper_cover.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">微软曝光USB蠕虫Crypto Clipper：10秒截5张图，专门偷钱包种子短语</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-20</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Microsoft, USB蠕虫, 安全, CryptoClipper</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/crypto_clipper_cover.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Crypto Clipper USB蠕虫">
+
+      <p>微软安全团队上周公布了一种新型USB蠕虫。这东西不装软件、不开端口，只干一件事：盯着你的剪贴板，等你复制钱包地址。</p>
+
+      <p>它叫 <strong>Crypto Clipper</strong>。</p>
+
+      <h2>插上U盘就开始偷</h2>
+
+      <img src="/post-images/crypto_clipper_attack_chain.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Crypto Clipper攻击链">
+
+      <p>Crypto Clipper的传播方式很老套——通过U盘里的 .lnk 快捷方式文件。你把U盘插到电脑上，Windows自动弹出文件列表，里面有几个看着像正常文件的快捷方式。双击任何一个，代码就跑起来了。</p>
+
+      <p>但后面的操作不老套。</p>
+
+      <p>它先检查这台机器上有没有装过自己。没装过的话，它不从普通网络下载，而是先在你电脑上部署一个<strong>便携版Tor客户端</strong>，通过本地SOCKS5代理连到暗网里的C2服务器，再把自身拉下来。整个过程不经过任何可追踪的IP地址。</p>
+
+      <p>微软在报告里特意提了这点：这是他们见过的少数几个完全不依赖传统C2基础设施的蠕虫。没有硬编码的IP，没有域名解析，所有通信都走Tor。</p>
+
+      <h2>你的剪贴板就是它的猎物</h2>
+
+      <p>装好之后，Crypto Clipper开始实时监控剪贴板。它会扫描你复制的文本，匹配<strong>12个或24个英文单词的种子短语格式</strong>——就是那些区块链钱包的助记词。一旦匹配到，立刻上传到攻击者服务器。</p>
+
+      <p>它还会在<strong>10秒内截5张屏幕截图</strong>。微软说这些截图是为了给攻击者提供上下文信息。我猜意思是"看看这人截屏时在干嘛"，比如他是不是正在打开交易所、是不是刚转了账。</p>
+
+      <p>更狠的是：如果你复制的是一个钱包地址，它会把这个地址<strong>替换成攻击者控制的钱包地址</strong>。你粘贴转账的时候，钱直接进了别人的口袋。整个过程你完全看不到任何异常。</p>
+
+      <h2>伪装能力也不差</h2>
+
+      <img src="/post-images/crypto_clipper_features.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Crypto Clipper技术分析">
+
+      <p>Crypto Clipper会扫描U盘上已有的文件名，然后把自己的 .lnk 快捷方式改成类似的名字。比如U盘里有个"毕业论文.docx"，它就生成一个"毕业论文.lnk"。用户很难分辨。</p>
+
+      <p>而且它用便携版Tor而不是安装版，不留注册表痕迹，不写服务项，不改系统配置。杀毒软件如果没有针对这种行为的启发式规则，基本上查不出来。</p>
+
+      <h2>微软给了一个有意思的评价</h2>
+
+      <p>报告原文里有句话我觉得写得很准：</p>
+
+      <blockquote style="border-left:3px solid #BD93F9;padding:12px 20px;margin:20px 0;background:rgba(189,147,249,0.08);border-radius:0 8px 8px 0;color:#F8F8F2;font-style:italic;">
+        "Lightweight script-based stealers can deliver outsized impact when paired with anonymized communications and runtime tasking."
+      </blockquote>
+
+      <p>翻译过来就是：这种轻量级的、基于脚本的窃取工具，配上匿名通信和运行时任务调度，影响力远超它的体量。</p>
+
+      <p>没有复杂的内核驱动，没有高级的代码混淆，就几个脚本文件加一个Tor客户端。但它能做到的事情——偷种子短语、替换钱包地址、完全隐身——比很多大名鼎鼎的APT工具都实用。</p>
+
+      <h2>怎么防</h2>
+
+      <img src="/post-images/crypto_clipper_defense.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="防御建议">
+
+      <p>微软说他们观察到Crypto Clipper是通过 .lnk 文件在USB设备间传播的，目前还没公布具体的感染规模。但他们建议所有处理加密货币的用户：</p>
+
+      <ul>
+        <li>别随便插来路不明的U盘</li>
+        <li>Windows资源管理器里打开"显示文件扩展名"，让 .lnk 无处遁形</li>
+        <li>用硬件钱包管理种子短语，别把助记词存在联网设备上</li>
+        <li>定期检查启动项和网络连接，看有没有异常的Tor流量</li>
+      </ul>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #30363d;">参考：Microsoft Security Report · Crypto Clipper Analysis</p>
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Microsoft/" class="tag-link">Microsoft</a>
+      <a href="/tags/USB蠕虫/" class="tag-link">USB蠕虫</a>
+      <a href="/tags/安全/" class="tag-link">安全</a>
+      <a href="/tags/CryptoClipper/" class="tag-link">CryptoClipper</a>
+      <a href="/tags/加密货币/" class="tag-link">加密货币</a>
+      <a href="/tags/Tor/" class="tag-link">Tor</a>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>

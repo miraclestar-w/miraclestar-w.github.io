@@ -1,0 +1,94 @@
+<!--
+title: Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片
+date: 2026-06-21
+tags: Apple,蓝牙,安全漏洞,Beats,CVE-2025-20701,Airoha,WhisperPair
+description: Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。漏洞去年就公开了，苹果拖了整整12个月才出补丁。同期WhisperPair漏洞群影响更广，Sony、Google等10+厂商中招。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片 | Miracle</title>
+<meta name="description" content="Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。漏洞去年就公开了，苹果拖了整整12个月才出补丁。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/apple-bluetooth-eavesdropping-chip-root-cause.html">
+<meta property="og:title" content="Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片">
+<meta property="og:description" content="Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。漏洞去年就公开了，苹果拖了整整12个月才出补丁。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/apple-bluetooth-eavesdropping-chip-root-cause.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/whisperpair_scope.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/apple-bluetooth-eavesdropping-chip-root-cause.html">
+<meta name="twitter:title" content="Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片">
+<meta name="twitter:description" content="Beats Studio Buds蓝牙芯片存在高危窃听漏洞CVE-2025-20701，攻击者可在蓝牙范围内窃听手机麦克风。">
+<meta name="twitter:image" content="/post-images/whisperpair_scope.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-21</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Apple, 蓝牙, 安全漏洞, Beats</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/whisperpair_scope.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="WhisperPair蓝牙漏洞影响范围">
+
+      <p>Beats Studio Buds终于推送了固件更新。版本号1B211，修复了一个评分8.8/10的高危漏洞——攻击者在蓝牙范围内，可以远程打开你耳机的麦克风偷听。</p>
+      <p>这个漏洞编号CVE-2025-20701，去年就有人报告了。拖了整整12个月才出补丁。</p>
+
+      <h2>不只是Apple的问题</h2>
+      <img src="/post-images/airoha_chip_v2.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Airoha蓝牙芯片漏洞影响链">
+      <p>漏洞不出在Apple的代码里，出在Airoha Systems的蓝牙芯片上。这家公司的芯片被塞进了大量消费级蓝牙耳机，Apple、Jabra、Bose、JBL都在用。</p>
+      <p>安全研究员Dennis Heinze和Frieder Steinmetz去年发现了这个漏洞链。他们演示了完整的攻击流程：攻击者在蓝牙范围内，可以伪装成你之前配对过的设备，然后通过耳机麦克风监听你的对话。不只是偷听——他们还能读取通话记录、通讯录，甚至直接拨号。</p>
+      <p>Airoha去年就给下游厂商发了修复版SDK。但各家耳机厂商什么时候把固件推到用户手里，完全是另一回事。Apple和Jabra这周才动，Bose和JBL也发了声明说在跟进。</p>
+
+      <h2>攻击没那么难</h2>
+      <img src="/post-images/cve_breakdown.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="CVE评分详解">
+      <p>这个漏洞的攻击门槛比你想象的低。攻击者不需要物理接触你的设备，只需要在蓝牙信号范围内（大概10米）。你甚至不需要正在用耳机——漏洞描述里说，攻击对象是"尚未配对、正在寻找配对请求的设备"。也就是说，你的耳机放包里开着机，就可能被利用。</p>
+      <p>不过也有好消息：目前没有公开报告说这个漏洞在野外被实际利用过。这类攻击需要攻击者持续待在蓝牙范围内，操作复杂度不低。</p>
+
+      <h2>同期还有个更大的雷</h2>
+      <img src="/post-images/bt_timeline.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="蓝牙漏洞时间线">
+      <p>就在同一个月，安全公司Insinuator还披露了另一组蓝牙漏洞"WhisperPair"，影响范围更广——Sony、Nothing、JBL、OnePlus、Google自己的设备都在列。这组漏洞不只能窃听，还能定位设备位置。受影响的厂商超过10家。</p>
+      <p>蓝牙安全一直是个被低估的领域。大多数人在意的是手机系统有没有及时更新，很少有人去检查耳机的固件版本。</p>
+
+      <h2>怎么查你的耳机有没有修</h2>
+      <img src="/post-images/firmware_check.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="固件版本检查指南">
+      <p><strong>iPhone用户：</strong>打开设置 → 蓝牙 → 点耳机旁边的"i" → 看固件版本是不是1B211。如果你的Beats Studio Buds还在蓝牙配对范围内，固件会自动更新。没自动更新的话，确保耳机连着手机、手机连着Wi-Fi，放着别动几分钟。</p>
+      <p><strong>Android用户比较麻烦</strong>，Apple的固件更新走的是iOS生态。目前没有看到Android端的更新通道说明。</p>
+      <p>说实话，大部分人可能根本不知道自己的耳机还能被这样搞。10米范围内，你的耳机麦克风就变成了别人的窃听器。Beats这颗Airoha芯片，被塞进了不知道多少副耳机里。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #30363d;">参考：Insinuator Security Research · Apple Security Advisory · CVE-2025-20701 · WhisperPair Disclosure</p>
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Apple/" class="tag-link">Apple</a>
+      <a href="/tags/蓝牙/" class="tag-link">蓝牙</a>
+      <a href="/tags/安全漏洞/" class="tag-link">安全漏洞</a>
+      <a href="/tags/Beats/" class="tag-link">Beats</a>
+      <a href="/tags/CVE-2025-20701/" class="tag-link">CVE-2025-20701</a>
+      <a href="/tags/WhisperPair/" class="tag-link">WhisperPair</a>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>
