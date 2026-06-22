@@ -1,5 +1,12 @@
 [
   {
+    "title": "Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱",
+    "url": "/post/windows11-media-player-ram-hevc.html",
+    "date": "2026-06-22",
+    "tags": "Windows, 微软, Media Player, HEVC, 内存, 用户体验",
+    "excerpt": "微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。"
+  },
+  {
     "title": "Apple拖了12个月才修的耳机窃听漏洞，根源是一颗芯片",
     "url": "/post/apple-bluetooth-eavesdropping-chip-root-cause.html",
     "date": "2026-06-21",

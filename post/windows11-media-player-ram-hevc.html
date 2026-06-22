@@ -1,0 +1,129 @@
+<!--
+title: Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱
+date: 2026-06-22
+tags: Windows,微软,Media Player,HEVC,内存,用户体验
+description: 微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱 | Miracle</title>
+<meta name="description" content="微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/windows11-media-player-ram-hevc.html">
+<meta property="og:title" content="Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱">
+<meta property="og:description" content="微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/windows11-media-player-ram-hevc.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/win11-wmp-memory.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/windows11-media-player-ram-hevc.html">
+<meta name="twitter:title" content="Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱">
+<meta name="twitter:description" content="微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。">
+<meta name="twitter:image" content="/post-images/win11-wmp-memory.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-22</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Windows, 微软, Media Player, HEVC, 内存, 用户体验</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/win11-wmp-memory.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Windows Media Player内存占用对比">
+
+      <p>微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。</p>
+
+      <p>Hacker News上这条帖子直接炸了，314个赞，评论区全是骂的。</p>
+
+      <h2>老播放器好好的，为什么要换</h2>
+
+      <p>Windows自带的Media Player从Windows 3.0就开始有了，二十多年没怎么大改过。能播视频、能放音乐、界面丑但能用。对大多数人来说，它就是个"不碍事"的存在——你不会专门打开它，但它也不会出什么幺蛾子。</p>
+
+      <p>微软大概觉得这样不行。2022年开始推新版Media Player，走的是Fluent Design路线，界面确实好看了。但问题来了：好看归好看，它到底比老版本好在哪？</p>
+
+      <p>答案可能让人失望。</p>
+
+      <h2>内存占用直接起飞</h2>
+
+      <p>ExtremeTech做了对比测试，新版Media Player播放同一个视频文件时，内存占用是老版本的3.5倍。</p>
+
+      <img src="/post-images/win11-hevc-cost.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="HEVC解码器成本对比">
+
+      <p>老版本播一个MP4大概吃50MB内存，新版直接飙到175MB以上。你可能觉得175MB不算什么，但别忘了这只是一个媒体播放器。你电脑上同时还跑着浏览器、IDE、微信、钉钉……每个应用多吃100多MB，8GB内存的电脑很快就扛不住了。</p>
+
+      <p>有人在评论区说："我打开新版Media Player，看了一下任务管理器，以为自己同时开了三个Chrome标签页。"</p>
+
+      <h2>解码器要收费才是真正的骚操作</h2>
+
+      <p>内存占用高还能忍，但接下来这个才是真正的争议点。</p>
+
+      <p>Windows 11的新版Media Player默认不支持HEVC（H.265）解码。想播HEVC编码的视频？去微软商店花7块钱买个扩展包。</p>
+
+      <p>以前呢？Windows 10自带的"HEVC Video Extensions"是免费的，直接装就行。现在微软把免费入口藏起来了，新播放器里默认不带这个功能。</p>
+
+      <p>HN评论区有人算了一笔账：HEVC是目前最主流的4K视频编码格式，蓝光碟、流媒体、监控摄像头全在用。微软等于是在说"你用我的系统看4K视频，得额外付钱"。</p>
+
+      <img src="/post-images/win11-timeline.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Windows 11争议功能时间线">
+
+      <p>更讽刺的是，微软自己就在大力推4K和HDR内容。Xbox Series X支持4K蓝光，Microsoft Store里卖的电影也是4K HEVC编码。结果自家播放器反而不支持？</p>
+
+      <h2>用户的反应很真实</h2>
+
+      <p>HN评论区画风基本是这样的：</p>
+
+      <p>有人说"我直接切回了VLC"，这条评论获得了最多的赞。VLC是开源免费的，支持几乎所有视频格式，不需要额外买解码器。</p>
+
+      <p>有人说"微软的设计师是不是觉得用户内存多到用不完"。</p>
+
+      <p>还有人提到，Windows 11本身的内存管理就已经被吐槽过很多次了——系统空闲状态下就要吃4-6GB内存。现在连自带的媒体播放器都这么吃资源，那8GB内存的电脑基本上就是"开机就卡"的状态。</p>
+
+      <img src="/post-images/win11-user-reactions.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="用户反应总结">
+
+      <h2>其实微软一直在搞这种操作</h2>
+
+      <p>这不是微软第一次干这种事了。</p>
+
+      <p>Windows 11取消了任务栏拖拽功能，后来被骂回来了。取消了右键菜单的完整版，后来也被骂回来了。每次都是先砍掉一个好用的功能，用户骂完再加回来。</p>
+
+      <p>但这次的解码器收费不太一样——这涉及到真金白银。免费的东西变成付费的，用户的容忍度会低很多。</p>
+
+      <p>而且HEVC解码器的授权费本来就很有争议。MPEG LA对HEVC收取专利费，微软之前一直替用户承担了这笔费用。现在微软把这个成本转嫁给用户，本质上是在说"这笔钱我不想出了"。</p>
+
+      <h2>一个播放器背后的问题</h2>
+
+      <p>这件事看起来小，但反映的问题不小。</p>
+
+      <p>微软这两年在Windows 11上一直在做减法——砍功能、加限制、推订阅。从取消本地账户到强制绑定微软账号，从广告塞进开始菜单到解码器收费，每一步都在把Windows从一个"工具"变成一个"平台"。</p>
+
+      <p>对普通用户来说，最直接的感受就是：以前能免费用的东西，现在要么不好用了，要么要花钱了。</p>
+
+      <p>HN上有个评论说得很直白："微软正在把Windows变成一个需要持续付费才能正常使用的操作系统。"</p>
+
+      <p>这话可能有点夸张，但方向确实在往那边走。</p>
+
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Windows/" class="tag-link">Windows</a>
+      <a href="/tags/微软/" class="tag-link">微软</a>
+      <a href="/tags/Media Player/" class="tag-link">Media Player</a>
+      <a href="/tags/HEVC/" class="tag-link">HEVC</a>
+      <a href="/tags/内存/" class="tag-link">内存</a>
+      <a href="/tags/用户体验/" class="tag-link">用户体验</a>
+    </div>
+  </article>
+</div>
+</main>
+
+</body>
+</html>
