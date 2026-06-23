@@ -1,0 +1,119 @@
+<!--
+title: 华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍
+date: 2026-06-23
+tags: AI,Moebius,图像修复,FLUX.1,模型蒸馏,华中科大
+description: Hacker News榜一的Moebius：0.22B参数的图像修复模型，效果持平11.9B的FLUX.1-Fill-Dev，推理速度快15倍以上。来自华中科技大学和VIVO AI Lab。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍 | Miracle</title>
+<meta name="description" content="Hacker News榜一的Moebius：0.22B参数的图像修复模型，效果持平11.9B的FLUX.1-Fill-Dev，推理速度快15倍以上。来自华中科技大学和VIVO AI Lab。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/moebius-02b-image-inpainting.html">
+<meta property="og:title" content="华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍">
+<meta property="og:description" content="Hacker News榜一的Moebius：0.22B参数的图像修复模型，效果持平11.9B的FLUX.1-Fill-Dev，推理速度快15倍以上。来自华中科技大学和VIVO AI Lab。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/moebius-02b-image-inpainting.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/moebius_pipeline.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/moebius-02b-image-inpainting.html">
+<meta name="twitter:title" content="华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍">
+<meta name="twitter:description" content="Hacker News榜一的Moebius：0.22B参数的图像修复模型，效果持平11.9B的FLUX.1-Fill-Dev，推理速度快15倍以上。来自华中科技大学和VIVO AI Lab。">
+<meta name="twitter:image" content="/post-images/moebius_pipeline.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-23</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">AI, Moebius, 图像修复, FLUX.1, 模型蒸馏, 华中科大</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/moebius_pipeline.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Moebius模型架构">
+
+      <p>Hacker News刚挂上去几小时就冲到榜一。一个0.22B参数的图像修复模型，跑出来的效果比11.9B参数的FLUX.1-Fill-Dev还猛，推理速度快了15倍以上。</p>
+
+      <p>论文挂在arXiv上，代码在GitHub上，206个star，来自华中科技大学视觉学习实验室和VIVO AI Lab。</p>
+
+      <h2>这事有多离谱</h2>
+
+      <p>搞AI的人都知道，模型越大效果越好，这是默认共识。FLUX.1-Fill-Dev是目前最主流的图像修复模型，11.9B参数，效果确实强。</p>
+
+      <p>但问题也很明显：这东西太大了。要跑起来至少需要一张高端GPU，推理时间长到让人等得不耐烦。实际部署的时候，光是加载模型就要好几秒。</p>
+
+      <p>Moebius只有0.22B参数，连FLUX的2%都不到。按理说这么小的模型，效果应该差很远才对。</p>
+
+      <p>实际上没有。在自然图像和人像修复的测试集上，Moebius的生成质量和FLUX.1-Fill-Dev持平，某些指标甚至更好。</p>
+
+      <img src="/post-images/moebius_tab1.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Moebius vs FLUX.1性能对比">
+
+      <h2>怎么做到的</h2>
+
+      <p>关键在两个地方。</p>
+
+      <p>第一个是LλMI模块（Local-λ Mix Interaction）。传统diffusion模型的计算方式是全局attention，每一步都要计算所有像素之间的关系，计算量随图像分辨率指数增长。LλMI把它拆成两部分：Local-λ负责捕捉局部空间特征，Interactive-λ负责处理全局语义信息。两部分分别压缩成固定大小的矩阵，再合并。这样参数量砍下来了，但关键信息没丢。</p>
+
+      <p>第二个是自适应多粒度蒸馏策略。小模型直接训练效果有限，所以他们用FLUX.1-Fill-Dev当teacher model来蒸馏。但蒸馏不是简单地把大模型的输出当标签，而是在latent space里动态平衡多个梯度损失，让小模型学到大模型的"思考方式"而不是死记硬背输出。</p>
+
+      <p>简单说就是：大模型教小模型怎么想，而不是教它记住什么。</p>
+
+      <h2>实际跑起来什么样</h2>
+
+      <img src="/post-images/moebius_tab2.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Moebius详细对比数据">
+
+      <p>论文里给了具体数字。在标准测试集上，Moebius的FID分数（越低越好）和FLUX.1-Fill-Dev接近，某些场景下还略好。但推理速度快了15倍以上。</p>
+
+      <p>15倍是什么概念？FLUX.1跑一张图可能要3-5秒，Moebius只要零点几秒。这个差距在实时应用里是质的区别。</p>
+
+      <p>比如视频修复，帧与帧之间需要连续处理。FLUX.1跑一帧要好几秒，实时性根本谈不上。Moebius可以在消费级显卡上接近实时处理。</p>
+
+      <p>再比如移动端应用。11.9B的模型根本塞不进手机，0.22B的模型虽然也不小，但至少有了在端侧部署的可能性。</p>
+
+      <h2>没那么完美的地方</h2>
+
+      <img src="/post-images/moebius_cover.gif" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Moebius修复效果演示">
+
+      <p>先泼点冷水。</p>
+
+      <p>Moebius是任务特定模型，只做图像修复（inpainting），不像FLUX.1那样是通用模型。你不能拿它来生成新图像或者做风格迁移，它就是专门用来修补缺失区域的。</p>
+
+      <p>论文里的测试集也比较标准，真实场景下的边界情况（极端遮挡、复杂纹理、超大分辨率）表现如何，还需要社区验证。</p>
+
+      <p>另外，0.22B的参数量在实际部署时也不是随便什么设备都能跑的。虽然比11.9B小得多，但对手机端来说还是偏大，可能需要进一步量化或者剪枝。</p>
+
+      <h2>这个方向本身挺有意思</h2>
+
+      <p>倒不是说Moebius能立刻替代FLUX.1。而是这个方向本身很有意思：用不到2%的参数达到同等效果，说明大模型里存在大量冗余。</p>
+
+      <p>如果这个思路能推广到其他任务——比如图像生成、超分辨率、视频修复——那对整个行业的部署成本和推理效率影响会很大。</p>
+
+      <p>论文里的蒸馏方法也有参考价值。在latent space里做蒸馏而不是pixel space，避开了昂贵的解码步骤，这个技巧可以用在很多场景。</p>
+
+      <p>代码已经开源在GitHub上：<a href="https://github.com/hustvl/Moebius" target="_blank">hustvl/Moebius</a>。论文编号arXiv:2606.19195。想试的话可以直接clone下来跑。</p>
+
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/AI/" class="tag-link">AI</a>
+      <a href="/tags/Moebius/" class="tag-link">Moebius</a>
+      <a href="/tags/图像修复/" class="tag-link">图像修复</a>
+      <a href="/tags/FLUX.1/" class="tag-link">FLUX.1</a>
+      <a href="/tags/模型蒸馏/" class="tag-link">模型蒸馏</a>
+      <a href="/tags/华中科大/" class="tag-link">华中科大</a>
+    </div>
+  </article>
+</div>
+</main>
+
+</body>
+</html>

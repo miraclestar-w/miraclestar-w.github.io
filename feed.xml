@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍</title>
+      <link>https://miraclestar-w.github.io/post/moebius-02b-image-inpainting.html</link>
+      <description>Hacker News榜一的Moebius：0.22B参数的图像修复模型，效果持平11.9B的FLUX.1-Fill-Dev，推理速度快15倍以上。来自华中科技大学和VIVO AI Lab。</description>
+      <pubDate>Tue, 23 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/moebius-02b-image-inpainting.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>Windows 11新播放器搞了个大翻车：内存吃3.5倍，解码器反而要钱</title>
       <link>https://miraclestar-w.github.io/post/windows11-media-player-ram-hevc.html</link>
       <description>微软给Windows 11换了个全新的媒体播放器，结果被用户发现内存占用是老版本的3.5倍。更要命的是，以前免费的视频解码器现在要单独掏钱买了。</description>
