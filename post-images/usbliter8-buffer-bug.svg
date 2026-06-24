@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 195" width="840" height="195" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <style><![CDATA[
+    :root { --card:#fcfcfd; --line:#d7d7df; --fill:#cfe0fc; --fillneg:#f6cccc; --ptr:#d9822b; --muted:#71717a; }
+    .card { fill:var(--card); stroke:var(--line); }
+    .cell { fill:#ffffff; stroke:var(--line); }
+    .fill { fill:var(--fill); }
+    .fillneg { fill:var(--fillneg); }
+    .idx  { fill:var(--muted); font-size:11px; font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace; }
+    .name { fill:var(--muted); font-size:13px; font-weight:600; letter-spacing:.02em; }
+    .anim { animation-duration:8s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; }
+    #ptr { animation-name:ptr; }
+    #f6{animation-name:f6;} #f7{animation-name:f7;} #f8{animation-name:f8;}
+    #f3{animation-name:f3;} #f4{animation-name:f4;} #f5{animation-name:f5;}
+    #f0{animation-name:f0;} #f1{animation-name:f1;} #f2{animation-name:f2;}
+
+    @keyframes ptr {
+      0%,6%   { transform:translateX(484px); }
+      14%     { transform:translateX(560px); }
+      22%     { transform:translateX(636px); }
+      30%     { transform:translateX(242px); }
+      38%     { transform:translateX(318px); }
+      46%     { transform:translateX(394px); }
+      54%     { transform:translateX(0px); }
+      62%     { transform:translateX(76px); }
+      70%,95% { transform:translateX(152px); }
+      100%    { transform:translateX(484px); }
+    }
+    @keyframes f6 { 0%,4%{opacity:0;} 7%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f7 { 0%,12%{opacity:0;} 15%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f8 { 0%,20%{opacity:0;} 23%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f3 { 0%,28%{opacity:0;} 31%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f4 { 0%,36%{opacity:0;} 39%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f5 { 0%,44%{opacity:0;} 47%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f0 { 0%,52%{opacity:0;} 55%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f1 { 0%,60%{opacity:0;} 63%,95%{opacity:1;} 98%,100%{opacity:0;} }
+    @keyframes f2 { 0%,68%{opacity:0;} 71%,95%{opacity:1;} 98%,100%{opacity:0;} }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation:none; }
+      #ptr { transform:translateX(0); }
+      #f0,#f1,#f2,#f3,#f4,#f5,#f6,#f7,#f8 { opacity:1; }
+    }
+  ]]></style>
+
+  <rect class="card" x="1" y="1" width="838" height="193" rx="14"/>
+  <rect class="cell" x="70"  y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="146" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="222" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="312" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="388" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="464" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="554" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="630" y="56" width="70" height="64" rx="6"/>
+  <rect class="cell" x="706" y="56" width="70" height="64" rx="6"/>
+
+  <rect id="f0" class="anim fillneg" x="70"  y="56" width="70" height="64" rx="6"/>
+  <rect id="f1" class="anim fillneg" x="146" y="56" width="70" height="64" rx="6"/>
+  <rect id="f2" class="anim fillneg" x="222" y="56" width="70" height="64" rx="6"/>
+  <rect id="f3" class="anim fillneg" x="312" y="56" width="70" height="64" rx="6"/>
+  <rect id="f4" class="anim fillneg" x="388" y="56" width="70" height="64" rx="6"/>
+  <rect id="f5" class="anim fillneg" x="464" y="56" width="70" height="64" rx="6"/>
+  <rect id="f6" class="anim fill" x="554" y="56" width="70" height="64" rx="6"/>
+  <rect id="f7" class="anim fill" x="630" y="56" width="70" height="64" rx="6"/>
+  <rect id="f8" class="anim fill" x="706" y="56" width="70" height="64" rx="6"/>
+  <line x1="544" y1="50" x2="544" y2="126" stroke="#d9822b" stroke-width="1.5" stroke-dasharray="4 3"/>
+
+  <g id="ptr" class="anim">
+    <path d="M105,52 l-9,-13 l18,0 z" fill="#d9822b"/>
+  </g>
+
+  <text class="idx" x="105" y="138" text-anchor="middle">-0x18</text>
+  <text class="idx" x="181" y="138" text-anchor="middle">-0x14</text>
+  <text class="idx" x="257" y="138" text-anchor="middle">-0x10</text>
+  <text class="idx" x="347" y="138" text-anchor="middle">-0x0C</text>
+  <text class="idx" x="423" y="138" text-anchor="middle">-0x08</text>
+  <text class="idx" x="499" y="138" text-anchor="middle">-0x04</text>
+  <text class="idx" x="589" y="138" text-anchor="middle">0x00</text>
+  <text class="idx" x="665" y="138" text-anchor="middle">0x04</text>
+  <text class="idx" x="741" y="138" text-anchor="middle">0x08</text>
+
+  <line x1="554" y1="154" x2="776" y2="154" stroke="#c9c9d2" stroke-width="1.5"/>
+  <text class="name" x="665" y="174" text-anchor="middle">DMA buffer</text>
+</svg>

@@ -1,5 +1,12 @@
 [
   {
+    "title": "苹果A12芯片被8个USB小数据包打穿了，而且修不了",
+    "url": "/post/usbliter8-apple-a12-bootrom-exploit.html",
+    "date": "2026-06-24",
+    "tags": "Apple, 安全, BootROM, 漏洞, A12, USB, usbliter8, iPhone",
+    "excerpt": "安全研究公司Paradigm Shift公开了针对苹果A12和A13芯片的BootROM漏洞usbliter8，通过USB发送异常小数据包即可操纵硬件指针获得代码执行权。硬件层面问题，苹果无法修复。"
+  },
+  {
     "title": "华中科大搞了个0.2B模型，把12B的FLUX.1干碎了，速度快15倍",
     "url": "/post/moebius-02b-image-inpainting.html",
     "date": "2026-06-23",
