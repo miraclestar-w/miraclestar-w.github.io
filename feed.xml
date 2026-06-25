@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了</title>
+      <link>https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html</link>
+      <description>Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。</description>
+      <pubDate>Wed, 25 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>苹果A12芯片被8个USB小数据包打穿了，而且修不了</title>
       <link>https://miraclestar-w.github.io/post/usbliter8-apple-a12-bootrom-exploit.html</link>
       <description>安全研究公司Paradigm Shift公开了针对苹果A12和A13芯片的BootROM漏洞usbliter8，通过USB发送异常小数据包即可操纵硬件指针获得代码执行权。硬件层面问题，苹果无法修复。</description>

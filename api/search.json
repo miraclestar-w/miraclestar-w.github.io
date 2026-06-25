@@ -1,5 +1,12 @@
 [
   {
+    "title": "Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了",
+    "url": "/post/gemini-35-flash-computer-use.html",
+    "date": "2026-06-25",
+    "tags": "Google, Gemini, Flash, AI, Computer Use, HN",
+    "excerpt": "Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。"
+  },
+  {
     "title": "苹果A12芯片被8个USB小数据包打穿了，而且修不了",
     "url": "/post/usbliter8-apple-a12-bootrom-exploit.html",
     "date": "2026-06-24",

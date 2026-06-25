@@ -1,0 +1,122 @@
+<!--
+title: Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了
+date: 2026-06-25
+tags: Google,Gemini,Flash,AI,Computer Use,HN
+description: Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了 | Miracle</title>
+<meta name="description" content="Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html">
+<meta property="og:title" content="Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了">
+<meta property="og:description" content="Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/gemini-flash-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html">
+<meta name="twitter:title" content="Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了">
+<meta name="twitter:description" content="Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。">
+<meta name="twitter:image" content="/post-images/gemini-flash-cover.png">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-25</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Google, Gemini, Flash, AI, Computer Use</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/gemini-flash-cover.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Gemini 3.5 Flash Computer Use">
+
+      <p>6月24日，Google发了一篇博客：Gemini 3.5 Flash现在能操控电脑了。看屏幕、动鼠标、点按钮、打字，全都能干。</p>
+
+      <p>听起来很酷。但这个模型是Gemini家族里最便宜、最快的那一个。不是最强的Pro，不是最聪明的Ultra，是那个主打"便宜量大"的Flash。</p>
+
+      <p>HN上175个人点了赞，105条评论吵翻了。</p>
+
+      <h2>Flash之前干过什么</h2>
+
+      <img src="/post-images/gemini-flash-blog.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Google Gemini Flash blog post">
+
+      <p>有个HN用户叫jorjon，他说自己用Gemini Flash 3.5通过一个叫agy的工具写代码。他让Flash帮忙提交改动，结果Flash跑了一条<code>git reset --hard</code>。</p>
+
+      <p>他的代码全没了。</p>
+
+      <p>不是"改错了"，是"清空了"。git reset --hard的意思是：把工作区的所有改动全部丢弃，回到上一次提交的状态。没有任何恢复的余地，除非你提前备份了。</p>
+
+      <p>Flash的逻辑大概是：要提交代码，先清一下工作区比较干净。它觉得这样"更好"。</p>
+
+      <h2>Google为什么选Flash</h2>
+
+      <img src="/post-images/gemini-flash-cloud.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Google Cloud AI platform">
+
+      <p>Google自己的说法是Flash快、便宜、适合大规模部署。3.5 Flash比5.5便宜3倍左右，延迟更低，吞吐量更高。</p>
+
+      <p>从商业角度看这很合理。computer use需要频繁截图、识别屏幕内容、执行操作，每一步都要调用模型。用Pro做这些事，成本会爆炸。Flash便宜，跑得起。</p>
+
+      <p>但问题是：操控电脑这件事，对准确性的要求极高。你让AI帮你点一下"确认删除"按钮，它点成了"全部删除"，后果是不可逆的。</p>
+
+      <p>Flash便宜是因为它在推理上做了取舍。它更快，但不一定更准。让它操控电脑，就像让一个手脚很快但眼神不好的人帮你做手术。</p>
+
+      <h2>HN社区的反应</h2>
+
+      <p>评论区分成了两派。</p>
+
+      <p>一派觉得computer use本身就不靠谱。airstrike直接说："Computer use is such a terrible idea. It's slow, insecure, error prone, expensive."他认为这不过是让用户多烧token的手段，不会带来好的体验。</p>
+
+      <p>arjunchint说他们公司试过截图+AI的方式操控网页，后来改成了用accessibility tree（网页的结构化描述），成本降了将近100倍。言下之意：看屏幕是最笨的办法。</p>
+
+      <p>另一派则觉得Flash虽然不完美，但够用了。ai_fry_ur_brain说他有所有顶级模型的权限，但90%的时候还是选Flash。理由很简单：LLM大部分时候都在浪费时间，与其用贵的模型慢悠悠地浪费，不如用便宜的快速浪费完。</p>
+
+      <p>还有人问了一个很实际的问题：3.5 Pro什么时候出？zuzululu说Flash的性能"given that it's 3x cheaper than 5.5"已经很不错了。言外之意：便宜才是硬道理。</p>
+
+      <h2>Google的算盘</h2>
+
+      <img src="/post-images/gemini-flash-vertex.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Google Vertex AI platform">
+
+      <p>Google选Flash做computer use，不是因为它最聪明，而是因为它最便宜。3.5 Flash比5.5便宜3倍，跑一次截图识别的成本大概是Pro的三分之一。computer use要反复截图、识别、操作，每一步都烧token，用Pro做这件事成本根本扛不住。</p>
+
+      <p>所以Google的逻辑很清楚：先用便宜的模型把流程跑通，等Pro出来了再切换。现阶段的目标不是"做得好"，而是"做得起"。</p>
+
+      <p>但jorjon的git reset --hard事件摆在那里。模型操控电脑的代价不是token费，是你的数据。Flash帮你点错一个按钮，你可能丢掉几个小时的工作。Flash帮你跑错一条命令，你的项目可能回到三天前的状态。</p>
+
+      <p>Google自己在博客里放的benchmark图里，Flash在OSWorld上的分数并不好看。他们自己都知道。但Google还是选择把computer use交给了Flash。</p>
+
+      <h2>那些还在等Pro的人</h2>
+
+      <p>HN评论区出现频率最高的一句话是："Where is 3.5 Pro?"</p>
+
+      <p>Google给了Flash computer use，但Pro还没动静。对于需要准确操控电脑的场景——比如自动化测试、数据录入、复杂工作流——Flash的错误率可能让人无法接受。</p>
+
+      <p>Smallstepforman说他让Gemini从PDF里提取表格并生成C++数据结构，来回改了15次之后Gemini直接放弃了，说"我超过了错误阈值"。连表格都处理不好的模型，你敢让它操控你的电脑吗？</p>
+
+      <p>目前computer use还只能通过API调用，没有像Claude CoWork或Codex那样的UI界面。想体验的话，得自己写代码调接口。</p>
+
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Google/" class="tag-link">Google</a>
+      <a href="/tags/Gemini/" class="tag-link">Gemini</a>
+      <a href="/tags/Flash/" class="tag-link">Flash</a>
+      <a href="/tags/AI/" class="tag-link">AI</a>
+      <a href="/tags/Computer Use/" class="tag-link">Computer Use</a>
+      <a href="/tags/HN/" class="tag-link">HN</a>
+    </div>
+  </article>
+</div>
+</main>
+</body>
+</html>
