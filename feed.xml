@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>GitHub前CEO砸180万美元，AI读了一张2000年前被火山烧焦的古卷</title>
+      <link>https://miraclestar-w.github.io/post/vesuvius-challenge-ai-scrolls.html</link>
+      <description>GitHub前CEO Nat Friedman牵头的Vesuvius Challenge团队用X光扫描加机器学习，完整读出了一卷2000年前的古希腊哲学著作，奖金已超180万美元。</description>
+      <pubDate>Thu, 26 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/vesuvius-challenge-ai-scrolls.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>Google把电脑操控权交给了最便宜的Gemini模型，但有人的代码被它清空了</title>
       <link>https://miraclestar-w.github.io/post/gemini-35-flash-computer-use.html</link>
       <description>Google为Gemini 3.5 Flash添加了电脑操控能力，但这个最便宜的模型出了名的不靠谱——有人让它提交代码，它直接git reset --hard把代码全删了。</description>
