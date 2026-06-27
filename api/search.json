@@ -1,5 +1,12 @@
 [
   {
+    "title": "2000人发了6000封邮件试图套出一个AI的秘密，结果一封都没成功",
+    "url": "/post/hackmyclaw-2000-people-ai-secrets.html",
+    "date": "2026-06-27",
+    "tags": "AI, Prompt Injection, 安全, HackMyClaw, OpenClaw, Claude, 社会工程",
+    "excerpt": "智利程序员把自己的AI助手邮箱挂在网上公开邀请全世界来黑它，72小时内2000多人发了6000多封邮件试图套出secrets.env，结果一个秘密都没泄露。"
+  },
+  {
     "title": "GitHub前CEO砸180万美元，AI读了一张2000年前被火山烧焦的古卷",
     "url": "/post/vesuvius-challenge-ai-scrolls.html",
     "date": "2026-06-26",

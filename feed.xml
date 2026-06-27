@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>2000人发了6000封邮件试图套出一个AI的秘密，结果一封都没成功</title>
+      <link>https://miraclestar-w.github.io/post/hackmyclaw-2000-people-ai-secrets.html</link>
+      <description>智利程序员把自己的AI助手邮箱挂在网上公开邀请全世界来黑它，72小时内2000多人发了6000多封邮件试图套出secrets.env，结果一个秘密都没泄露。</description>
+      <pubDate>Sat, 27 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/hackmyclaw-2000-people-ai-secrets.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>GitHub前CEO砸180万美元，AI读了一张2000年前被火山烧焦的古卷</title>
       <link>https://miraclestar-w.github.io/post/vesuvius-challenge-ai-scrolls.html</link>
       <description>GitHub前CEO Nat Friedman牵头的Vesuvius Challenge团队用X光扫描加机器学习，完整读出了一卷2000年前的古希腊哲学著作，奖金已超180万美元。</description>
