@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞</title>
+      <link>https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html</link>
+      <description>用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。</description>
+      <pubDate>Mon, 30 Jun 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>2000人发了6000封邮件试图套出一个AI的秘密，结果一封都没成功</title>
       <link>https://miraclestar-w.github.io/post/hackmyclaw-2000-people-ai-secrets.html</link>
       <description>智利程序员把自己的AI助手邮箱挂在网上公开邀请全世界来黑它，72小时内2000多人发了6000多封邮件试图套出secrets.env，结果一个秘密都没泄露。</description>

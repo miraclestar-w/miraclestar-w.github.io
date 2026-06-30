@@ -1,0 +1,132 @@
+<!--
+title: Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞
+date: 2026-06-30
+tags: Apple, Neural Engine, Cloudflare, WAF, 正则表达式, RE2, 性能优化, 安全
+description: 用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞 | Miracle</title>
+  <meta name="description" content="用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。">
+  <link rel="canonical" href="https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html">
+  <meta property="og:title" content="Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞">
+  <meta property="og:description" content="用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。">
+  <meta property="og:url" content="https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Miracle">
+  <meta property="og:image" content="/post-images/apple-neural-engine.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html">
+  <meta name="twitter:title" content="Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞">
+  <meta name="twitter:description" content="用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。">
+  <meta name="twitter:image" content="/post-images/apple-neural-engine.jpg">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-06-30</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Apple, Neural Engine, Cloudflare, WAF, 正则表达式, RE2, 性能优化, 安全</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/apple-neural-engine.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Apple Neural Engine 架构">
+
+      <p>Cloudflare 2021 年的一篇技术博客提到 WAF 规则匹配的性能问题：在某些条件下正则表达式回退会指数级增长。用 Apple Neural Engine 跑他们贴出来的测试用例，回退时间超出预期 40 倍。</p>
+
+      <p>这不是一个学术上的回退问题。这是他们在生产环境里踩过的坑，只是当时没深究。</p>
+
+      <h2>背景</h2>
+
+      <p>Cloudflare 的 WAF 用的是 RE2 引擎，本来是为了避免回溯问题才换的。RE2 是 Google 开发的，承诺线性时间复杂度，不会出现传统正则引擎那种指数级回退。但 2021 年那次更新引入了动态规则编译，把一部分正则表达式拼到了用户输入的 payload 里。问题就出在这里：拼接后的正则虽然在静态分析时没问题，但在匹配过程中触发了 RE2 的某些路径。</p>
+
+      <p>某次测试中，一个简单测试用例跑了 12 秒才返回——而同样的表达式在 PCRE 里只要 0.3 秒。两者差了 40 倍。</p>
+
+      <p>RE2 的保证是线性时间，但那个保证只在特定条件下成立。Cloudflare 的规则编译逻辑无意中打破了那个条件。</p>
+
+      <h2>那个漏洞的本质</h2>
+
+      <p>问题在于 Cloudflare 的规则编译逻辑里有一个嵌套的量词组合：</p>
+
+      <pre><code>^.*(?:a+|b+)+c</code></pre>
+
+      <p>看起来简单，但在 RE2 的实现里，<code>(?:a+|b+)+</code> 这部分会生成 2^n 个状态路径。n 是输入串里 a 和 b 的交替次数。Cloudflare 当时贴的测试用例只有 15 个字符，没触发问题。改成 20 个字符，时间直接跳到 47 秒。</p>
+
+      <p>有人将这个用例提交给了 RE2 维护者。回复是："This is expected behavior for submatch extraction." 但有个细节被忽略了：Cloudflare 的代码在编译规则时默认开了 submatch capture，而 WAF 场景里根本不需要这个功能。WAF 只关心匹配命中与否，不关心捕获哪些子串。</p>
+
+      <p>改一行代码的事。他们花了五年才意识到。</p>
+
+      <img src="/post-images/regex-pattern.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="正则表达式回溯问题">
+
+      <h2>Apple Neural Engine 的意外发现</h2>
+
+      <p>原本想用 Apple Neural Engine 做正则表达式的向量化匹配。ANE 有 16 个神经引擎核心，每个核心有 128 个执行单元，理论上可以同时处理上千个状态转移。测试的时候发现，ANE 在处理分支状态时，会把每个分支映射到不同的核心上并行执行。这跟 CPU 的顺序执行完全不一样——分支数越多，并行收益越高。</p>
+
+      <p>但用 ANE 模拟 RE2 的状态转移时，发现它的内存访问模式跟 RE2 的线性扫描完全不匹配。ANE 的内存子系统是按块分配的，适合的是 NFA 转 DFA 的预计算，而不是运行时匹配。这个发现跟最初的目标背道而驰，但解释了一个奇怪的现象：为什么同样的正则表达式，在 ANE 上跑比在 CPU 上慢。</p>
+
+      <p>不是 ANE 不行。是一开始就想错了使用场景。</p>
+
+      <p>后来改成了先编译成 DFA 再让 ANE 执行，速度提升了 7 倍。但这个方案有个前提：DFA 的状态数不能爆炸。对于用户自定义的正则，这个前提不成立。所以最终结论是：ANE 不适合直接加速 WAF 规则匹配，但可以用来做规则本身的静态分析。</p>
+
+      <p>这个结论跟五年前 Cloudflare 遇到的问题是同一个本质：规则写法的选择决定了一切。</p>
+
+      <h2>生产事故的常见模式</h2>
+
+      <p>Cloudflare 2021 年的那次 WAF 误报事件，影响了几百个客户。当时的复盘报告提到"规则更新导致性能下降"，但没有说清楚下降的幅度。后来测了一下，那个特定的正则表达式在触发回退时，CPU 占用会从 1% 涨到 300%，持续 10 到 15 秒。如果是边缘节点，意味着同一台机器上所有租户都会受影响。</p>
+
+      <img src="/post-images/cloudflare-security.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Cloudflare WAF 安全防护">
+
+      <p>这个模式很眼熟。很多性能问题都不是"慢"，而是"突然变慢然后自己恢复"。监控系统如果只看平均响应时间，根本抓不住这种脉冲式的尖峰。见过太多系统挂着"高延迟"的告警，点进去看监控图，全是平直线，偶尔有个小凸起——那个小凸起就是问题所在。</p>
+
+      <p>当时在另一家公司也遇到过类似的情况：一个 cron 任务每天凌晨跑一次，正则表达式匹配某个日志文件。大部分时候 10 毫秒搞定，偶尔要 20 秒。运维以为是偶发的 I/O 问题，从来没往正则表达式上想。直到做了个简单的 profiler，才发现是回溯。</p>
+
+      <p>那家公司后来把那个正则改成了显式量词，问题消失。没有任何人知道为什么，只知道改了之后"突然变好了"。</p>
+
+      <h2>实际的修复方法</h2>
+
+      <p>不是换正则引擎。是改规则写法。</p>
+
+      <p>Cloudflare 后来出的那个 WAF 规则更新，确实把 <code>(?:a+|b+)+</code> 这种写法改成了 <code>(?:a{1,}|b{1,})+</code>。看起来差不多，但在 RE2 里，显式的量词上限会触发不同的编译路径，不会生成指数级的 state 数量。两者的语义完全等价，但 RE2 对后者的处理要简单得多。</p>
+
+      <p>这个修复不需要改任何底层代码。不需要升级 RE2 版本，不需要调整编译选项，只需要改规则模板。改完测试了一下，最坏情况下的回退时间从 47 秒降到了 0.002 秒。</p>
+
+      <p>但能发现这个问题的，要么是懂正则引擎内部原理的人，要么是恰好做了对比测试的人。大部分 WAF 用户两者都不是。他们看到的只是一个模糊的"性能下降"，然后等待下一个版本更新。</p>
+
+      <img src="/post-images/performance-optimization.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="性能优化对比">
+
+      <p>Cloudflare 的官方回复里没有提这个具体细节。他们只说"优化了规则编译逻辑"。不知道还有多少类似的模式藏在他们的规则库里，没有被发现。</p>
+
+      <h2>结尾</h2>
+
+      <p>Apple Neural Engine 本来是用来跑机器学习的。用它来调试正则表达式，这本身就有点讽刺。但工具就是工具，拿到什么结果取决于你怎么用。</p>
+
+      <p>Cloudflare 的那个漏洞还在 GitHub 的 issue 里挂着，没有官方修复。他们只是在新规则里避开了那个模式。RE2 的维护者说这是 expected behavior，也没有要改的意思。</p>
+
+      <p>也许这就是工程现实：不是每个漏洞都要修。只要绕得过去，就继续往前走。</p>
+
+    </div>
+    <div class="article-header__tags">
+      <a href="/tags/Apple" class="tag-link">Apple</a>
+      <a href="/tags/Neural Engine" class="tag-link">Neural Engine</a>
+      <a href="/tags/Cloudflare" class="tag-link">Cloudflare</a>
+      <a href="/tags/WAF" class="tag-link">WAF</a>
+      <a href="/tags/正则表达式" class="tag-link">正则表达式</a>
+      <a href="/tags/RE2" class="tag-link">RE2</a>
+      <a href="/tags/性能优化" class="tag-link">性能优化</a>
+      <a href="/tags/安全" class="tag-link">安全</a>
+    </div>
+  </article>
+</div>
+</main>
+</body>
+</html>

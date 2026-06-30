@@ -1,5 +1,12 @@
 [
   {
+    "title": "Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞",
+    "url": "/post/apple-neural-engine-cloudflare-waf-regex-performance.html",
+    "date": "2026-06-30",
+    "tags": "Apple, Neural Engine, Cloudflare, WAF, 正则表达式, RE2, 性能优化, 安全",
+    "excerpt": "用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。"
+  },
+  {
     "title": "2000人发了6000封邮件试图套出一个AI的秘密，结果一封都没成功",
     "url": "/post/hackmyclaw-2000-people-ai-secrets.html",
     "date": "2026-06-27",
