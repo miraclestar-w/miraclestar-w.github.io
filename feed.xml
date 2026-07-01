@@ -8,6 +8,14 @@
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>美国悬赏1000万美元追缉Signal和WhatsApp黑客团伙</title>
+      <link>https://miraclestar-w.github.io/post/us-bounty-10-million-signal-whatsapp-hackers.html</link>
+      <description>美国国务院通过"正义悬赏"项目提供1000万美元奖金，征集俄罗斯国家网络犯罪团伙UNC5792和UNC4221的身份信息。该团伙自2026年3月起持续攻击Signal和WhatsApp用户，利用社会工程学手段窃取加密密钥。</description>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0800</pubDate>
+      <guid isPermaLink="true">https://miraclestar-w.github.io/post/us-bounty-10-million-signal-whatsapp-hackers.html</guid>
+      <dc:creator>Miracle</dc:creator>
+    </item>
+    <item>
       <title>Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞</title>
       <link>https://miraclestar-w.github.io/post/apple-neural-engine-cloudflare-waf-regex-performance.html</link>
       <description>用 Apple Neural Engine 追踪 Cloudflare WAF 的一个 5 年老性能漏洞：RE2 正则引擎回退问题，以及 ANE 在规则静态分析中的意外发现。</description>

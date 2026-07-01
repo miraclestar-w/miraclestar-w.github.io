@@ -1,5 +1,12 @@
 [
   {
+    "title": "美国悬赏1000万美元追缉Signal和WhatsApp黑客团伙",
+    "url": "/post/us-bounty-10-million-signal-whatsapp-hackers.html",
+    "date": "2026-07-01",
+    "tags": "安全, Signal, WhatsApp, 黑客, 俄罗斯, FBI, 悬赏",
+    "excerpt": "美国国务院通过\u201c正义悬赏\u201d项目提供1000万美元奖金，征集俄罗斯国家网络犯罪团伙UNC5792和UNC4221的身份信息。该团伙自2026年3月起持续攻击Signal和WhatsApp用户，利用社会工程学手段窃取加密密钥。"
+  },
+  {
     "title": "Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞",
     "url": "/post/apple-neural-engine-cloudflare-waf-regex-performance.html",
     "date": "2026-06-30",
