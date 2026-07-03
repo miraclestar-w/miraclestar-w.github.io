@@ -1,10 +1,52 @@
 [
   {
+    "title": "1亿用户数据全泄露，X跟FTC说\"我不记得了\"",
+    "url": "/post/x-100m-user-data-leak-ftc-consent-order.html",
+    "content": "EFF公开信揭露X平台违反FTC数据同意令，1亿用户隐私设置被悄悄修改，消息、邮件、浏览记录全部暴露在平台访问之下。",
+    "date": "2026-07-03",
+    "tags": [
+      "X",
+      "Twitter",
+      "FTC",
+      "EFF",
+      "数据隐私",
+      "暗黑模式"
+    ]
+  },
+  {
+    "title": "小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节",
+    "url": "/post/xiaomi-mimo-1t-1000tps.html",
+    "content": "小米发布MiMo-V2.5-Pro-UltraSpeed模型，1万亿参数在8块消费级GPU上实现1000+ tokens/s推理速度。本文深度解析其FP4量化、DFlash投机解码和TileRT推理内核三大核心技术。",
+    "date": "2026-07-02",
+    "tags": [
+      "小米",
+      "MiMo",
+      "AI",
+      "GPU",
+      "大模型",
+      "推理优化"
+    ]
+  },
+  {
+    "title": "小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节",
+    "url": "/post/xiaomi-mimo-1t-1000tps.html",
+    "content": "小米发布MiMo-V2.5-Pro-UltraSpeed模型，1万亿参数在8块消费级GPU上实现1000+ tokens/s推理速度。本文深度解析其FP4量化、DFlash投机解码和TileRT推理内核三大核心技术。",
+    "date": "2026-07-02",
+    "tags": [
+      "小米",
+      "MiMo",
+      "AI",
+      "GPU",
+      "大模型",
+      "推理优化"
+    ]
+  },
+  {
     "title": "美国悬赏1000万美元追缉Signal和WhatsApp黑客团伙",
     "url": "/post/us-bounty-10-million-signal-whatsapp-hackers.html",
     "date": "2026-07-01",
     "tags": "安全, Signal, WhatsApp, 黑客, 俄罗斯, FBI, 悬赏",
-    "excerpt": "美国国务院通过\u201c正义悬赏\u201d项目提供1000万美元奖金，征集俄罗斯国家网络犯罪团伙UNC5792和UNC4221的身份信息。该团伙自2026年3月起持续攻击Signal和WhatsApp用户，利用社会工程学手段窃取加密密钥。"
+    "excerpt": "美国国务院通过“正义悬赏”项目提供1000万美元奖金，征集俄罗斯国家网络犯罪团伙UNC5792和UNC4221的身份信息。该团伙自2026年3月起持续攻击Signal和WhatsApp用户，利用社会工程学手段窃取加密密钥。"
   },
   {
     "title": "Apple Neural Engine 追踪到 Cloudflare WAF 一个 5 年老性能漏洞",

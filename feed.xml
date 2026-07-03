@@ -6,6 +6,22 @@
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
     <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
+
+    <item>
+    <title>1亿用户数据全泄露，X跟FTC说"我不记得了"</title>
+    <link>https://miraclestar-w.github.io/post/x-100m-user-data-leak-ftc-consent-order.html</link>
+    <description>EFF公开信揭露X平台违反FTC数据同意令，1亿用户隐私设置被悄悄修改，消息、邮件、浏览记录全部暴露在平台访问之下。</description>
+    <pubDate>Sat, 03 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/x-100m-user-data-leak-ftc-consent-order.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+<item>
+    <title>小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节</title>
+    <link>https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html</link>
+    <description>小米发布MiMo-V2.5-Pro-UltraSpeed模型，1万亿参数在8块消费级GPU上实现1000+ tokens/s推理速度。本文深度解析其FP4量化、DFlash投机解码和TileRT推理内核三大核心技术。</description>
+    <pubDate>2026-07-02</pubDate>
+    <guid isPermaLink="false">tag:miraclestar-w.github.io,2026-07-02:/post/xiaomi-mimo-1t-1000tps.html</guid>
+  </item>
     <atom:link href="https://miraclestar-w.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>美国悬赏1000万美元追缉Signal和WhatsApp黑客团伙</title>

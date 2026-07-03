@@ -1,0 +1,105 @@
+<!--
+title: 小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节
+date: 2026-07-02
+tags: 小米, MiMo, AI, GPU, 大模型, 推理优化
+description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-UltraSpeed，实现1000+ tokens/s推理速度的技术深度解析
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节 | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-02</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">小米, MiMo, AI</span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/mimo_hero_atmosphere.png" alt="mimo_a" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>周末刷Hacker News的时候看到一个帖子，500多分，评论区几百条。点进去一看——小米发了个1万亿参数的大模型，MiMo-V2.5-Pro-UltraSpeed，跑在8块消费级GPU上，输出速度干到了1000 tokens/s。</p>
+<p>我当时第一反应：做手机的？搞这么大动静？</p>
+<p>然后就开始翻技术文档，越看越觉得有意思。这文章就是我把看到的东西整理一下，聊聊几个我觉得挺骚的技术点。</p>
+<p>先说个数字感受一下：你平时跟ChatGPT聊天，它回你话的速度大概是30-50 tokens/s。小米这个模型，是它的20倍，峰值能到1200 tokens/s。1T参数量啊，不是什么几十亿参数的小玩意儿。</p>
+<p>这数字靠谱吗？我看了看，他们用的是FP4量化+投机解码+自研推理内核，三板斧下来确实能做到。当然具体benchmark得分另说，但1000 TPS这个数量级是站得住的。</p>
+<h3>手机厂商做AI，不是跟风，是被逼的</h3>
+<img src="/post-images/mimo_architecture.png" alt="mimo_b" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>你可能觉得小米搞AI是蹭热度。但仔细想想手机厂商现在的处境——</p>
+<p>苹果把Siri重构成了Gemini架构，WWDC上大谈Apple Intelligence。三星在Galaxy AI上砸了重金，拍照翻译、通话实时字幕全上了。Google更不用说，Gemini Nano直接塞进了Pixel的芯片里。</p>
+<p>手机行业的竞争已经不是比屏幕、比摄像头了。下一代用户体验的护城河就是AI。而AI的护城河说白了就两件事：模型够不够聪明，推理够不够快。</p>
+<p>聪明但慢得要死的AI，用户体验跟笨但快的AI没区别——用户根本等不了。小米选了条最难的路：又大又快。1T参数保证智能天花板够高，1000 TPS保证丝滑。这俩目标本来是矛盾的，模型越大推理越慢，但小米硬是把它们拧到了一起。</p>
+<h3>1000 TPS怎么来的？先说说不可能</h3>
+<img src="/post-images/mimo_performance.png" alt="性能对比" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>我第一次看到这个数字的时候算了一笔账：1T参数，FP16精度下光权重就要2TB显存，8块H100总共才640GB。数学上就不可能直接跑。</p>
+<p>所以小米肯定做了手脚。往下翻技术细节，发现他们做了一件很骚的事：没有堆专用硬件，而是在通用GPU上，通过模型和推理系统的联合优化，把速度逼到了极限。</p>
+<p>现在业界追求极致推理速度，有两个主流路线。Cerebras搞晶圆级芯片，把整个晶圆做成一颗巨无霸处理器；Groq走片上SRAM路线，用纯定制架构暴力提速。这两条路有个共同特点：贵，而且生态封闭。</p>
+<p>小米选了第三条路：用你手边买得到的GPU，通过模型和推理系统的深度协同设计（Codesign）来达到同样甚至更好的效果。具体怎么做的？三个关键技术，我一个一个说。</p>
+<h3>FP4量化：只砍"胖"的地方，承重墙不动</h3>
+<img src="/post-images/mimo_fp4_quant.png" alt="FP4量化示意图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>传统量化要么全FP16，要么全INT8，一刀切。小米搞了个精准手术：只对MoE（混合专家）架构中的Expert模块做FP4量化，其他部分保留原有精度。</p>
+<p>为什么这么干？MoE模型里Expert占了参数的大头，万亿参数绝大部分都在Expert里。但Expert对量化精度的容忍度偏偏最高。你把这部分从FP16砍到FP4，模型体积直接缩小4倍，显存带宽压力骤降，整体能力几乎没掉。</p>
+<p>这就像装修房子，不是把所有墙都砸了，而是只把储藏间的墙改薄了——空间变大了，承重结构纹丝不动。我觉得这里有个坑：FP4的精度损失到底有多大，得看具体任务。通用对话可能没啥影响，但数学推理这种精度敏感的场景，大概率会掉点。不过小米既然敢上，应该是在自己的测试集上验证过了。</p>
+<h3>DFlash投机解码：一口气"吞"更多token</h3>
+<img src="/post-images/mimo_dflash.png" alt="DFlash投机解码" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>传统的投机解码（Speculative Decoding）思路是用一个小模型来猜后续token，然后让大模型验证。但瓶颈在于小模型的猜测质量——猜得好就快，猜得差就白费算力。</p>
+<p>小米引入了学术界的DFlash方案，基于块级masked并行预测。小模型一次前向传播就填出一整块mask位置，不再需要逐个自回归生成。配合滑动窗口注意力（SWA），draft阶段的计算量从随上下文线性增长变成了常数级。</p>
+<p>效果呢？在Coding场景下平均接受长度达到6.3。啥意思？大模型每次验证8个draft token，能吞下6-7个。8个token的验证窗口，实际有效输出是6-7个，效率接近天花板。</p>
+<p>说实话这个数字挺吓人的。业内做投机解码的一般接受率能到3-4就不错了，6.3说明DFlash的draft模型跟target模型的对齐做得相当好。当然这可能跟他们的训练数据和模型结构有关，换个场景未必能复现。</p>
+<h3>TileRT：微秒级的算子间隙也得填上</h3>
+<p>前面两个是模型侧的优化，TileRT负责系统侧。</p>
+<p>在1000 TPS的超高频运行状态下，每个算子的执行时间被压缩到微秒级。传统推理框架里，算子之间的启动、同步、内存搬运会造成明显的"执行间隙"。毫秒级推理的时候这不是问题，但到了微秒级，这个间隙就成了主要瓶颈。</p>
+<p>我做运维的，对这个特别有感触。平时跑服务，毫秒级延迟的时候，你根本不care内核调度开销。但一旦延迟压到微秒级，上下文切换、内存拷贝、锁竞争这些平时看不见的东西全冒出来了。推理也是一样的道理。</p>
+<p>TileRT的做法是引入全新的执行模型，从根本上消灭算子边界带来的执行间隙。定制的编译引擎和计算核，专门为FP4量化+DFlash推测解码这条pipeline做了优化。</p>
+<p>最终效果：一个标准的8卡通用GPU节点，跑1T模型，突破1000 TPS。这个"标准"二字很关键——你不需要去买Cerebras的定制硬件，不需要依赖Groq的专属芯片。用市场上能买到的GPU，通过模型和系统的深度协同，就能达到这个速度。</p>
+<img src="/post-images/mimo_tilert.png" alt="MiMo TTS" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>运维看了这套方案，我有几个想法</h3>
+<p>说实话看完技术细节，我第一反应不是"好厉害"，而是"这玩意儿以后怎么部署、怎么运维"。有几个点我觉得挺值得琢磨。</p>
+<h4>推理服务的部署思路要变了</h4>
+<p>过去部署大模型推理服务，思路就是堆GPU、上vLLM/TGI、调参。模型越大需要的GPU越多，延迟越高，线性增长的关系。简单粗暴。</p>
+<p>小米的方案告诉我们另一种可能：与其堆更多硬件，不如在模型和系统层做协同优化。FP4量化减少显存占用，推测解码提升单次验证的有效token数，定制推理内核消除算子间隙。三板斧下来，同样的硬件能跑出10倍吞吐。</p>
+<p>这意味着什么？以后评估推理方案，不能只看"用了多少张卡"。模型量化策略、推测解码方案、推理框架的定制程度，这些都会成为成本和性能的关键变量。选一套好的推理系统，可能比多买几张卡有用得多。运维工程师得开始理解这些技术选型了，不能只管网络和存储。</p>
+<h4>资源调度要做得像数据库连接池一样精细</h4>
+<p>小米这次的API定价策略很有意思：3倍价格，10倍速度。而且是申请制、限时开放，每个账号每天最多10次入队，单次会话30分钟上限，空闲5分钟自动释放。</p>
+<p>这说明高速推理资源是稀缺的。1000 TPS的推理服务背后，GPU集群不可能无限扩容。资源调度必须做得非常精细——谁在用、用了多久、什么时候释放、怎么保证公平性。</p>
+<p>对我们运维的启发：以后做推理服务的资源管理，可能要像管理数据库连接池一样。不是简单的"有卡就分配"，而是要根据用户优先级、业务场景、会话状态做动态调度。空闲超时自动释放、每日入队次数限制、会话时长上限——这些策略你得提前想好。</p>
+<h4>监控指标得升级</h4>
+<p>1000 TPS的推理服务，出了问题你可能连日志都来不及看。微秒级的算子执行，毫秒级的端到端延迟，传统的监控粒度已经不够用了。</p>
+<p>需要关注的指标也会变：除了常规的GPU利用率、显存占用、请求延迟，还要关注推测解码的接受率、每个验证步骤的有效token数、算子执行间隙的占比。这些指标直接决定了推理服务的实际性能。</p>
+<p>我估计接下来会有一批专门针对推理服务的可观测性工具冒出来，就像当年Kubernetes催生了一堆监控方案一样。这个方向是有机会的。</p>
+<h3>手机厂商的AI基建竞赛，才刚开始</h3>
+<p>小米这次发的不只是一个模型，更是一个信号：手机厂商正在从"AI应用层"往"AI基建层"深入。</p>
+<p>以前手机厂商做AI，大多调用别人的API。三星用Google的Gemini，苹果自研芯片但也依赖合作伙伴。现在小米的做法是自己训模型、自己做推理系统、自己搞部署优化，端到端全栈能力。</p>
+<p>这个趋势一旦开始就不会停。手机厂商有三个别人没有的东西：</p>
+<p>用户数据。小米有几亿台手机在跑MIUI，用户的使用习惯、语音数据、搜索记录都是训练AI的天然养料。</p>
+<p>硬件控制力。手机厂商对芯片、存储、散热有深度控制能力，端侧AI的优化空间巨大，只有手机厂商能把软硬件协同做到极致。</p>
+<p>场景理解。手机厂商最懂用户日常什么时候需要AI翻译、什么时候需要AI总结消息、什么时候需要AI辅助拍照。这些场景化的能力不是大模型公司能随便覆盖的。</p>
+<p>小米MiMo-V2.5-Pro-UltraSpeed的发布某种程度上是手机厂商AI基建竞赛的起跑枪。可以预见接下来12个月，华为、OPPO、vivo都会在这个方向上加码。谁先把模型能力、推理速度、端侧部署三件事做到位，谁就可能在下一代手机体验中占先机。</p>
+<img src="/post-images/mimo_summary_cards.png" alt="关键技术总结" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>这个思路比模型本身更值钱</h3>
+<p>小米用8块通用GPU把1万亿参数的模型跑出了1000 tokens/s。这个数字本身迟早会被超越，但它背后的思路值得记住。</p>
+<p>真正的效率提升不来自于堆更多的资源，而来自于对系统每一层的极致理解。模型层知道哪些参数可以压缩、哪些必须保留；系统层知道每个算子在哪里浪费了时间、怎么把间隙填上。</p>
+<p>这跟运维的本质其实是一样的。不是服务器越多越好，而是把每一台服务器的每一分算力都用到极致。</p>
+<p>当别人还在数GPU的时候，真正的高手已经在数微秒了。</p>
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/小米/" class="tag-link">小米</a><a href="/tags/MiMo/" class="tag-link">MiMo</a><a href="/tags/AI/" class="tag-link">AI</a><a href="/tags/GPU/" class="tag-link">GPU</a><a href="/tags/大模型/" class="tag-link">大模型</a><a href="/tags/推理优化/" class="tag-link">推理优化</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
