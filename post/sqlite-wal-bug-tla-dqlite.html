@@ -1,0 +1,176 @@
+<!--
+title: 潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？
+date: 2026-07-04
+tags: SQLite, TLA+, 形式化验证, dqlite, WAL, Checkpoint, Bug 分析
+description: Canonical 的 dqlite 团队使用 TLA+ 形式化验证方法发现了一个潜伏在 SQLite 中长达 16 年的 WAL checkpoint bug，并验证了 dqlite 并未受此影响。
+-->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？ | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-04</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">SQLite, TLA+, 形式化验证, dqlite, WAL, Checkpoint, Bug 分析</span>
+          </div>
+        </header>
+        <div class="article-content">
+<h2>潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？</h2>
+<blockquote>2026年6月25日，Canonical 的 dqlite 团队发布了一篇技术博客，揭示了如何使用形式化验证方法 TLA+ 发现一个潜伏在 SQLite 中长达 16 年的 bug。这个 bug 位于 Write Ahead Log (WAL) 的 checkpoint 机制中，可能导致数据库损坏。更关键的是，他们用同样的方法验证了 dqlite 并未受此影响。</blockquote>
+<img src="/post-images/sqlite_bug_cover.jpg" alt="SQLite Bug 分析" style="max-width:100%;">
+<h3>一个藏了 16 年的 Bug</h3>
+<p>2025年3月，SQLite 发布了一个修复版本，解决了一个长期存在的 bug：在 Write Ahead Log (WAL) checkpoint 时，由于竞态条件可能导致数据库损坏。</p>
+<p>这个 bug 最令人震惊的不是它的危害（实际影响很低），而是它已经在代码库中潜伏了 <strong>16 年</strong>——从 2010 年至今。更难的是，发现和复现这个 bug 都极其困难。</p>
+<p>对于 dqlite 团队来说，还有一个更迫切的问题：<strong>dqlite 会受影响吗？</strong></p>
+<img src="/post-images/wal_diagram.png" alt="WAL 模式与 Checkpoint 流程" style="max-width:100%;">
+<h3>什么是 WAL 和 Checkpoint？</h3>
+<p>要理解这个 bug，得先搞懂 SQLite 的 WAL 模式。</p>
+<h4>WAL 模式的工作原理</h4>
+<p>SQLite 使用 WAL (Write Ahead Log) 模式来解决读写冲突：<strong>Writer 不会阻塞 Reader</strong>。</p>
+<ul>
+  <li><strong>Writer</strong> 将数据写入一个特殊的暂存区——WAL 文件</li>
+  <li><strong>Reader</strong> 可以忽略 WAL 中的新数据，直到数据稳定</li>
+  <li>最终，暂存区的数据会被移动到主数据库文件——这个过程叫 <strong>Checkpoint</strong></li>
+</ul>
+<h4>关键锁和共享内存</h4>
+<p>SQLite 用锁和共享内存来协调 WAL 的变化。我们只需要关心两把锁：</p>
+<ul>
+  <li><strong>CKPT_LOCK（Checkpoint 锁）</strong>：防止多个 checkpoint 同时进行</li>
+  <li><strong>WRITE_LOCK（写锁）</strong>：在向 WAL 追加新页之前获取</li>
+</ul>
+<p>共享内存中有几个关键字段：</p>
+<ul>
+  <li><code>walSalt</code>：WAL 每次重置时递增的计数器</li>
+  <li><code>mxFrame</code>：WAL 的长度</li>
+  <li><code>nBackfill</code>：已经 checkpoint 的页数，<code>[nBackfill+1, mxFrame]</code> 这部分还没复制到数据库</li>
+</ul>
+<h3>用 TLA+ 建模 Bug</h3>
+<p>要找出 bug 的确切触发序列，团队使用了 <strong>TLA+</strong>——一种形式化规约和验证语言。</p>
+<img src="/post-images/bug_timeline.png" alt="Bug 时间线：潜伏 16 年" style="max-width:100%;">
+<h4>建模思路</h4>
+<p>写 TLA+ 最难的部分是决定<strong>什么该建模，什么不该建模</strong>。目标是：</p>
+<ul>
+  <li>最简单的 spec</li>
+  <li>仍然忠实于现实</li>
+  <li>能从中提取有用洞察</li>
+</ul>
+<h4>建模 WAL 和数据库</h4>
+<p>首先定义数据库和 WAL 的状态：</p>
+<pre><code>VARIABLE wal      \* WAL 中的页序列
+VARIABLE db       \* 数据库中的页集合
+VARIABLE nBackfill \* 已 checkpoint 的页数
+VARIABLE mxFrame   \* WAL 长度
+VARIABLE walSalt   \* WAL 重置计数器</code></pre>
+<p>初始化状态：</p>
+<pre><code>Init ≜
+    ∧ wal = ⟨⟩
+    ∧ db = {}
+    ∧ nBackfill = 0
+    ∧ mxFrame = 0
+    ∧ walSalt = 0</code></pre>
+<h4>建模 Append 操作</h4>
+<p>SQLite 向 WAL 追加页时，会先获取写锁。关键代码路径是 <code>WalAppendTakeLock</code> 和 <code>WalAppend</code>。</p>
+<p>如果 WAL 已经全部 checkpoint（<code>nBackfill = mxFrame</code>），Writer 会重置 WAL：</p>
+<pre><code>∧ wal' = ⟨ frameNumber ⟩
+∧ mxFrame' = 1
+∧ nBackfill' = 0
+∧ walSalt' = walSalt + 1</code></pre>
+<p>否则，就正常追加：</p>
+<pre><code>∧ wal' = Append(wal, frameNumber)
+∧ mxFrame' = mxFrame + 1</code></pre>
+<h4>建模 Checkpoint 操作</h4>
+<p>Checkpoint 的过程更复杂，因为要从共享内存读取数据，而这些数据可能在两次读取之间被 Writer 修改！</p>
+<p>Checkpoint 分三步：</p>
+<ol>
+  <li><strong>CheckPointCopyHeader</strong>：复制 WAL 头部（<code>mxFrame</code> 和 <code>walSalt</code>）到局部变量</li>
+  <li><strong>StartCheckpoint</strong>：检查是否需要 checkpoint（<code>nBackfill < safeMxFrame</code>）</li>
+  <li><strong>Checkpoint</strong>：将 WAL 中的页移动到数据库，更新 <code>nBackfill</code></li>
+</ol>
+<pre><code>Checkpoint ≜
+    ∧ checkPointState = "waitingForLock"
+    ∧ db' = db ∪ { wal[j] : j ∈ nBackfill+1‥Len(wal) }
+    ∧ nBackfill' = safeMxFrame
+    ∧ safeMxFrame' = 0
+    ∧ checkPointState' = "notStarted"</code></pre>
+<h3>复现 Bug：20 步见证数据丢失</h3>
+<p>定义了一个不变量 <code>NoPageIsLost</code>：数据库中不应有任何"空洞"——所有写入 WAL 的页都必须按顺序出现在数据库中。</p>
+<p>运行模型检查器，<strong>仅 20 个状态</strong>就找到了一个反例！序列如下：</p>
+<img src="/post-images/tla_flow.png" alt="TLA+ 建模验证流程" style="max-width:100%;">
+<h4>Bug 触发序列</h4>
+<p>关键竞态条件发生在：</p>
+<ol>
+  <li>Checkpoint 开始时复制了 <code>safeMxFrame = 2</code> 和 <code>pWalSalt = 0</code></li>
+  <li>在 checkpoint 执行期间，Writer 完成了一个追加并重置了 WAL（<code>walSalt</code> 从 0 变为 1，<code>mxFrame</code> 从 2 变为 1）</li>
+  <li>Checkpoint 完成后，<code>nBackfill</code> 被设为 <strong>旧的</strong> <code>safeMxFrame</code> (2)，但此时 <code>mxFrame</code> 已经是 1 了！</li>
+  <li>结果：<code>nBackfill > mxFrame</code>，导致页 2 从数据库中消失</li>
+</ol>
+<p>这验证了 SQLite 官方报告中的 bug 描述。</p>
+<h3>dqlite 受影响吗？</h3>
+<p>dqlite 是 Canonical 开发的分布式 SQLite，需要与 Raft 共识算法协调写操作。关键差异：</p>
+<ul>
+  <li><strong>dqlite 禁止用户发起的 checkpoint</strong></li>
+  <li><strong>dqlite 禁用自动 checkpoint</strong></li>
+  <li><strong>Checkpoint 时停止所有读写</strong>（stop-the-world）</li>
+</ul>
+<img src="/post-images/dqlite_comparison.png" alt="SQLite vs dqlite：Checkpoint 机制对比" style="max-width:100%;">
+<h4>建模 dqlite 的 Checkpoint</h4>
+<p>在 TLA+ 中，dqlite 的 checkpoint 需要先获取写锁：</p>
+<pre><code>DqliteCheckpointTakeLock ≜
+    ∧ writeLock = "notTaken"
+    ∧ writeLock' = "takenForCheckpoint"</code></pre>
+<p>通过扩展原有 spec，添加了获取和释放锁的动作。由于 <strong>Append 和 Checkpoint 都需要持有写锁</strong>，它们无法并发进行，从而消除了数据竞争。</p>
+<h4>模型检查结果</h4>
+<p>使用相同的不变量 <code>NoPageIsLost</code> 检查 dqlite 模型，<strong>没有发现任何错误</strong>！</p>
+<p><strong>结论：dqlite 不受这个 bug 影响。</strong></p>
+<h3>SQLite 的修复方案</h3>
+<p>2026年3月5日，SQLite 披露了 bug 并发布了修复。修复方法很简单——在 checkpoint 时增加一个检查：</p>
+<pre><code>Checkpoint ≜
+    ∧ checkPointState = "waitingForLock"
+    ∧ IF walSalt = pWalSalt
+       THEN
+        ∧ db' = db ∪ { wal[j] : j ∈ nBackfill+1‥Len(wal) }
+        ∧ nBackfill' = safeMxFrame
+       ELSE
+        ∧ UNCHANGED ⟨ nBackfill, db ⟩</code></pre>
+<p>如果 WAL 在 checkpoint 期间被重置（<code>walSalt ≠ pWalSalt</code>），就跳过这次 checkpoint。运行模型检查器确认，修复后不再触发不变量。</p>
+<h3>总结与思考</h3>
+<p>这个案例展示了 <strong>TLA+ 在工业级系统中的实际价值</strong>：</p>
+<ol>
+  <li><strong>16 年的 bug 仅用 20 步复现</strong>——形式化验证的威力</li>
+  <li><strong>竞态条件难以通过测试发现</strong>——并发 bug 需要数学方法</li>
+  <li><strong>dqlite 的额外锁设计意外地提供了保护</strong>——虽然不是为了这个 bug 加的</li>
+  <li><strong>简单的修复方案</strong>——加一个 salt 检查就够了</li>
+</ol>
+<p>对于使用 SQLite 或类似 WAL 机制的系统，这个案例提醒我们：<strong>并发控制的设计细节可能隐藏着长达数十年的隐患。</strong></p>
+<hr>
+<p><strong>原文作者：</strong> Marco Manino 和 Alberto Carretero，dqlite 团队 @ Canonical</p>
+<p><strong>原文链接：</strong> [Hunting a 16-year-old SQLite bug with TLA+: is dqlite affected?](https://ubuntu.com/blog/hunting-a-16-year-old-sqlite-bug-with-tla-is-dqlite-affected)</p>
+<p><strong>标签：</strong> SQLite, TLA+, 形式化验证, dqlite, WAL, Checkpoint, Bug 分析</p>
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/SQLite/" class="tag-link">SQLite</a>
+          <a href="/tags/TLA%2B/" class="tag-link">TLA+</a>
+          <a href="/tags/%E5%BD%A2%E5%BC%8F%E5%8C%96%E9%AA%8C%E8%AF%81/" class="tag-link">形式化验证</a>
+          <a href="/tags/dqlite/" class="tag-link">dqlite</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
