@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 20 Jun 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jul 2026 00:00:00 +0800</lastBuildDate>
 
+  <item>
+    <title>Tesla Q2 2026销量暴涨25%：交付量首次超产量，库存危机解除了吗？</title>
+    <link>https://miraclestar-w.github.io/post/tesla-q2-2026-sales-increase.html</link>
+    <description>特斯拉Q2交付48万辆，同比增长25%，交付量首次超过产量，暗示库存积压问题正在缓解。欧洲市场是增长主驱动力，储能业务同比增长40%。</description>
+    <pubDate>Mon, 06 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/tesla-q2-2026-sales-increase.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
   <item>
     <title>潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？</title>
     <link>https://miraclestar-w.github.io/post/sqlite-wal-bug-tla-dqlite.html</link>

@@ -1,5 +1,12 @@
 [
     {
+    "title": "Tesla Q2 2026销量暴涨25%：交付量首次超产量，库存危机解除了吗？",
+    "url": "/post/tesla-q2-2026-sales-increase.html",
+    "content": "特斯拉Q2交付48万辆，同比增长25%，交付量首次超过产量，暗示库存积压问题正在缓解。欧洲市场是增长主驱动力，储能业务同比增长40%。",
+    "date": "2026-07-06",
+    "tags": ["特斯拉", "Tesla", "电动车", "Q2财报"]
+  },
+  {
     "title": "潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？",
     "url": "/post/sqlite-wal-bug-tla-dqlite.html",
     "content": "Canonical 的 dqlite 团队使用 TLA+ 形式化验证方法发现了一个潜伏在 SQLite 中长达 16 年的 WAL checkpoint bug，并验证了 dqlite 并未受此影响。",
