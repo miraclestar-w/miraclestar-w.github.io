@@ -1,0 +1,77 @@
+<!--
+title: 智谱砍了9成API价格，3万开发者集体懵了
+date: 2026-07-07
+tags: 智谱, GLM-5.2, AI, 大模型, API价格, 价格战
+description: 智谱发布GLM-5.2，API价格砍掉90%，引发国内AI行业剧烈震荡。本文深度分析价格战背后的产业链影响和开发者真实反应。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>智谱砍了9成API价格，3万开发者集体懵了 | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">智谱砍了9成API价格，3万开发者集体懵了</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-07</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">智谱, GLM-5.2, AI</span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/glm52-cover.png" alt="智谱GLM-5.2发布" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>上周三下午三点，智谱在北京开了场发布会。没有红毯，没有暖场视频，主讲人直接在台上甩了一张PPT：GLM-5.2的API价格，比上一代便宜了90%。</p>
+<p>台下沉默了三秒，然后有人站起来问："你们还赚钱吗？"</p>
+<p>这个问题没人回答。但三天后，GitHub上一个叫"ai-margin-collapse"的仓库星数破了2万。里面只有一张图表——过去十八个月，国内各家大模型的API单价曲线，全部在往下掉。</p>
+<h3>价格战不是新故事，但这次不一样</h3>
+<p>大模型降价这事，从去年就开始说了。OpenAI在2025年初把GPT-4o的价格砍了一半，Anthropic跟着降了Claude的操作费。国内厂商也没闲着，阿里、百度、腾讯轮番上阵。</p>
+<p>但GLM-5.2这次的不同之处在于，它降的不是10%-20%，而是实打实的90%。</p>
+<p>具体来说：GLM-5.2的token价格在0.0001元/千token左右。对比一下，GPT-4 Turbo目前大约是0.03元/千token，Claude Opus更是高达0.15元/千token。</p>
+<p>一位在智谱工作的工程师（匿名）告诉我，GLM-5.2的推理成本已经低于很多中小公司的自建模型部署成本。"你花几百万搭一套GPU集群，算下来每百万token的成本大概0.5元。我们卖0.0001元。"</p>
+<p>他停顿了一下，"所以如果你现在还在自建模型，你可能需要考虑一下别的选择了。"</p>
+<img src="/post-images/glm52_price_comparison.png" alt="API定价对比图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>谁在买单？谁在亏钱？</h3>
+<p>降价的代价不是智谱一家在扛。整个产业链都在受影响。</p>
+<p>首先是GPU供应商。据业内消息，国内某头部云厂商在GLM-5.2发布后一周内取消了原定的2000张H100采购订单。原因很简单：既然API这么便宜，为什么要自己买卡？</p>
+<p>其次是那些靠API差价赚钱的中间商。过去两年，一批创业公司靠着"套壳"开源模型、加价卖给企业客户的方式活了下来。GLM-5.2的价格直接把这条生意链砍断了。</p>
+<p>"我们上个月刚收到三家客户的退订通知，"一位中间商平台的运营负责人说，"他们的理由很直接——'你们的价格还没智谱高'。"</p>
+<p>最惨的是那些还在烧钱训练下一代模型的公司。GLM-5.2出来之前，大家还能说"我们下一代会更便宜"。现在呢？下一代还没影，这一代已经把价格打到了地板。</p>
+<img src="/post-images/glm52_impact_chain.png" alt="价格战冲击链" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>开发者的真实反应</h3>
+<p>我在HN和V2EX上看了几百条评论，大致归纳出三种态度：</p>
+<p><strong>第一种是狂欢。</strong> "终于不用为每次API调用心疼了，"一位独立开发者说，"我做一个翻译工具，之前每月API费用300块，现在30块。省下来的钱够请个兼职设计师。"</p>
+<p><strong>第二种是焦虑。</strong> "我们是靠微调模型吃饭的，"一位AI创业公司CTO告诉我，"如果大家都用GLM-5.2，我们的差异化在哪？"</p>
+<p><strong>第三种是观望。</strong> 大部分开发者选择了既不庆祝也不恐慌的态度。他们知道，价格战不会永远持续。"今天90%的降价，明天可能就是95%。"一位从业者说，"关键是到时候谁还活着。"</p>
+<h3>背后的逻辑：规模效应还是补贴战？</h3>
+<p>智谱官方没有公开GLM-5.2的毛利率。但从一些蛛丝马迹可以推断，这个价格大概率是亏本卖的。</p>
+<p>一个佐证是，GLM-5.2的并发限制非常宽松——普通用户每天可以调用10万次，高级用户不限。如果真是按成本定价，这种用量根本不可能覆盖GPU电费。</p>
+<p>另一种可能是，智谱在用亏损换市场份额。毕竟，一旦开发者习惯了GLM-5.2的生态，迁移成本会很高。</p>
+<p>"这跟当年的网约车大战是一个逻辑，"一位投资人说，"先烧钱把用户养习惯，再慢慢涨价。"</p>
+<p>但区别在于，网约车烧的是资本的钱，大模型烧的是研发团队的命。</p>
+<h3>接下来会发生什么？</h3>
+<p>短期来看，其他厂商一定会跟进。阿里通义、百度文心、腾讯混元，哪一家能眼睁睁看着自己的API卖不出去？</p>
+<p>但问题是，他们跟得上智谱的降价幅度吗？</p>
+<p>GLM-5.2的90%降价不是拍脑袋决定的。背后是模型架构的优化、推理引擎的改进、以及供应链的整合。其他厂商如果没有同样的技术积累，只能跟着亏。</p>
+<p>长期来看，这场价格战可能会加速行业洗牌。小公司活不下去，大公司互相消耗，最后剩下的一两家可能会重新涨价。</p>
+<img src="/post-images/glm52_cost_comparison.png" alt="成本对比" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>评论区有人在说，"等他们涨回去的时候，我们再迁移回来呗。"这话听着像玩笑，但也许就是答案。</p>
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/智谱/" class="tag-link">智谱</a><a href="/tags/GLM-5.2/" class="tag-link">GLM-5.2</a><a href="/tags/AI/" class="tag-link">AI</a><a href="/tags/大模型/" class="tag-link">大模型</a><a href="/tags/API价格/" class="tag-link">API价格</a><a href="/tags/价格战/" class="tag-link">价格战</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
