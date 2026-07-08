@@ -1,26 +1,60 @@
 [
-    {
+  {
+    "title": "Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修",
+    "url": "/post/circl-ai-crypto-bugs.html",
+    "content": "zkSecurity 用 AI 审计 Cloudflare 旗下 CIRCL 密码学库，挖出 7 个真实漏洞。最致命的 CP-ABE 访问控制失效只需一行代码修复。AI 能发现问题，但信任worthy的报告仍需要人来把关。",
+    "date": "2026-07-08",
+    "tags": [
+      "Cloudflare",
+      "CIRCL",
+      "AI审计",
+      "密码学",
+      "漏洞挖掘",
+      "zkSecurity"
+    ]
+  },
+  {
     "title": "智谱砍了9成API价格，3万开发者集体懵了",
     "url": "/post/zhipu-glm52-price-war.html",
     "content": "智谱发布GLM-5.2，API价格砍掉90%，引发国内AI行业剧烈震荡。本文深度分析价格战背后的产业链影响和开发者真实反应。",
     "date": "2026-07-07",
-    "tags": ["智谱", "GLM-5.2", "AI", "大模型", "API价格", "价格战"]
+    "tags": [
+      "智谱",
+      "GLM-5.2",
+      "AI",
+      "大模型",
+      "API价格",
+      "价格战"
+    ]
   },
   {
     "title": "Tesla Q2 2026销量暴涨25%：交付量首次超产量，库存危机解除了吗？",
     "url": "/post/tesla-q2-2026-sales-increase.html",
     "content": "特斯拉Q2交付48万辆，同比增长25%，交付量首次超过产量，暗示库存积压问题正在缓解。欧洲市场是增长主驱动力，储能业务同比增长40%。",
     "date": "2026-07-06",
-    "tags": ["特斯拉", "Tesla", "电动车", "Q2财报"]
+    "tags": [
+      "特斯拉",
+      "Tesla",
+      "电动车",
+      "Q2财报"
+    ]
   },
   {
     "title": "潜伏 16 年：SQLite WAL Bug 是如何被 TLA+ 揪出来的？dqlite 中招了吗？",
     "url": "/post/sqlite-wal-bug-tla-dqlite.html",
     "content": "Canonical 的 dqlite 团队使用 TLA+ 形式化验证方法发现了一个潜伏在 SQLite 中长达 16 年的 WAL checkpoint bug，并验证了 dqlite 并未受此影响。",
     "date": "2026-07-04",
-    "tags": ["SQLite", "TLA+", "形式化验证", "dqlite", "WAL", "Checkpoint", "Bug 分析"]
+    "tags": [
+      "SQLite",
+      "TLA+",
+      "形式化验证",
+      "dqlite",
+      "WAL",
+      "Checkpoint",
+      "Bug 分析"
+    ]
   },
-{
+  {
     "title": "1亿用户数据全泄露，X跟FTC说\"我不记得了\"",
     "url": "/post/x-100m-user-data-leak-ftc-consent-order.html",
     "content": "EFF公开信揭露X平台违反FTC数据同意令，1亿用户隐私设置被悄悄修改，消息、邮件、浏览记录全部暴露在平台访问之下。",

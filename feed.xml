@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 07 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 08 Jul 2026 00:00:00 +0800</lastBuildDate>
 
+  <item>
+    <title>Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修</title>
+    <link>https://miraclestar-w.github.io/post/circl-ai-crypto-bugs.html</link>
+    <description>zkSecurity 用 AI 审计 Cloudflare 旗下 CIRCL 密码学库，挖出 7 个真实漏洞。最致命的 CP-ABE 访问控制失效只需一行代码修复。AI 能发现问题，但信任worthy的报告仍需要人来把关。</description>
+    <pubDate>Tue, 08 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/circl-ai-crypto-bugs.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
   <item>
     <title>智谱砍了9成API价格，3万开发者集体懵了</title>
     <link>https://miraclestar-w.github.io/post/zhipu-glm52-price-war.html</link>

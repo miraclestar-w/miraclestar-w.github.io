@@ -1,0 +1,112 @@
+<!--
+title: Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修
+date: 2026-07-08
+tags: Cloudflare, CIRCL, AI审计, 密码学, 漏洞挖掘, zkSecurity
+description: zkSecurity 用 AI 审计 Cloudflare 旗下 CIRCL 密码学库，挖出 7 个真实漏洞。最致命的 CP-ABE 访问控制失效只需一行代码修复。AI 能发现问题，但信任worthy的报告仍需要人来把关。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修 | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-08</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">Cloudflare, CIRCL, AI审计, 密码学</span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/circl-ai-audit-cover.png" alt="Cloudflare CIRCL密码学库AI审计发现漏洞" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>Cloudflare 旗下 CIRCL 密码学库上线几个月后，zkSecurity 团队把他们的 AI 审计管道对准了这个库。AI 挖出了 7 个真实漏洞，全部已修复。其中最致命的一个——CP-ABE 访问控制完全失效——只需要一行代码的改动就能修好。</p>
+<p>这不是什么理论上的安全问题。这些漏洞影响的是实际部署中的加密通信、身份认证和密钥共享。</p>
+<img src="/post-images/circl-crypto-concept.png" alt="密码学概念图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>一个"聪明"的 bug</h3>
+<p>第 7 号漏洞是 zkSecurity 自己的 AI 审计工具 zkao 独立发现的。它在 CIRCL 的 CP-ABE（密文策略属性基加密）实现里找到了一个逻辑错误。</p>
+<p>CP-ABE 是一种高级加密方案，允许你这样写加密策略："(位置在美国 AND 部门是财务) OR (角色是管理员)"。只有满足策略的用户才能解密。听起来很美好。</p>
+<p>但 zkao 发现，AND 门（"与"逻辑）的实现有问题。AND 门应该把一个秘密分成两份，每一份单独都无法恢复原始秘密，必须两份合起来才行。这是 AND 门的定义。</p>
+<p>然而代码里，其中一个子节点得到的值是 0，另一个得到的是完整的秘密。这意味着只需要一个子节点就能恢复整个秘密。AND 门变成了 OR 门。</p>
+<p>更糟的是，为了让系统达到 CCA 安全（抗选择明文攻击），tkn20 实现会在每个策略外面再套一层 AND 门。这层外层 AND 门的左子节点是一个"通配符"叶子——每个密钥都天然满足这个条件。</p>
+<p>把这两件事放在一起：通配符叶子恰好是外层 AND 门的第一个子节点（In0），而 In0 又恰好是那个拿到完整秘密的子节点。</p>
+<p>结果就是：每个密钥都能独立解密，不管策略怎么写的。访问控制完全失效。</p>
+<p>修复方法是一行代码：</p>
+<pre><code>// 修复前：In1 被设为 0
+shares[gate.In1] = newMatrixZp(k.rows, k.cols)  // In1 = 0
+
+// 修复后：In1 = parent - In0
+shares[gate.In1].sub(shares[gate.Out], shares[gate.In0])</code></pre>
+<h3>浮点数精度丢失</h3>
+<p>第 1 号漏洞发生在阈值 RSA 签名（TSS/RSA）的多项式求值中。</p>
+<p>阈值签名把秘密密钥分成 n 份，分给 n 个参与者。每个参与者的份额通过对秘密多项式求值得到。代码里，系数是 <code>big.Int</code>（大整数），没问题。但计算 x^i 的时候用了 float64：</p>
+<pre><code>xi := int64(math.Pow(float64(x), float64(i)))</code></pre>
+<p>float64 只有 53 位尾数。当 x^i 超过 2^53（约 9×10^15）时，结果会被静默舍入，然后再转回整数。</p>
+<p>举个例子：100 个参与者、阈值 27 的情况下，在 x=100、i=26 处求值，需要计算 100^26 = 10^52。这比 2^53 大了 36 个数量级。即使 x=20、i=16 就已经出错了。</p>
+<p>后果是多项式被错误求值，分发给参与者的密钥份额本身就是错的。签名组合要么直接失败，要么产生看起来正确但无法重构预期密钥的份额。</p>
+<p>AI 把这个标为"严重"，Cloudflare 确认后的评级是"低"——因为触发条件在实际中不太可能出现。但一旦触发，问题确实存在。</p>
+<p>修复方法是把浮点指数运算替换为 Horner 方法的多项式求值，全程使用 big.Int。代码里原来的 TODO 注释早就暗示了这一点。</p>
+<img src="/post-images/circl-code-audit.png" alt="代码审计过程" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>一个只值 1 比特的证明</h3>
+<p>第 2 号漏洞在 zk/qndleq 模块，这是一个 DLEQ（离散对数相等）证明系统，用于证明两对值拥有相同的离散对数。</p>
+<p>问题的核心在于安全参数 SecParam。这个参数决定了证明挑战的比特长度。正常情况下，验证者应该自己设定这个值。但代码里，SecParam 放在了 Proof 结构体本身里面：</p>
+<pre><code>type Proof struct {
+    Z, C     *big.Int
+    SecParam uint
+}</code></pre>
+<p>验证过程中，代码用证明自身的 SecParam 来重新计算挑战。而这个字段是攻击者可控制的。</p>
+<p>设 SecParam = 1，挑战坍缩成 1 比特（0 或 1）——每次伪造尝试相当于抛硬币。设 SecParam = 8，暴力破解大约需要 256 次尝试。无论哪种情况，证明系统的可靠性都没了。</p>
+<p>这是一个反复出现的模式的典型案例：安全参数必须由验证者固定，却从证明者提供的数据中读取。</p>
+<h3>语言级别的陷阱</h3>
+<p>第 5 号漏洞几乎就是一个 Go 语言层面的陷阱。</p>
+<p>在 HPKE 的 <code>verifyPSKInputs</code> 函数里，switch 语句的 case 标签用了位或运算符：</p>
+<pre><code>case modePSK | modeAuthPSK:  // 0x01 | 0x03 == 0x03，即只有 modeAuthPSK</code></pre>
+<p>在 Go 中，<code>case a | b:</code> 是一个单一 case，其值为两个常数的 OR，而不是两个 case。所以 <code>case modePSK | modeAuthPSK</code> 实际上是 <code>case 0x03</code>，而 <code>modePSK</code>（0x01）根本不匹配任何 case。</p>
+<p>本该拒绝缺少 PSK 的分支被跳过了。</p>
+<p>效果是：<code>SetupPSK(..., nil, nil)</code> 带着空 PSK 继续执行，而不是被拒绝。PSK 模式本应要求 PSK 材料；这里静默地丢弃了认证前提条件，让部署运行在一个比配置更弱的模式下。</p>
+<p>修复方法是从 OR 改为逗号分隔的 case（<code>case modePSK, modeAuthPSK:</code>）。一个字符的改动。</p>
+<h3>AI 的盲点</h3>
+<p>最有意思的发现之一是 AI 对自身发现的严重程度评估非常不准确。</p>
+<p>7 个漏洞中，AI 高估了 5 个的严重性，低估了 1 个（第 3 号 BLS 聚合验证漏洞），还有 1 个评估合理。</p>
+<p>第 3 号漏洞尤其值得注意。AI 把它标为"中等"，但实际上这是一个经典的 rogue key 攻击——在密码学界属于教科书级别的高危漏洞。Cloudflare 确认为"高"。</p>
+<p>AI 的推理过程显示，它正确识别了缺失的消息唯一性检查，甚至命名了 rogue key 攻击。但它锚定在"BASIC 模式的契约把唯一性要求放在调用方身上"这个事实上，把它当作缓解措施，降低了严重性评级。</p>
+<p>我们不知道为什么会这样。这可能真的很难——当目标是像 CIRCL 这样被许多不同应用使用的库时，影响取决于下游调用者，而模型看不到这些信息。</p>
+<img src="/post-images/circl-ai-security.png" alt="AI安全审计" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<h3>模型配对不是对称的</h3>
+<p>另一个有趣的发现：模型配对的效果不是稳定的。</p>
+<p>6 个漏洞中有 5 个是由 Claude Opus 4.6 配合他们的 skills 发现的。GPT-5.3 主要在做验证而非发现——除了第 5 号 HPKE 漏洞。</p>
+<p>但几周后，他们换成了 Opus 4.7 和 GPT-5.4，角色基本反转了：GPT-5.4 发现了更多漏洞，Opus 4.7 只能做验证。</p>
+<p>这提醒我们不要对特定模型名称过度拟合结论。前沿技术在不断移动。</p>
+<h3>不只是 Cloudflare</h3>
+<p>zkSecurity 扫描了 200 多个密码学项目（从下载量最高的加密 crate/package 中选择），产生了超过 1000 个候选发现。最大的瓶颈现在是 triage（分类）——每个报告的漏洞都需要专家检查技术有效性才能提交给项目方。</p>
+<p>他们讨厌 AI spam，正如所有人一样。</p>
+<p>这篇文章是系列的第一篇。他们计划继续发布来自其他项目的已确认漏洞。</p>
+<p>如果你维护一个密码学项目，他们表示愿意一起验证——在 serious bugs 被修复之前找到它们。</p>
+<h3>写在最后</h3>
+<p>CIRCL 的维护者们响应很快，所有报告的漏洞都在短时间内修复了。</p>
+<p>但真正值得思考的不是这些 bug 本身，而是这个过程揭示的东西：AI 能在密码学代码中找到真实漏洞，但它对严重性的判断不可靠，它不会把分散的观察串联成更有影响力的利用链，而且它的表现会随着模型版本的更替而波动。</p>
+<blockquote>
+<p>"Every reported bug has to be checked by our experts for technical validity before it reaches a project, because we hate AI spam as much as everyone else does."</p>
+</blockquote>
+<p>AI 能发现问题。但信任worthy的报告仍然需要人来把关。至少在目前是这样。</p>
+<img src="/post-images/circl-vulnerability-diagram.png" alt="漏洞分析示意图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/Cloudflare/" class="tag-link">Cloudflare</a><a href="/tags/CIRCL/" class="tag-link">CIRCL</a><a href="/tags/AI审计/" class="tag-link">AI审计</a><a href="/tags/密码学/" class="tag-link">密码学</a><a href="/tags/漏洞挖掘/" class="tag-link">漏洞挖掘</a><a href="/tags/zkSecurity/" class="tag-link">zkSecurity</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
