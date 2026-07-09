@@ -5,7 +5,15 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 08 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 00:00:00 +0800</lastBuildDate>  <item>
+    <title>Grok 4.5 上了热搜，但没人提的那件事</title>
+    <link>https://miraclestar-w.github.io/post/grok-4-5-code-data-monopoly.html</link>
+    <description>xAI用1.5T参数的V9基础模型训练了Grok 4.5，并秘密加入了Cursor的训练数据。代码生成基准全面超越GPT-5.5，但背后的数据垄断正在成为行业新常态。</description>
+    <pubDate>Thu, 09 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/grok-4-5-code-data-monopoly.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+
 
   <item>
     <title>Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修</title>

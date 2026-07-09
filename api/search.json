@@ -1,5 +1,19 @@
 [
   {
+    "title": "Grok 4.5 上了热搜，但没人提的那件事",
+    "url": "/post/grok-4-5-code-data-monopoly.html",
+    "content": "xAI用1.5T参数的V9基础模型训练了Grok 4.5，并秘密加入了Cursor的训练数据。代码生成基准全面超越GPT-5.5，但背后的数据垄断正在成为行业新常态。",
+    "date": "2026-07-09",
+    "tags": [
+      "Grok 4.5",
+      "xAI",
+      "Cursor",
+      "AI",
+      "大模型",
+      "代码生成"
+    ]
+  },
+  {
     "title": "Cloudflare 密码学库翻车：AI 挖出 7 个漏洞，1 行代码就能修",
     "url": "/post/circl-ai-crypto-bugs.html",
     "content": "zkSecurity 用 AI 审计 Cloudflare 旗下 CIRCL 密码学库，挖出 7 个真实漏洞。最致命的 CP-ABE 访问控制失效只需一行代码修复。AI 能发现问题，但信任worthy的报告仍需要人来把关。",

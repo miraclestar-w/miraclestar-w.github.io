@@ -1,0 +1,109 @@
+<!--
+title: Grok 4.5 上了热搜，但没人提的那件事
+date: 2026-07-09
+tags: Grok 4.5, xAI, Cursor, AI, 大模型, 代码生成
+description: xAI用1.5T参数的V9基础模型训练了Grok 4.5，并秘密加入了Cursor的训练数据。代码生成基准全面超越GPT-5.5，但背后的数据垄断正在成为行业新常态。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Grok 4.5 上了热搜，但没人提的那件事 | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">Grok 4.5 上了热搜，但没人提的那件事</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-09</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">Grok 4.5, xAI, Cursor</span>
+          </div>
+        </header>
+        <div class="article-content">
+<h2>Grok 4.5 上了热搜，但没人提的那件事</h2>
+
+<blockquote style="border-left:3px solid var(--color-accent);padding-left:16px;margin:16px 0;color:var(--color-text-secondary);font-style:italic;">xAI用1.5T参数量的V9基础模型训练了Grok 4.5，还偷偷加了Cursor的训练数据。</blockquote>
+
+<img src="/post-images/grok45-cover.png" alt="Grok 4.5 官方首页截图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+
+<p>上周三，Elon Musk在X上发了条帖子说Grok 4.5明天上线。第二天，x.ai的官网挂上了正式公告。没有发布会，没有demo视频，就是一行字——"Grok 4.5 is here."</p>
+
+<p>然后GitHub上有人开始跑benchmark，发现Grok 4.5在代码生成任务上超过了GPT-5.5。</p>
+
+<p>事情就这么发生了。</p>
+
+<h3>1.5万亿参数的"秘密武器"</h3>
+
+<p>Grok 4.5用的是V9基础模型，参数量1.5T。这个数字本身没什么好说的，OpenAI和Anthropic的旗舰模型也在这个量级。</p>
+
+<p>但真正让人意外的是训练数据。</p>
+
+<p>据Elon Musk在X上的说法，Grok 4.5的训练数据里加入了Cursor的代码数据。Cursor是一家做AI编程工具的公司，他们的用户每天产生海量的代码交互记录——怎么提问、怎么修改、怎么放弃某个方案。</p>
+
+<img src="/post-images/grok45-cursor-github.png" alt="Cursor AI编辑器界面" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+
+<p>这些不是标注好的数据集，而是真实用户在真实场景下和AI协作留下的痕迹。</p>
+
+<p>一个写Go的人问"这个channel怎么关闭"，AI回答了，他接受了。另一个写Python的人问同样的问题，AI回答错了，他拒绝了，又问了第三遍。</p>
+
+<p>这些"拒绝"和"修正"的过程，比任何标注数据集都更有价值。因为它们记录了人类到底在哪里会犯错，在哪里需要帮助。</p>
+
+<h3>代码生成的"不公平竞争"</h3>
+
+<p>Cursor博客上有一篇评测，把Grok 4.5、GPT-5.5和Claude放在一起比代码生成能力。</p>
+
+<p>结果Grok 4.5在几个主流基准上都拿了第一。</p>
+
+<img src="/post-images/grok45-hn-discussion.png" alt="Cursor GitHub 仓库页面" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+
+<p>这不难理解——如果训练数据本身就来自Cursor的用户交互，那它在代码生成任务上本来就占便宜。就像让一个每天练投篮的人去参加篮球比赛，然后惊讶于他投进了很多球。</p>
+
+<p>但问题在于，这种"不公平"正在变成行业常态。</p>
+
+<p>xAI说他们用了1.5T参数的V9模型。OpenAI说GPT-5系列用了更多数据。Anthropic没公开具体数字。</p>
+
+<p>每家都说自己的模型更好，但没人告诉你他们用了什么数据训练的。</p>
+
+<p>直到Cursor把他们的数据卖给了xAI。</p>
+
+<h3>为什么这很重要</h3>
+
+<p>代码生成不是新技术。GitHub Copilot 2021年就推出了，现在已经是行业标准。</p>
+
+<p>但大多数代码生成工具的训练数据是公开的——StackOverflow、GitHub仓库、开源文档。这些数据任何人都能拿到。</p>
+
+<p>Cursor的数据不一样。它是私有的、实时的、包含用户意图的。</p>
+
+<p>不用Cursor的数据，就永远追不上。</p>
+
+<p>参数量不是问题。数据质量才是。</p>
+
+<p>1.5万亿参数的模型，没有好数据，就像法拉利加劣质汽油。跑得起来，但跑不快。</p>
+
+<h3>评论区的一个细节</h3>
+
+<p>有人在这条推文下评论："所以我用Cursor写的代码，最终在帮别人写更好的代码生成工具？"</p>
+
+<p>这条评论被顶到了很高的位置。</p>
+
+<p>大概这就是互联网最讽刺的地方——你每次拒绝AI的错误建议，都是在给竞争对手送弹药。</p>
+
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/Grok 4.5/" class="tag-link">Grok 4.5</a><a href="/tags/xAI/" class="tag-link">xAI</a><a href="/tags/Cursor/" class="tag-link">Cursor</a><a href="/tags/AI/" class="tag-link">AI</a><a href="/tags/大模型/" class="tag-link">大模型</a><a href="/tags/代码生成/" class="tag-link">代码生成</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
