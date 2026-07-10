@@ -1,5 +1,19 @@
 [
   {
+    "title": "智谱用 GLM-5 跑赢 GPT-4，而我只用了 8GB 显存",
+    "url": "/post/glm5-local-8gb-gpu.html",
+    "content": "一个普通开发者在老笔记本上本地跑通 GLM-5.2 的全过程。不是教程，是踩坑记录。GGUF 量化 + Colibri 分段推理的实战经验。8GB 显存的 MX450 如何跑起对标 GPT-4 的大模型？",
+    "date": "2026-07-10",
+    "tags": [
+      "智谱",
+      "GLM-5.2",
+      "AI",
+      "大模型",
+      "本地部署",
+      "GGUF"
+    ]
+  },
+  {
     "title": "Grok 4.5 上了热搜，但没人提的那件事",
     "url": "/post/grok-4-5-code-data-monopoly.html",
     "content": "xAI用1.5T参数的V9基础模型训练了Grok 4.5，并秘密加入了Cursor的训练数据。代码生成基准全面超越GPT-5.5，但背后的数据垄断正在成为行业新常态。",

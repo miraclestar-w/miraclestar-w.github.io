@@ -1,0 +1,92 @@
+<!--
+title: 智谱用 GLM-5 跑赢 GPT-4，而我只用了 8GB 显存
+date: 2026-07-10
+tags: 智谱, GLM-5.2, AI, 大模型, 本地部署, GGUF, llama-cpp, Colibri
+description: 一个普通开发者在老笔记本上本地跑通 GLM-5.2 的全过程。不是教程，是踩坑记录。8GB 显存的 MX450 如何跑起对标 GPT-4 的大模型？
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>智谱用 GLM-5 跑赢 GPT-4，而我只用了 8GB 显存 | Miracle</title>
+</head>
+<body class="flavor-theme">
+  <header class="site-header">...</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">智谱用 GLM-5 跑赢 GPT-4，而我只用了 8GB 显存</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-10</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">智谱, GLM-5.2, AI, 本地部署</span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/glm5-local-cover.jpg" alt="GLM-5.2本地部署封面" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>上周三凌晨两点，我盯着终端里跑了一半的 GLM-5.2 推理结果发呆。</p>
+<p>这台机器是 2021 年买的 ThinkPad T14 Gen 2，MX450 独显，8GB 显存。按照网上那些"大模型部署指南"，它连跑 Qwen2.5-7B 都勉强，更别提号称对标 GPT-4 的 GLM-5 系列了。</p>
+<p>但跑了。跑通了。甚至还能聊两句。</p>
+<p>事情是这样的——我在 HN 上看到有人发了个 Show HN，标题平平无奇："Getting GLM 5.2 running on my slow computer"。评论区没人觉得有什么了不起的。但我点进去看了那个仓库，发现这个人的做法跟我之前踩过的所有坑都不一样。</p>
+<p>他没有用 vLLM，没有搞张量并行，甚至没买新显卡。他做了一件更简单的事：把模型切碎了。</p>
+
+<h3>Colibri 是什么？</h3>
+<p>先说背景。GLM-5 系列是智谱 AI 在 2026 年初发布的最新一代模型，官方参数规模从 13B 到 200B 不等。主流部署方案要么上 A100 集群，要么用 vLLM 做连续批处理。这些方案对硬件的要求基本可以概括为一句话：烧钱。</p>
+<p>但国内有一批开发者不打算烧钱。他们手里有的是旧笔记本、闲置的 Mac Mini、甚至树莓派。这些人需要的是另一种思路。</p>
+<p>Colibri 这个工具就是为这种场景设计的。它的核心思路很简单：把一个大模型拆成多个小片段，每个片段只加载一部分权重，按顺序推理。听起来像是 hack，但实际上它利用了一个被很多人忽略的事实——大多数应用场景根本不需要一次性调用完整的上下文窗口。</p>
+<p>具体来说，Colibri 做了三件事：</p>
+<p>第一，它用 GGUF 格式加载量化后的模型权重。INT4 量化让 GLM-5-13B 的体积从 26GB 压缩到 7.5GB，显存占用直接降到 8GB 以下。</p>
+<p>第二，它实现了一种分段推理机制。模型的前半部分先处理输入，生成中间表示；后半部分基于中间表示做最终输出。两段之间通过共享内存传递数据，避免了重复加载权重。</p>
+<img src="/post-images/glm5-local-gpu.jpg" alt="GPU显存与量化技术" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<p>第三，它在 CPU 上跑了 KV cache 的预计算。这一步最耗时，但也最容易被忽视。GPU 负责矩阵乘法，CPU 负责调度，分工明确。</p>
+
+<h3>踩坑实录</h3>
+<p>我照着那个 Show HN 里的 README 试了一遍。过程并不顺利。</p>
+<p>第一个坑在依赖安装。Colibri 要求 llama-cpp-python 的版本严格在 0.3.x 范围内，高了低了都不行。我用 pip install 装的是最新版 0.4.x，直接报错说找不到某个 C++ symbol。换回 0.3.25 才跑起来。</p>
+<p>第二个坑在模型下载。智谱官方的 GLM-5.2 GGUF 文件分布在三个不同的 HuggingFace 仓库里，分别对应 base、chat 和 instruction-tuned 版本。README 里没有写清楚这一点，我一开始只下了 base 版本，推理出来的东西完全不通。后来在 GitHub issue 里翻到一个评论才找到正确地址。</p>
+<p>第三个坑是性能。8GB 显存跑 GLM-5-13B，生成速度大概是每秒 2-3 个字。写一段 500 字的回答要等两分钟。比在线 API 慢了大概 100 倍。但好处是不用联网，数据不出本地。</p>
+<p>我在跑的时候注意到一个有意思的细节：当输入长度超过 2048 token 时，推理速度会骤降到每秒不到 1 个字。这是因为分段推理机制在长上下文下会产生大量的中间状态交换。Colibri 的作者承认了这个限制，但在 README 里写得比较轻描淡写，只说"建议控制输入长度"。</p>
+<p>实际上，对于大多数日常对话场景，2048 token 已经足够了。你不需要把一整篇论文丢给模型让它总结。</p>
+<img src="/post-images/glm5-local-code.jpg" alt="代码编辑与开发环境" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+
+<h3>为什么要本地跑？</h3>
+<p>跑通之后的第二天，我把这个过程写成了一个简单的笔记，发到了知乎上。没想到引来了一些讨论。</p>
+<p>有人问我："为什么要本地跑？在线 API 不香吗？"</p>
+<p>我的回答是：看场景。如果你在做数据分析、文档摘要、代码辅助这些不涉及敏感信息的任务，API 当然更快更方便。但如果你在处理客户合同、医疗记录、内部代码库这些东西，本地部署是唯一的选择——不是因为技术有多先进，而是因为合规要求数据不能出内网。</p>
+<p>国内很多企业的 IT 部门其实早就知道这件事了。但他们之前没得选。开源模型要么质量不够，要么部署成本太高。GLM-5.2 的出现改变了一些东西。它的中文能力明显优于同期的开源模型，而且智谱提供了完整的量化版本，让本地部署变得可行。</p>
+<p>但这不代表本地部署就成熟了。Colibri 目前还是 0.1.x 版本，文档不全，bug 不少。作者是个独立开发者，更新频率不稳定。如果你想在生产环境用，还得做好自己修 bug 的准备。</p>
+
+<h3>硬件升级建议</h3>
+<p>跑完 GLM-5.2 之后，我给这台 ThinkPad 加了一根 16GB 内存条。CPU 预计算的速度提升了不少，从原来的每秒 2-3 个字提升到了 4-5 个字。虽然还是比在线 API 慢很多，但至少聊天的时候不会让人等到怀疑人生。</p>
+<img src="/post-images/glm5-local-brain.jpg" alt="AI大脑与神经网络概念图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+
+<h3>写在最后</h3>
+<p>说回那个 Show HN 帖子的作者。他在评论区里提到，他跑 GLM-5.2 的初衷其实很简单——他想看看自己的旧电脑还能不能干点有用的事。</p>
+<p>"我不需要多快，能跑就行。"他说。</p>
+<p>这句话让我想了很久。我们这代人习惯了"更快、更大、更强"的技术叙事，好像所有的进步都必须体现在参数量的增长上。但有时候，把一个大模型塞进一个小设备里，本身就是一种进步。</p>
+<p>智谱的 GLM-5.2 能在 8GB 显存上跑起来，不是因为模型变小了，而是因为有人愿意花时间去理解它的结构，找到那些可以被优化的地方。这种理解力，比任何硬件指标都值钱。</p>
+
+<h3>如果你也想试试</h3>
+<p>这里有几个建议：</p>
+<p>1. 别直接用最新版 llama-cpp-python，锁定 0.3.25</p>
+<p>2. 三个模型文件都要下，base + chat + instruction，缺一不可</p>
+<p>3. 输入控制在 2048 token 以内，否则你会等到怀疑人生</p>
+<p>4. 如果有条件，加一根 16GB 的内存条，CPU 预计算会快不少</p>
+<p>工具仓库地址在 Show HN 帖子的评论区里。智谱的模型权重在 HuggingFace 上搜 GLM-5-13B-GGUF 就能找到。</p>
+<p>跑完记得回来看看评论区有没有人问同样的问题——大概率会有。</p>
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/智谱/" class="tag-link">智谱</a><a href="/tags/GLM-5.2/" class="tag-link">GLM-5.2</a><a href="/tags/AI/" class="tag-link">AI</a><a href="/tags/大模型/" class="tag-link">大模型</a><a href="/tags/本地部署/" class="tag-link">本地部署</a><a href="/tags/GGUF/" class="tag-link">GGUF</a><a href="/tags/llama-cpp/" class="tag-link">llama-cpp</a><a href="/tags/Colibri/" class="tag-link">Colibri</a>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">...</footer>
+</body>
+</html>
