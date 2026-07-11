@@ -1,0 +1,143 @@
+<!--
+title: 微软修了个 0-day，结果把 Defender 搞崩了
+date: 2026-07-11
+tags: Windows,Defender,安全,漏洞,补丁
+description: 微软给Windows Defender打了补丁，结果修出一个逻辑错误让实时扫描完全失效。热修复补丁也没修好，一次安全更新变成了三个漏洞。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>微软修了个 0-day，结果把 Defender 搞崩了 | Miracle</title>
+<meta name="description" content="微软给Windows Defender打了补丁，结果修出一个逻辑错误让实时扫描完全失效。热修复补丁也没修好，一次安全更新变成了三个漏洞。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/windows-defender-patch-broke.html">
+<meta property="og:title" content="微软修了个 0-day，结果把 Defender 搞崩了">
+<meta property="og:description" content="微软给Windows Defender打了补丁，结果修出一个逻辑错误让实时扫描完全失效。热修复补丁也没修好，一次安全更新变成了三个漏洞。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/windows-defender-patch-broke.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/post-images/01-cybersecurity-hacking.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/windows-defender-patch-broke.html">
+<meta name="twitter:title" content="微软修了个 0-day，结果把 Defender 搞崩了">
+<meta name="twitter:description" content="微软给Windows Defender打了补丁，结果修出一个逻辑错误让实时扫描完全失效。热修复补丁也没修好，一次安全更新变成了三个漏洞。">
+<meta name="twitter:image" content="/post-images/01-cybersecurity-hacking.jpg">
+</head>
+<body>
+<main class="site-main" role="main">
+<div class="article-container">
+  <article>
+    <header class="article-header">
+      <h1 class="article-title">微软修了个 0-day，结果把 Defender 搞崩了</h1>
+      <div class="article-meta">
+        <span class="article-meta__item">2026-07-11</span>
+        <span class="article-meta__sep">·</span>
+        <span class="article-meta__item">Windows, Defender, 安全, 漏洞, 补丁</span>
+      </div>
+    </header>
+    <div class="article-content">
+
+      <img src="/post-images/01-cybersecurity-hacking.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Windows Defender 安全更新">
+
+      <p>上周四微软推送了本月的安全更新，Windows Defender 的签名库跟着升级。没人注意到，补丁本身引入了一个逻辑错误，让 Defender 在扫描某些文件时会直接跳过——不是报错退出，是真的什么都不做。</p>
+
+      <h2>补丁怎么就把自己打穿了</h2>
+
+      <img src="/post-images/02-ai-robot-security.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Windows Defender 实时扫描架构">
+
+      <p>Windows Defender 的实时扫描流程是这样的：文件操作触发回调 → Defender 拦截文件句柄 → 把数据拉到内存里扫 → 放过去或者拦下来。</p>
+
+      <p>这次出问题的代码在拦截逻辑里。具体来说，是一个条件判断写反了。</p>
+
+      <p>正常情况下，Defender 对每个文件都会检查：这个文件类型在我的扫描规则库里吗？如果在，扫。如果不在，跳过。</p>
+
+      <p>但补丁改了一个变量名，导致判断永远返回 false。于是 Defender 对所有文件都执行"跳过"分支。</p>
+
+      <p>这不是一个模糊的边界情况。这是一个明确的逻辑错误，而且影响的是整个实时扫描模块。</p>
+
+      <p>MITRE CVE 编号还没分配，因为微软还在确认受影响范围。但从社区反馈来看，Windows 10 和 11 的所有版本都中招了——包括最新的那版。</p>
+
+      <h2>热修复补丁也没修好</h2>
+
+      <img src="/post-images/bug_timeline.png" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="Defender 补丁时间线">
+
+      <p>发现问题后，微软在 48 小时内发了一个热修复补丁。</p>
+
+      <p>问题是，热修复补丁改的是另一个模块——恶意软件检测引擎。实时扫描那个 bug 根本没动。</p>
+
+      <p>所以出现了这种局面：用户装了热修复补丁，以为安全了。实际上 Defender 还是在盲扫。</p>
+
+      <p>有安全研究人员在 X 上贴了一段 PoC 代码，只需要创建一个特定扩展名的文件就能触发跳过行为。不需要提权，不需要管理员权限，任何普通用户都能跑。</p>
+
+      <p>微软第二天又发了一个补丁。这次改了实时扫描模块。</p>
+
+      <p>但研究人员发现，新补丁虽然修了跳过逻辑，却引入了另一个问题： Defender 在扫描某些压缩文件时会产生空指针异常，导致整个服务崩溃重启。</p>
+
+      <p>一次安全更新，两个独立 bug。</p>
+
+      <h2>实际影响有多大</h2>
+
+      <img src="/post-images/security_shield.jpg" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;" alt="企业安全防护">
+
+      <p>这个问题最讽刺的地方在于：它影响的恰恰是那些最需要保护的用户。</p>
+
+      <p>企业环境里，Defender 通常是唯一的端点防护方案。没有 EDR，没有第三方杀毒软件，就是 Windows 自带的那个。</p>
+
+      <p>当 Defender 静默跳过扫描时，用户不会收到任何告警。任务栏上没有红色感叹号，事件日志里没有关键错误——只有一条普通的"扫描完成"记录。</p>
+
+      <p>从用户角度看，一切正常。</p>
+
+      <p>从攻击者角度看，这相当于白给了三天。</p>
+
+      <p>目前还没有证据表明这个漏洞被大规模利用。但考虑到 PoC 已经公开，而且不需要任何特殊权限，情况不会太乐观。</p>
+
+      <h2>你怎么知道你的电脑有没有中招</h2>
+
+      <p>方法很简单。打开 PowerShell，以管理员身份运行：</p>
+
+      ```powershell
+      Get-MpComputerStatus | Select-Object RealTimeProtectionEnabled
+      ```
+
+      <p>如果返回 <code>True</code>，不代表你真的在受保护。这只是说 Defender 的服务状态是开启的。</p>
+
+      <p>真正有效的验证方式是：下载 EICAR 测试文件，看看 Defender 能不能拦住。</p>
+
+      ```powershell
+      Invoke-WebRequest -Uri "https://secure.eicar.org/eicar.com" -OutFile "$env:TEMP\eicar.com"
+      ```
+
+      <p>如果文件被删除了，说明实时扫描在工作。如果文件留在临时目录里，说明你中招了。</p>
+
+      <p>微软的第三个补丁还没出来。建议手动跑一遍上面的测试，确认自己的 Defender 到底在干什么。</p>
+
+      <h2>这件事给我们的启示</h2>
+
+      <p>说实话，没什么启示。</p>
+
+      <p>微软的补丁流程出了错，修了错误的东西，然后又修了错误的东西。这就是一个典型的工程失误，不是什么深刻的教训。</p>
+
+      <p>真正值得说的是：别太相信杀毒软件的"已启用"状态栏。</p>
+
+      <p>它显示绿色不代表你在安全。它可能只是在安静地跳过所有文件。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：Microsoft Security Update Guide · CVE Database · 社区安全研究</p>
+    </div>
+    <div class="article-cta">
+      觉得有帮助？点赞收藏转发！
+    </div>
+  </article>
+</div>
+</main>
+    <footer class="site-footer">
+  <div class="footer-inner">
+    <p>&copy; 2026 <a href="https://miraclestar-w.github.io">Miracle</a> · Powered by <a href="https://github.com/nicepkg/nice-blog" target="_blank">Miracle 1.1.1</a></p>
+  </div>
+</footer>
+
+<script src="/scripts/main.min.js"></script>
+</body>
+</html>
