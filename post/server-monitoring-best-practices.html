@@ -1,22 +1,19 @@
 <!--
 title: 服务器监控最佳实践
 date: 2026-05-27
-tags: 服务器监控,Prometheus,Grafana,运维,可观测性
+tags: 服务器监控, Prometheus, Grafana, 运维, 可观测性
 description: 全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="/styles/main.min.css">
-  <link rel="stylesheet" href="/styles/custom.css">
-
+<link rel="stylesheet" href="/styles/main.min.css?v=20260713e">
+<link rel="stylesheet" href="/styles/custom.css?v=20260713r4h">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
 <style>:root { --heatmap-color: #50fa7b; }</style>
-
 <script>
   (function () {
     try {
@@ -31,22 +28,29 @@ description: 全面介绍服务器监控体系的构建方法，涵盖Prometheus
   <meta name="generator" content="Miracle 1.1.1">
   <title>服务器监控最佳实践 | Miracle</title>
 <meta name="description" content="全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。">
-<link rel="canonical" href="https://miraclestar-w.github.io/post/server-monitoring-best-practices/">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/server-monitoring-best-practices.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "服务器监控最佳实践", "description": "全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。", "datePublished": "2026-05-27", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/images/avatar.png", "mainEntityOfPage": "https://miraclestar-w.github.io/post/server-monitoring-best-practices.html", "url": "https://miraclestar-w.github.io/post/server-monitoring-best-practices.html"}</script>
 <meta property="og:title" content="服务器监控最佳实践">
 <meta property="og:description" content="全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。">
-<meta property="og:url" content="https://miraclestar-w.github.io/post/server-monitoring-best-practices/">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/server-monitoring-best-practices.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Miracle">
-<meta property="og:image" content="/images/avatar.png">
+<meta property="og:image" content="https://miraclestar-w.github.io/images/avatar.png">
+<meta property="article:published_time" content="2026-05-27">
+<meta property="article:tag" content="服务器监控">
+<meta property="article:tag" content="Prometheus">
+<meta property="article:tag" content="Grafana">
+<meta property="article:tag" content="运维">
+<meta property="article:tag" content="可观测性">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://miraclestar-w.github.io/post/server-monitoring-best-practices/">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/server-monitoring-best-practices.html">
 <meta name="twitter:title" content="服务器监控最佳实践">
 <meta name="twitter:description" content="全面介绍服务器监控体系的构建方法，涵盖Prometheus+Grafana监控栈搭建、告警规则设计、日志聚合和分布式追踪等关键实践。">
-<meta name="twitter:image" content="/images/avatar.png">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/images/avatar.png">
 </head>
 <body class="flavor-theme">
 
-  <header class="site-header" id="siteHeader">
+<header class="site-header" id="siteHeader">
   <div class="header-inner">
     <div class="top-bar">
       <div class="top-bar__left">
@@ -55,13 +59,11 @@ description: 全面介绍服务器监控体系的构建方法，涵盖Prometheus
         </a>
         <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
       </div>
-      <nav class="top-bar__nav" id="sectionBar">
-        <a class="nav-item" href="/memos">闪念</a>
+                  <nav class="top-bar__nav" id="sectionBar">
         <a class="nav-item" href="/">首页</a>
-        <a class="nav-item" href="/post">博客</a>
-        <a class="nav-item" href="/archives">归档</a>
-        <a class="nav-item" href="/tags">标签</a>
-        <a class="nav-item" href="/post/about">关于</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
@@ -87,56 +89,26 @@ description: 全面介绍服务器监控体系的构建方法，涵盖Prometheus
   </div>
 </header>
 <div class="header-spacer"></div>
-<script>
-(function(){
-  var btn = document.getElementById('btnNavToggle');
-  var nav = document.getElementById('sectionBar');
-  var hamburger = document.getElementById('hamburger');
-  if (btn && nav) {
-    btn.addEventListener('click', function(){
-      nav.classList.toggle('top-bar__nav--open');
-      if (hamburger) hamburger.classList.toggle('is-active');
-    });
-    nav.querySelectorAll('.nav-item').forEach(function(item){
-      item.addEventListener('click', function(){
-        nav.classList.remove('top-bar__nav--open');
-        if (hamburger) hamburger.classList.remove('is-active');
-      });
-    });
-  }
-  var root = document.documentElement;
-  var applyTheme = function(theme, persist){
-    if (theme === 'light') {
-      root.classList.add('theme-light');
-    } else {
-      root.classList.remove('theme-light');
-    }
-    if (persist) {
-      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
-    }
-  };
-  document.querySelectorAll('.theme-toggle').forEach(function(el){
-    el.addEventListener('click', function(){
-      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
-    });
-  });
-})();
-</script>
 
   <main class="site-main" role="main">
     <div class="article-container">
-  <article>
-    <header class="article-header">
-      <h1 class="article-title">服务器监控最佳实践</h1>
-      <div class="article-meta">
-        <span class="article-meta__item">2026-05-27</span>
-        <span class="article-meta__sep">·</span>
-        <span class="article-meta__item">服务器监控, Prometheus, Grafana, 运维, 可观测性</span>
-      </div>
-    </header>
-
-    <div class="article-content">
-      <p>服务器监控是运维体系的基石。一套完善的监控系统能够帮助团队及时发现故障、快速定位问题、预防潜在风险。本文将从<strong>监控体系设计</strong>、<strong>工具选型</strong>和<strong>最佳实践</strong>三个维度，系统性地介绍如何构建高效的服务器监控体系。</p>
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">服务器监控最佳实践</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-05-27</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">服务器监控</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">Prometheus</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">Grafana</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">运维</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">可观测性</a>
+          </span>
+          </div>
+        </header>
+        <div class="article-content">
+<p>服务器监控是运维体系的基石。一套完善的监控系统能够帮助团队及时发现故障、快速定位问题、预防潜在风险。本文将从<strong>监控体系设计</strong>、<strong>工具选型</strong>和<strong>最佳实践</strong>三个维度，系统性地介绍如何构建高效的服务器监控体系。</p>
 
       <h2>可观测性三大支柱</h2>
 
@@ -399,20 +371,21 @@ groups:
       <a href="/tags/Grafana/" class="tag-link">Grafana</a>
       <a href="/tags/运维/" class="tag-link">运维</a>
       <a href="/tags/可观测性/" class="tag-link">可观测性</a>
+        </div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
+      </article>
     </div>
-  </article>
-</div>
   </main>
 
-  <footer class="site-footer">
+<footer class="site-footer">
   <div class="footer-inner">
-    <nav class="footer-nav" aria-label="页脚导航">
-      <a class="footer-nav__link" href="/memos">闪念</a>
+            <nav class="footer-nav" aria-label="页脚导航">
       <a class="footer-nav__link" href="/">首页</a>
-      <a class="footer-nav__link" href="/post">博客</a>
-      <a class="footer-nav__link" href="/archives">归档</a>
-      <a class="footer-nav__link" href="/tags">标签</a>
-      <a class="footer-nav__link" href="/post/about">关于</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
     </nav>
     <div class="footer-social">
       <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
@@ -450,7 +423,41 @@ groups:
   </div>
 </div>
 <script src="/scripts/search.js"></script>
-
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
 <script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
