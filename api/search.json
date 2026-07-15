@@ -1,5 +1,19 @@
 [
   {
+    "title": "25GB内存跑744B参数模型：一个独立开发者搞出了什么",
+    "url": "/post/colibri-glm52-consumer.html",
+    "content": "JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。上线不到两周已经8400星。核心引擎就c/glm.c一个文件约2400行代码。",
+    "date": "2026-07-15",
+    "tags": [
+      "colibri",
+      "GLM-5.2",
+      "MoE",
+      "大模型",
+      "推理优化",
+      "消费级硬件"
+    ]
+  },
+  {
     "title": "AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全",
     "url": "/post/ai-agent-security-frameworks-explode.html",
     "content": "GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。当 AI Agent 开始接触真实的生产环境，安全问题从锦上添花变成了生死攸关。",

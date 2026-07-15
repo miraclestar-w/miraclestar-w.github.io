@@ -5,7 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 13 Jul 2026 00:00:00 +0800</lastBuildDate>  <item>
+    <lastBuildDate>Wed, 15 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+    <title>25GB内存跑744B参数模型：一个独立开发者搞出了什么</title>
+    <link>https://miraclestar-w.github.io/post/colibri-glm52-consumer.html</link>
+    <description>JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。上线不到两周已经8400星。</description>
+    <pubDate>Wed, 15 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/colibri-glm52-consumer.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+  <item>
     <title>AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全</title>
     <link>https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html</link>
     <description>GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。</description>

@@ -1,0 +1,152 @@
+<!--
+title: 25GB内存跑744B参数模型：一个独立开发者搞出了什么
+date: 2026-07-15
+tags: colibri, GLM-5.2, MoE, 大模型, 推理优化, 消费级硬件
+description: JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>25GB内存跑744B参数模型：一个独立开发者搞出了什么 | Miracle</title>
+<meta name="description" content="JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/colibri-glm52-consumer/">
+<meta property="og:title" content="25GB内存跑744B参数模型：一个独立开发者搞出了什么">
+<meta property="og:description" content="JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/colibri-glm52-consumer/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="/images/avatar.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/colibri-glm52-consumer/">
+<meta name="twitter:title" content="25GB内存跑744B参数模型：一个独立开发者搞出了什么">
+<meta name="twitter:description" content="JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。">
+<meta name="twitter:image" content="/images/avatar.png">
+</head>
+<body class="flavor-theme">
+
+  <header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+      <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/memos">闪念</a>
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item" href="/post">博客</a>
+        <a class="nav-item" href="/archives">归档</a>
+        <a class="nav-item" href="/tags">标签</a>
+        <a class="nav-item" href="/post/about">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.69 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22704 18.3629L5.63283 16.9529C6.02335 16.5623 6.02335 17.1955 5.63704 17.586L4.22704 18.996C3.83651 19.3865 3.83651 20.0197 4.22704 20.4102C4.61756 20.8007 5.25073 20.8007 5.64125 20.4102L7.05125 19.0002C7.44178 18.6097 7.44178 17.9765 7.05125 17.586L7.04704 16.9529Z"></path><path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.3671 7.0471L19.7771 5.6371C20.1676 5.24658 20.1676 4.61341 19.777 5.6371Z"></path><path d="M12 22C12.5523 22 13 21.5523 13 21V19C13 18.4477 12.5523 18 12 18C11.4477 18 11 18.4477 11 19V21C11 21.5523 11.4477 22 12 22Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.5523 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.5523 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">25GB内存跑744B参数模型：一个独立开发者搞出了什么</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-15</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">colibri, GLM-5.2, MoE, 大模型, 推理优化, 消费级硬件</span>
+          </div>
+        </header>
+        <div class="article-content">
+<blockquote><p>JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。</p></blockquote>
+<img src="/post-images/colibri_terminal.jpg" alt="终端中的命令行界面" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<h2>消费级GPU的疯狂周末</h2>
+<p>上周GitHub Trending上冒出一个新项目，上线不到两周已经8400星。作者是个叫JustVugg的独立开发者，项目名叫colibri——蜂鸟。</p>
+<p>这项目干了件挺反直觉的事：用纯C语言写了一个推理引擎，没绑任何深度学习框架，然后把GLM-5.2这个744B参数的MoE模型塞进了只有25GB内存的消费级机器里跑起来了。</p>
+<p>先说个数字：744B参数，FP16精度下光权重就要1.4TB。你家里那台32GB内存的台式机，连模型的十分之一都装不下。但colibri做到了，而且不是勉强能跑——是实际能生成文本的那种"跑"。</p>
+<h2>怎么把一个1.4TB的模型塞进25GB</h2>
+<p>核心思路其实不复杂，但执行起来需要不少工程巧劲。</p>
+<p>GLM-5.2用的是MoE（混合专家）架构，744B参数里绝大部分分布在Expert模块上。具体来说，它有一个约17B参数的密集核心（int4量化后约9.9GB），以及约21,504个路由专家，总共约370GB。每次前向传播只激活一小部分Expert，所以不需要把所有权重都加载到内存里。</p>
+<p>colibri的做法是把模型权重分片存储在磁盘上，运行时按需从磁盘读取到内存。它构建了一个统一内存层次结构——把VRAM、RAM和存储当成一个池子来管理。密集核心常驻RAM，专家模块留在磁盘上通过LRU缓存按需加载，OS页缓存充当L2缓存。</p>
+<p>更关键的是它做了一套学习缓存机制。引擎会记录<code>.coli_usage</code>文件追踪哪些专家被用得最多，然后把最热的专家自动钉扎到空闲RAM里。也就是说，你用得越多，它越快。</p>
+<h2>纯C，零依赖，为什么这么干</h2>
+<p>大多数LLM推理框架都绑着CUDA、cuBLAS、PyTorch这些重型依赖。PyTorch的体积动辄几个GB，安装环境折腾半天。colibri的反其道而行之很有意思——纯C实现，核心引擎就<code>c/glm.c</code>一个文件，约2400行代码。编译完就一个二进制文件，没有运行时依赖。</p>
+<p>这意味着你可以在树莓派上编译它，在Docker容器里直接复制运行，甚至交叉编译到嵌入式设备上跑。不需要装Python，不需要配conda环境，不需要等pip下载一堆包。</p>
+<p>当然代价是开发效率。纯C写推理引擎意味着所有算子都要自己实现，内存管理要手动处理，bug排查没有pdb给你用。但反过来想，这种极简架构也有好处：没有框架层的抽象开销，性能上限更高；没有依赖冲突，部署更可靠；代码量可控，安全审计更容易。</p>
+<p>项目支持AVX2整数点乘内核（Q8_0风格），在x86平台上int8计算比float快1.4-2.5倍。Windows原生支持靠的是MinGW-w64编译，POSIX I/O通过<code>c/compat.h</code>映射到Windows API。Apple Silicon有实验性Metal后端，M4 Max上比纯CPU快约1.4倍。</p>
+<h2>速度到底怎么样</h2>
+<p>说实话，这玩意儿不算快。作者自己在README里也说了："This is not fast."</p>
+<p>在25GB RAM、约1GB/s NVMe的机器上冷启动，推理速度大概0.05-0.1 tok/s。什么意思？生成一句话可能要等几十秒。</p>
+<p>但加了条件就不一样了。Intel Ultra 7 270K配2.74GB/s O_DIRECT磁盘，跑到0.11 tok/s。Ryzen 9 9950X配8.81GB/s PCIe 5.0 NVMe，默认0.28 tok/s，加<code>--topp 0.7</code>能到0.52 tok/s。430GB RAM的EPYC服务器跑满pinning之后达到1.0 tok/s，这时候磁盘IO不再是瓶颈了。</p>
+<p>Apple M5 Max配Metal后端和128GB统一内存，跑到1.83 tok/s——这是目前最快的消费级数据点。统一内存消除了PCIe拷贝开销，加上批处理command buffers，确实有优势。</p>
+<p>关键洞察是：RAM容量是第一杠杆。小内存机器会自动把专家缓存限制为每层2个slot，导致decode永远是冷的。加到128GB RAM之后，缓存命中率能到98%，磁盘基本可以不用了。</p>
+<h2>几个有意思的技术细节</h2>
+<p>colibri不止是个"把模型塞进内存"的项目，它在推理优化上做了不少深入的工作。</p>
+<p>MLA（Multi-Latent Attention）压缩KV-cache到576 floats/token，比标准实现小57倍。这意味着长对话的内存占用大幅降低，而且验证token-exact对齐了transformers oracle。</p>
+<p>MTP（多Token预测）投机解码原生支持。用layer 78的int8 MTP head做draft，接受率在39-59%之间。注意必须是int8——原作者提到原始镜像的int4 MTP head会导致0%接受率，投机解码静默失效。</p>
+<p>还有一个叫PILOT的实验功能：Router-Lookahead Prefetch。通过当前layer的路由状态预测下一层的专家路由，准确率71.6%。预测命中就直接预取，把I/O和计算重叠起来。</p>
+<img src="/post-images/colibri_hummingbird.jpg" alt="蜂鸟特写" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<h2>开源社区的反应</h2>
+<p>这个项目上线后在GitHub上迅速获得了8400星和671次fork。评论区有人问能不能加CUDA支持，作者回复说CUDA是opt-in的——需要单独编译<code>coli_cuda.dll</code>，不支持P2P或NCCL，但支持多GPU专家钉扎。</p>
+<p>也有人拿它跟llama.cpp做对比——两者思路类似，但colibri专注MoE架构和专家分页，llama.cpp更通用一些。colibri的特色在于它专门为GLM-5.2的MoE设计，而llama.cpp支持更多模型格式。</p>
+<p>有意思的是，这个项目没有官方文档，只有一个README和几个issue讨论。作者似乎更倾向于让代码自己说话，而不是花精力写教程。这种风格在开源社区里不算常见，但确实吸引了一批喜欢自己动手的人。</p>
+<p>项目还提供了一个Web Dashboard（<code>./coli web --model &lt;dir&gt;</code>），可以实时查看硬件面板、内存使用情况和"Brain" cortex可视化。OpenAI兼容API接口（<code>./coli serve</code>）也内置了，支持bounded FIFO queue和<code>cache_slot</code>隔离上下文。</p>
+<h2>普通人能用到吗</h2>
+<p>如果你有一台内存不太大的机器，又想试试跑大模型的感觉，colibri提供了一种可能：用消费级硬件跑大模型，虽然慢一点，但至少能跑。</p>
+<p>不过要做好心理准备——在25GB RAM的机器上，它确实很慢。如果你真的想用它做点什么，至少准备64GB以上内存和一块高速NVMe SSD。不然的话，可能等它生成一句话的时间够你打开ChatGPT打轮字了。</p>
+<p>截至发稿，colibri还在持续更新中。如果你感兴趣，仓库地址是github.com/JustVugg/colibri，模型权重在Hugging Face上的<code>mateogrgic/GLM-5.2-colibri-int4-with-int8-mtp</code>。</p>
+<img src="/post-images/colibri_code.jpg" alt="代码编辑器中的C文件" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/colibri_server.jpg" alt="服务器机房" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+</div>
+        <div class="article-cta">觉得有帮助？点赞收藏转发！</div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-copyright">© 2026 Miracle. Powered by <a href="https://github.com/miraclestar-w/miraclestar-w.github.io" target="_blank" rel="noopener">Miracle</a>.</div>
+    </div>
+  </footer>
+
+</body>
+</html>
