@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 15 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jul 2026 00:00:00 +0800</lastBuildDate>
     <item>
+    <title>GitHub 让 AI 代理把私有仓库数据公开泄露了，而且到现在还没修</title>
+    <link>https://miraclestar-w.github.io/post/github-gitlost-agentic-workflows-leak.html</link>
+    <description>Noma Labs 发现 GitHub Agentic Workflows 存在 GitLost 漏洞，攻击者无需任何权限就能通过一个 Issue 让 AI 代理泄露私有仓库数据。GitHub 至今未修复。</description>
+    <pubDate>Sat, 18 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/github-gitlost-agentic-workflows-leak.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+  <item>
     <title>25GB内存跑744B参数模型：一个独立开发者搞出了什么</title>
     <link>https://miraclestar-w.github.io/post/colibri-glm52-consumer.html</link>
     <description>JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。上线不到两周已经8400星。</description>

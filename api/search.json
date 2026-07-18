@@ -1,5 +1,17 @@
 [
   {
+    "title": "GitHub 让 AI 代理把私有仓库数据公开泄露了，而且到现在还没修",
+    "url": "/post/github-gitlost-agentic-workflows-leak.html",
+    "content": "Noma Labs 发现 GitHub Agentic Workflows 存在 GitLost 漏洞，攻击者无需任何权限就能通过一个 Issue 让 AI 代理泄露私有仓库数据。GitHub 至今未修复。",
+    "date": "2026-07-18",
+    "tags": [
+      "GitHub",
+      "AI安全",
+      "Prompt Injection",
+      "Agentic Workflows"
+    ]
+  },
+  {
     "title": "25GB内存跑744B参数模型：一个独立开发者搞出了什么",
     "url": "/post/colibri-glm52-consumer.html",
     "content": "JustVugg的colibri项目用纯C语言把744B参数的MoE模型塞进25GB消费级硬件，零依赖、无GPU。上线不到两周已经8400星。核心引擎就c/glm.c一个文件约2400行代码。",
