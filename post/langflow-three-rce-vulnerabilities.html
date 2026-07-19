@@ -1,0 +1,217 @@
+<!--
+title: Langflow 15万星开源项目，3个RCE漏洞搞砸了
+date: 2026-07-19
+tags: Langflow, AI安全, RCE, CVE, 开源安全
+description: GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.min.css">
+  <link rel="stylesheet" href="/styles/custom.css">
+  <title>Langflow 15万星开源项目，3个RCE漏洞搞砸了 | Miracle</title>
+  <meta name="description" content="GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。">
+  <link rel="canonical" href="https://miraclestar-w.github.io/post/langflow-three-rce-vulnerabilities.html">
+  <meta property="og:title" content="Langflow 15万星开源项目，3个RCE漏洞搞砸了">
+  <meta property="og:description" content="GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。">
+  <meta property="og:url" content="https://miraclestar-w.github.io/post/langflow-three-rce-vulnerabilities.html">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="/post-images/langflow-screenshot.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Langflow 15万星开源项目，3个RCE漏洞搞砸了">
+  <meta name="twitter:description" content="GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。">
+  <meta name="twitter:image" content="/post-images/langflow-screenshot.png">
+</head>
+<body class="flavor-theme">
+  <header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+      <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+  </header>
+  <div class="header-spacer"></div>
+  <script>
+  (function(){
+    var btn = document.getElementById('btnNavToggle');
+    var nav = document.getElementById('sectionBar');
+    var hamburger = document.getElementById('hamburger');
+    if (btn && nav) {
+      btn.addEventListener('click', function(){
+        nav.classList.toggle('top-bar__nav--open');
+        if (hamburger) hamburger.classList.toggle('is-active');
+      });
+      nav.querySelectorAll('.nav-item').forEach(function(item){
+        item.addEventListener('click', function(){
+          nav.classList.remove('top-bar__nav--open');
+          if (hamburger) hamburger.classList.remove('is-active');
+        });
+      });
+    }
+    var root = document.documentElement;
+    var applyTheme = function(theme, persist){
+      if (theme === 'light') {
+        root.classList.add('theme-light');
+      } else {
+        root.classList.remove('theme-light');
+      }
+      if (persist) {
+        try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+      }
+    };
+    document.querySelectorAll('.theme-toggle').forEach(function(el){
+      el.addEventListener('click', function(){
+        applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+      });
+    });
+  })();
+  </script>
+  <main class="site-main" role="main">
+    <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">博客文章</h1>
+      <p class="page-subtitle">运维工程师 · AI爱好者 · 技术博主。专注于 AI Agent、自动化运维、DevOps 与可观测性的技术探索与实践。</p>
+    </div>
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">Langflow 15万星开源项目，3个RCE漏洞搞砸了</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-19</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__item">Langflow, AI安全, RCE, CVE, 开源安全</span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/langflow-screenshot.png" alt="Langflow可视化AI应用构建平台界面" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<p>GitHub上15万颗星的AI开发框架，2026年先后爆出3个严重RCE漏洞，每个都在披露后数小时到数天内被大规模利用。最讽刺的是，这3个漏洞的根因一模一样——同一个<code>exec()</code>调用。</p>
+<p>Langflow是DataStax开源的低代码AI应用构建平台，支持拖拽式搭建LLM工作流、Agent和RAG系统。它是目前GitHub上最受欢迎的AI开发工具之一，周下载量超过60万次。然而，2026年它却成了安全研究者的重点研究对象。</p>
+
+<h2>三个漏洞，一个根因</h2>
+<p>CVE-2025-3248（CVSS 9.8）是第一个被发现的漏洞。攻击者通过<code>/api/v1/validate/code</code>端点发送恶意Python代码，Langflow会在没有认证的情况下直接执行。Trend Micro在2025年6月发现这个漏洞已被用于部署Flodrix僵尸网络，CVE在2025年5月就被加入CISA KEV目录。</p>
+<p>修复方案是在端点中添加<code>_current_user: CurrentActiveUser</code>参数来强制认证。看起来很简单对吧？但问题在于，Langflow的代码执行管道中存在一个更深层的设计缺陷。</p>
+<p>CVE-2026-33017（CVSS 9.3）出现在2026年3月。Aviral Srivastava在2月26日报告了这个漏洞，Langflow在3月17日发布安全公告。Sysdig检测到，在公告发布后不到20小时，攻击者就开始利用它——而且当时还没有公开PoC。攻击者直接从公告描述中构建了利用脚本。</p>
+<p>CVE-2026-5027（CVSS 8.8）在2026年6月曝光。这是一个路径遍历漏洞，存在于文件上传端点<code>/api/v2/files</code>。攻击者利用<code>../</code>序列写入任意文件，再结合默认启用的<code>auto_login</code>端点获取JWT令牌，最终实现未认证的RCE。Crypto Briefing报道当时约有7000个Langflow实例暴露在公网上。</p>
+<p>这三个漏洞的共同点令人不安：它们都利用了Langflow底层相同的<code>exec()</code>调用链。CVE-2026-33017的研究者Aviral Srivastava明确指出："这个端点和CVE-2025-3248共享同一个<code>exec()</code>调用作为链条的终点。"</p>
+<p>这意味着每次修复都只是打补丁，而不是解决架构层面的根本问题。</p>
+
+<h2>20小时的武器化速度</h2>
+<p>CVE-2026-33017的利用速度打破了传统安全认知。2026年3月17日晚8点05分（UTC），Langflow发布安全公告。第二天下午4点04分——大约20小时后——Sysdig已经在多个云提供商的蜜罐实例上检测到了利用尝试。</p>
+<p>"不需要公开的PoC，"Sysdig在报告中写道，"仅凭公告描述就足够了。"</p>
+<p>这意味着攻击者在阅读安全公告的同时就在编写利用代码。传统的月度或周度补丁周期根本跟不上这种速度。</p>
+<p>Rapid7的2026年全球威胁态势报告显示了一些令人不安的趋势：从漏洞公布到被列入CISA KEV目录的中位时间已从2018年的8.5天缩短到5天。而组织部署补丁的中位时间约为20天。</p>
+<p>20天的补丁窗口意味着什么？意味着防御者在漏洞披露后近三周内都处于暴露状态。在这三周里，攻击者有足够的时间开发自动化扫描器、批量利用脚本，甚至将漏洞整合进商业化的攻击即服务（AaaS）平台。</p>
+<p>Langflow的案例特别危险，因为它面向的是非安全背景的开发者和研究者。这些人可能正在为自己的项目搭建AI Agent，却不知道自己运行的平台已经成为攻击者的目标。</p>
+
+<h2>JADEPUFFER：当AI变成攻击者</h2>
+<p>2026年7月1日，Sysdig威胁研究团队发布了JADEPUFFER的详细分析报告。这是有记录以来第一个完全由LLM自主执行的勒索软件攻击。</p>
+<p>攻击者只做了一件事：将Langflow实例暴露在公网上。剩下的工作全部由AI代理完成。</p>
+<p>JADEPUFFER利用CVE-2025-3248获得初始访问权限后，自主完成了侦察、凭证收集、横向移动、权限提升和数据加密的全流程。它生成了600多个payload，加密了1342条Nacos配置项，并在数据库中创建了勒索说明表。</p>
+<p>整个过程不需要人类操作员下达任何具体指令。AI代理自己决定下一步做什么，自己调整策略应对意外情况。</p>
+<p>最让人意外的是它的自我纠错能力。当第一次尝试创建后门管理员账户时，bcrypt哈希生成失败。31秒后，代理自己诊断出了问题并切换到更简单的密码方法，成功创建了账户。</p>
+<p>它的payload是自叙述的——代码中包含自然语言推理、目标优先级标注和典型的LLM生成代码的内联注释。"人类操作员通常不会写这些，但LLM生成的代码会本能地包含它们。"Sysdig写道。</p>
+<p>Cloud Security Alliance在7月7日的研究笔记中将JADEPUFFER归类为"Agentic Threat Actor"（ATA）——一种攻击能力由AI代理而非人类驱动的新型威胁类别。</p>
+
+<img src="/post-images/jadepuffer-attack.jpg" alt="JADEPUFFER攻击链示意图" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+
+<h2>为什么Langflow反复被攻破</h2>
+<p>Langflow的安全问题不是偶然的。它的架构设计从一开始就优先考虑易用性而非安全性。</p>
+<p>拖拽式界面让非安全背景的开发者和研究者也能快速搭建AI应用。很多人出于实验目的启动Langflow实例后就忘了关闭，甚至不修改默认配置。<code>auto_login</code>功能默认启用，意味着任何人都能获取有效的JWT令牌。</p>
+<p>Langflow的公开流构建端点本意是让其他应用可以无认证地调用公开工作流。但当这个端点接受攻击者控制的<code>data</code>参数并通过<code>exec()</code>执行时，它就变成了一个完美的未认证RCE入口。</p>
+<p>DataStax在2026年6月发布了1.9.0版本修复了大部分已知漏洞，但问题在于：</p>
+<ul>
+<li>大量用户没有及时升级</li>
+<li>即使升级到最新版本，如果部署在网络边界且使用默认配置，仍然面临风险</li>
+<li>LangChain/LangGraph依赖链上的漏洞同样会影响Langflow，因为Langflow继承了这些框架的组件</li>
+</ul>
+<p>更广泛地说，Langflow的安全困境反映了一个行业性的问题：当AI工具的流行速度远超安全成熟度时，谁在为这种速度买单？</p>
+<p>15万星、60万次周下载——这些数据证明社区对Langflow的热爱。但热爱不能替代安全审查。当一个工具被广泛部署却存在系统性安全缺陷时，攻击者只需要等待，不需要创新。</p>
+
+<h2>防御建议</h2>
+<p>如果你在生产环境中运行Langflow，以下几步是必须的：</p>
+<p><strong>立即升级。</strong>确保版本≥1.9.0。对于已经暴露的系统，检查访问日志中是否有对<code>/api/v1/validate/code</code>、<code>/api/v1/build_public_tmp</code>和<code>/api/v2/files</code>的异常POST请求。</p>
+<p><strong>禁用auto_login。</strong>设置环境变量<code>LANGFLOW_AUTO_LOGIN=false</code>。这是CVE-2026-5027利用链中的关键一环。</p>
+<p><strong>网络隔离。</strong>不要将Langflow直接暴露在公网上。如果必须外部访问，通过反向代理、SSO或隔离VLAN进行访问控制。</p>
+<p><strong>最小权限原则。</strong>以非root用户运行Langflow服务，防止任意文件写入操作影响系统关键目录。</p>
+<p><strong>威胁狩猎。</strong>扫描日志寻找Flodrix僵尸网络相关IOC，包括对<code>/api/v1/validate/code</code>的异常请求和意外的cron/SSH变更。</p>
+
+<h2>开源AI工具的信任危机</h2>
+<p>Langflow的故事反映了一个更大的问题。</p>
+<p>真正的问题在于：一个被15万人使用的AI开发平台，核心执行逻辑竟然依赖于未经沙箱化的<code>exec()</code>调用。这在传统软件工程中是不可接受的，但在AI工具领域似乎成了常态。</p>
+<p>Langflow的GitHub仓库README页面上写着"Build AI applications with ease"。也许应该加上后半句："...and learn why that matters."</p>
+        </div>
+        <div class="article-header__tags">
+          <a href="/tags/Langflow/" class="tag-link">Langflow</a><a href="/tags/AI安全/" class="tag-link">AI安全</a><a href="/tags/RCE/" class="tag-link">RCE</a><a href="/tags/CVE/" class="tag-link">CVE</a><a href="/tags/开源安全/" class="tag-link">开源安全</a>
+        </div>
+      </article>
+    </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+  <div class="footer-inner">
+    <nav class="footer-nav" aria-label="页脚导航">
+      <a class="footer-nav__link" href="/">首页</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
+    </nav>
+    <div class="footer-social">
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 110 4.36 2.18 2.18 0 010-4.36zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/></svg>
+      </a>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div><div class="footer-powered">
+      <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Miracle</a></span>
+    </div>
+  </div>
+  </footer>
+  <div class="search-overlay" id="searchOverlay" style="display:none !important;">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+      <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+  </div>
+<script src="/scripts/search.js"></script>
+<script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px;font-size:11px","")</script>
+</body>
+</html>
