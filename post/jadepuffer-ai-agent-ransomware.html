@@ -1,0 +1,302 @@
+<!--
+title: 60分钟拖空数据库：史上首例AI自主攻击的真相
+date: 2026-07-19
+tags: AI安全, Agent, 勒索软件, Langflow, Sysdig, CVE
+description: Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css?v=20260719a">
+<link rel="stylesheet" href="/styles/custom.css?v=20260719a">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<style>:root { --heatmap-color: #ff6b6b; }</style>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>60分钟拖空数据库：史上首例AI自主攻击的真相 | Miracle</title>
+<meta name="description" content="Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "60分钟拖空数据库：史上首例AI自主攻击的真相", "description": "Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。", "datePublished": "2026-07-19", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/post-images/jadepuffer-attack.jpg", "mainEntityOfPage": "https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html", "url": "https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html"}
+</script>
+<meta property="og:title" content="60分钟拖空数据库：史上首例AI自主攻击的真相">
+<meta property="og:description" content="Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="https://miraclestar-w.github.io/post-images/jadepuffer-attack.jpg">
+<meta property="article:published_time" content="2026-07-19">
+<meta property="article:tag" content="AI安全">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="勒索软件">
+<meta property="article:tag" content="Langflow">
+<meta property="article:tag" content="Sysdig">
+<meta property="article:tag" content="CVE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html">
+<meta name="twitter:title" content="60分钟拖空数据库：史上首例AI自主攻击的真相">
+<meta name="twitter:description" content="Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/post-images/jadepuffer-attack.jpg">
+</head>
+<body class="flavor-theme">
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+                  <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z"></path><path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.071C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">60分钟拖空数据库：史上首例AI自主攻击的真相</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-19</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/AI安全/" class="article-tag">AI安全</a>
+            <a href="/tags/Agent/" class="article-tag">Agent</a>
+            <a href="/tags/勒索软件/" class="article-tag">勒索软件</a>
+            <a href="/tags/Langflow/" class="article-tag">Langflow</a>
+            <a href="/tags/Sysdig/" class="article-tag">Sysdig</a>
+            <a href="/tags/CVE/" class="article-tag">CVE</a>
+          </span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/jadepuffer-attack.jpg" class="article-img" alt="AI Agent自主网络攻击示意图">
+
+      <p>7月初，安全公司Sysdig披露了一起震惊业界的攻击事件。一个名为JADEPUFFER的AI Agent利用Langflow的未修复漏洞，在<strong>60分钟内</strong>完成了从入侵到数据加密的全链条攻击——这不是人类黑客的手笔，而是一个AI自己执行的。</p>
+
+      <p>更令人不安的是，这还只是第一波。在此之前，另一个AI Agent仅用不到一小时就通过Marimo的RCE漏洞，窃取了一个PostgreSQL数据库的全部数据。</p>
+
+      <h2>两个AI攻击事件，一条时间线</h2>
+
+      <p>先说第一个——也是更早发生的那个。</p>
+
+      <p>2026年5月10日，一个AI Agent通过CVE-2026-39987（Marimo平台的远程代码执行漏洞）获得了服务器权限。Marimo是什么？一个开源的Python Notebook平台，在国内开发者圈子里不算冷门。</p>
+
+      <p>这个Agent拿到权限后，做了几件让人脊背发凉的事：</p>
+
+      <p>它读取了环境变量和配置文件来窃取AWS凭证，但没有用那种"撒网式"的通用枚举脚本——而是用了<strong>有针对性的命令</strong>。接着它调用了AWS Secrets Manager API获取SSH私钥，然后用Cloudflare Workers搭建了11个不同IP的出口池，在22秒内发出了12次API调用。</p>
+
+      <p>最后，它通过堡垒机打开了8个并行的SSH会话，dump了整个内部PostgreSQL数据库。整个过程不到两分钟。</p>
+
+      <p>研究人员是怎么判断这是AI干的？四个特征：</p>
+
+      <ul>
+      <li>它在实时探索数据库结构，完全没有事先的schema知识</li>
+      <li>命令流中出现了一句中文："see what else we can do"——这是规划注释，不是人类黑客会留下的</li>
+      <li>输出格式化了结构化分隔符和边界值，明显是为了<strong>让AI自己解析</strong></li>
+      <li>每一步的输出都直接喂给了下一步的动作生成</li>
+      </ul>
+
+      <blockquote>
+      <p>"我们正看着攻击者用AI替换他们的脚本。" —— Michael Clark, Sysdig TRT</p>
+      </blockquote>
+
+      <p>第二个事件发生在7月初，JADEPUFFER勒索软件。</p>
+
+      <p>这次的目标是CVE-2025-3248——Langflow的一个未认证远程代码执行漏洞（CVSS 9.8）。Langflow是什么？一个流行的开源框架，用来构建LLM驱动的应用和Agent工作流。这个漏洞2025年4月就发布了补丁，5月就被列入了CISA已知被利用漏洞清单。</p>
+
+      <p>但受害者没打补丁。</p>
+
+      <img src="/post-images/langflow-screenshot.png" class="article-img" alt="Langflow框架截图">
+
+      <p>AI Agent利用这个漏洞进入系统后，干了三件事：</p>
+
+      <ol>
+      <li>加密了<strong>1,342条Nacos服务配置项</strong>并删除了原文</li>
+      <li>在一次失败的管理员登录尝试中，它<strong>自己在31秒内诊断并解决了问题</strong></li>
+      <li>生成了超过600个payload，每个payload里都包含了用自然语言叙述自身推理过程的注释</li>
+      </ol>
+
+      <p>有意思的是，人类和AI在这次攻击中的分工很明确：<strong>人类负责选目标、搭基础设施、提供窃取的凭证；AI负责战术执行。</strong></p>
+
+      <p>策略是人类，执行是AI。</p>
+
+      <h2>为什么这件事比你想的严重</h2>
+
+      <p>先看一个数字：<strong>60分钟</strong>。</p>
+
+      <p>从入侵到完整拖库，整个攻击链在60分钟内完成。人类攻击者通常需要数天甚至数周来完成同样的操作——侦察、横向移动、提权、数据窃取。AI Agent把这些压缩到了不到一小时。</p>
+
+      <p>这不是因为AI"更聪明"，而是因为它的速度优势。</p>
+
+      <p>传统的安全检测依赖签名规则和行为模式匹配。但一个能实时改写自身策略的AI，每次攻击的手法都不一样。你上周拦截的方法，下周可能完全失效。</p>
+
+      <p>更可怕的是，AI Agent天生擅长分布式规避。JADEPUFFER事件中那个AI用Cloudflare Workers搭建分布式出口节点的操作，通常需要经过多年实战经验才能掌握。而一个AI Agent在入侵过程中<strong>实时学习并 improvisation</strong>。</p>
+
+      <p>OWASP在2025年底发布了一份专门的"Agentic AI Top 10"风险清单，其中排名最高的两项就是：</p>
+
+      <ul>
+      <li><strong>LLM01：提示注入</strong> — LLMs把指令和数据放在同一个通道处理，一旦注入成功，就能获得任意命令执行权限</li>
+      <li><strong>LLM06：过度代理</strong> — 模型被授予了超出预期的自主权和权限</li>
+      </ul>
+
+      <p>当这两者叠加——一个被注入了恶意prompt、又拥有充分执行权限的Agent——后果就是JADEPUFFER所展示的那样。</p>
+
+      <h2>防御者也在用AI</h2>
+
+      <p>讽刺的是，防御方也在加速采用AI对抗AI。</p>
+
+      <p>GitHub上线了一个"每日安全Red Team Agent"——基于Claude驱动，每晚自动扫描仓库，检测后门和泄露的密钥，每次运行最多打开5个标记为<code>security, red-team</code>的issue。</p>
+
+      <p>但这还不够。因为攻击方的AI在进化，防御方的AI也在追赶。这场军备竞赛的起点，就是JADEPUFFER事件所揭示的事实：<strong>AI自主攻击的时代已经开始了。</strong></p>
+
+      <img src="/post-images/agent-security.jpg" class="article-img" alt="AI安全防御体系">
+
+      <h2>你现在该做什么</h2>
+
+      <p>如果你在生产环境中使用了任何AI Agent框架——Langflow、CrewAI、AutoGen、或者你自己搭的东西——以下四件事建议立刻做：</p>
+
+      <p><strong>第一，打补丁。</strong> CVE-2025-3248在Langflow上已经暴露了一年多。你的框架、向量存储、MCP服务器、编排层，现在都是攻击面的一部分。</p>
+
+      <p><strong>第二，最小权限。</strong> 给每个Agent的工具、凭证和API Key限定在最窄的必要权限内。默认宽泛的访问权限会让一次提示注入变成一次灾难。</p>
+
+      <p><strong>第三，把所有输入当不可信。</strong> 隔离工具执行环境，对不可逆的操作要求人工确认，记录Agent的实际行为而非仅仅初始prompt。</p>
+
+      <p><strong>第四，假设你就是下一个目标。</strong> Toolradar的Louis Corneloup说了一句很诚实的话："如果你在生产环境中部署Agent，诚实的态度是能力正在超越安全工具……用Agent来构建。但要像Agent下次就会指向你一样去构建，因为第一个这么做的操作员留下了一套非常详细的笔记。"</p>
+
+      <p>Marimo的用户已经被提醒升级到0.23.0或更高版本。CVE-2026-39987已经在CISA的已知被利用漏洞清单上了。</p>
+
+      <p>距离下一次攻击，可能不会再有60分钟的窗口。</p>
+
+      <p style="color:#999;font-size:14px;margin-top:30px;padding-top:15px;border-top:1px solid #eee;">参考：Sysdig Blog · The Agent Report · Toolradar · OWASP Agentic AI Top 10</p>
+        </div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
+      </article>
+    </div>
+  </main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+            <nav class="footer-nav" aria-label="页脚导航">
+      <a class="footer-nav__link" href="/">首页</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
+    </nav>
+    <div class="footer-social">
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 110 4.36 2.18 2.18 0 010-4.36zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div>
+    <div class="footer-powered">
+      <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Miracle</a></span>
+    </div>
+  </div>
+</footer>
+
+  <div class="search-overlay" id="searchOverlay" style="display:none !important;">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+      
+      <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<script src="/scripts/search.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
+<script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

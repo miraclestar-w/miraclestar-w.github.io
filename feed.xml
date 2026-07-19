@@ -5,8 +5,16 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 18 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0800</lastBuildDate>
     <item>
+    <title>60分钟拖空数据库：史上首例AI自主攻击的真相</title>
+    <link>https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html</link>
+    <description>Sysdig披露JADEPUFFER事件——一个AI Agent利用Langflow漏洞，60分钟内完成从入侵到数据加密的全链条攻击。人类负责选目标，AI负责执行。</description>
+    <pubDate>Sun, 19 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/jadepuffer-ai-agent-ransomware.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+  <item>
     <title>GitHub 让 AI 代理把私有仓库数据公开泄露了，而且到现在还没修</title>
     <link>https://miraclestar-w.github.io/post/github-gitlost-agentic-workflows-leak.html</link>
     <description>Noma Labs 发现 GitHub Agentic Workflows 存在 GitLost 漏洞，攻击者无需任何权限就能通过一个 Issue 让 AI 代理泄露私有仓库数据。GitHub 至今未修复。</description>
