@@ -7,14 +7,89 @@ description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-Ultr
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/main.min.css">
-  <link rel="stylesheet" href="/styles/custom.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css?v=20260713e">
+<link rel="stylesheet" href="/styles/custom.css?v=20260713r4h">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<style>:root { --heatmap-color: #50fa7b; }</style>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
   <title>小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节 | Miracle</title>
+<meta name="description" content="小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-UltraSpeed，实现1000+ tokens/s推理速度的技术深度解析">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节", "description": "小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-UltraSpeed，实现1000+ tokens/s推理速度的技术深度解析", "datePublished": "2026-07-02", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/post-images/mimo_hero_atmosphere.png", "mainEntityOfPage": "https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html", "url": "https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html"}</script>
+<meta property="og:title" content="小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节">
+<meta property="og:description" content="小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-UltraSpeed，实现1000+ tokens/s推理速度的技术深度解析">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="https://miraclestar-w.github.io/post-images/mimo_hero_atmosphere.png">
+<meta property="article:published_time" content="2026-07-02">
+<meta property="article:tag" content="小米">
+<meta property="article:tag" content="MiMo">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="GPU">
+<meta property="article:tag" content="大模型">
+<meta property="article:tag" content="推理优化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/xiaomi-mimo-1t-1000tps.html">
+<meta name="twitter:title" content="小米用8块消费级GPU跑出万亿参数模型，我拆了拆它的技术细节">
+<meta name="twitter:description" content="小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-UltraSpeed，实现1000+ tokens/s推理速度的技术深度解析">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/post-images/mimo_hero_atmosphere.png">
 </head>
 <body class="flavor-theme">
-  <header class="site-header">...</header>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+                  <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z"></path><path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
 
   <main class="site-main" role="main">
     <div class="article-container">
@@ -24,35 +99,42 @@ description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-Ultr
           <div class="article-meta">
             <span class="article-meta__item">2026-07-02</span>
             <span class="article-meta__sep">·</span>
-            <span class="article-meta__item">小米, MiMo, AI</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">小米</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">MiMo</a>
+            <a href="/tags/AI/" class="article-tag">AI</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">GPU</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">大模型</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">推理优化</a>
+          </span>
           </div>
         </header>
         <div class="article-content">
-<img src="/post-images/mimo_hero_atmosphere.png" alt="mimo_a" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_hero_atmosphere.png" alt="mimo_a" class="article-img">
 <p>周末刷Hacker News的时候看到一个帖子，500多分，评论区几百条。点进去一看——小米发了个1万亿参数的大模型，MiMo-V2.5-Pro-UltraSpeed，跑在8块消费级GPU上，输出速度干到了1000 tokens/s。</p>
 <p>我当时第一反应：做手机的？搞这么大动静？</p>
 <p>然后就开始翻技术文档，越看越觉得有意思。这文章就是我把看到的东西整理一下，聊聊几个我觉得挺骚的技术点。</p>
 <p>先说个数字感受一下：你平时跟ChatGPT聊天，它回你话的速度大概是30-50 tokens/s。小米这个模型，是它的20倍，峰值能到1200 tokens/s。1T参数量啊，不是什么几十亿参数的小玩意儿。</p>
 <p>这数字靠谱吗？我看了看，他们用的是FP4量化+投机解码+自研推理内核，三板斧下来确实能做到。当然具体benchmark得分另说，但1000 TPS这个数量级是站得住的。</p>
 <h3>手机厂商做AI，不是跟风，是被逼的</h3>
-<img src="/post-images/mimo_architecture.png" alt="mimo_b" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_architecture.png" alt="mimo_b" class="article-img">
 <p>你可能觉得小米搞AI是蹭热度。但仔细想想手机厂商现在的处境——</p>
 <p>苹果把Siri重构成了Gemini架构，WWDC上大谈Apple Intelligence。三星在Galaxy AI上砸了重金，拍照翻译、通话实时字幕全上了。Google更不用说，Gemini Nano直接塞进了Pixel的芯片里。</p>
 <p>手机行业的竞争已经不是比屏幕、比摄像头了。下一代用户体验的护城河就是AI。而AI的护城河说白了就两件事：模型够不够聪明，推理够不够快。</p>
 <p>聪明但慢得要死的AI，用户体验跟笨但快的AI没区别——用户根本等不了。小米选了条最难的路：又大又快。1T参数保证智能天花板够高，1000 TPS保证丝滑。这俩目标本来是矛盾的，模型越大推理越慢，但小米硬是把它们拧到了一起。</p>
 <h3>1000 TPS怎么来的？先说说不可能</h3>
-<img src="/post-images/mimo_performance.png" alt="性能对比" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_performance.png" alt="性能对比" class="article-img">
 <p>我第一次看到这个数字的时候算了一笔账：1T参数，FP16精度下光权重就要2TB显存，8块H100总共才640GB。数学上就不可能直接跑。</p>
 <p>所以小米肯定做了手脚。往下翻技术细节，发现他们做了一件很骚的事：没有堆专用硬件，而是在通用GPU上，通过模型和推理系统的联合优化，把速度逼到了极限。</p>
 <p>现在业界追求极致推理速度，有两个主流路线。Cerebras搞晶圆级芯片，把整个晶圆做成一颗巨无霸处理器；Groq走片上SRAM路线，用纯定制架构暴力提速。这两条路有个共同特点：贵，而且生态封闭。</p>
 <p>小米选了第三条路：用你手边买得到的GPU，通过模型和推理系统的深度协同设计（Codesign）来达到同样甚至更好的效果。具体怎么做的？三个关键技术，我一个一个说。</p>
 <h3>FP4量化：只砍"胖"的地方，承重墙不动</h3>
-<img src="/post-images/mimo_fp4_quant.png" alt="FP4量化示意图" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_fp4_quant.png" alt="FP4量化示意图" class="article-img">
 <p>传统量化要么全FP16，要么全INT8，一刀切。小米搞了个精准手术：只对MoE（混合专家）架构中的Expert模块做FP4量化，其他部分保留原有精度。</p>
 <p>为什么这么干？MoE模型里Expert占了参数的大头，万亿参数绝大部分都在Expert里。但Expert对量化精度的容忍度偏偏最高。你把这部分从FP16砍到FP4，模型体积直接缩小4倍，显存带宽压力骤降，整体能力几乎没掉。</p>
 <p>这就像装修房子，不是把所有墙都砸了，而是只把储藏间的墙改薄了——空间变大了，承重结构纹丝不动。我觉得这里有个坑：FP4的精度损失到底有多大，得看具体任务。通用对话可能没啥影响，但数学推理这种精度敏感的场景，大概率会掉点。不过小米既然敢上，应该是在自己的测试集上验证过了。</p>
 <h3>DFlash投机解码：一口气"吞"更多token</h3>
-<img src="/post-images/mimo_dflash.png" alt="DFlash投机解码" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_dflash.png" alt="DFlash投机解码" class="article-img">
 <p>传统的投机解码（Speculative Decoding）思路是用一个小模型来猜后续token，然后让大模型验证。但瓶颈在于小模型的猜测质量——猜得好就快，猜得差就白费算力。</p>
 <p>小米引入了学术界的DFlash方案，基于块级masked并行预测。小模型一次前向传播就填出一整块mask位置，不再需要逐个自回归生成。配合滑动窗口注意力（SWA），draft阶段的计算量从随上下文线性增长变成了常数级。</p>
 <p>效果呢？在Coding场景下平均接受长度达到6.3。啥意思？大模型每次验证8个draft token，能吞下6-7个。8个token的验证窗口，实际有效输出是6-7个，效率接近天花板。</p>
@@ -63,7 +145,7 @@ description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-Ultr
 <p>我做运维的，对这个特别有感触。平时跑服务，毫秒级延迟的时候，你根本不care内核调度开销。但一旦延迟压到微秒级，上下文切换、内存拷贝、锁竞争这些平时看不见的东西全冒出来了。推理也是一样的道理。</p>
 <p>TileRT的做法是引入全新的执行模型，从根本上消灭算子边界带来的执行间隙。定制的编译引擎和计算核，专门为FP4量化+DFlash推测解码这条pipeline做了优化。</p>
 <p>最终效果：一个标准的8卡通用GPU节点，跑1T模型，突破1000 TPS。这个"标准"二字很关键——你不需要去买Cerebras的定制硬件，不需要依赖Groq的专属芯片。用市场上能买到的GPU，通过模型和系统的深度协同，就能达到这个速度。</p>
-<img src="/post-images/mimo_tilert.png" alt="MiMo TTS" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_tilert.png" alt="MiMo TTS" class="article-img">
 <h3>运维看了这套方案，我有几个想法</h3>
 <p>说实话看完技术细节，我第一反应不是"好厉害"，而是"这玩意儿以后怎么部署、怎么运维"。有几个点我觉得挺值得琢磨。</p>
 <h4>推理服务的部署思路要变了</h4>
@@ -86,7 +168,7 @@ description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-Ultr
 <p>硬件控制力。手机厂商对芯片、存储、散热有深度控制能力，端侧AI的优化空间巨大，只有手机厂商能把软硬件协同做到极致。</p>
 <p>场景理解。手机厂商最懂用户日常什么时候需要AI翻译、什么时候需要AI总结消息、什么时候需要AI辅助拍照。这些场景化的能力不是大模型公司能随便覆盖的。</p>
 <p>小米MiMo-V2.5-Pro-UltraSpeed的发布某种程度上是手机厂商AI基建竞赛的起跑枪。可以预见接下来12个月，华为、OPPO、vivo都会在这个方向上加码。谁先把模型能力、推理速度、端侧部署三件事做到位，谁就可能在下一代手机体验中占先机。</p>
-<img src="/post-images/mimo_summary_cards.png" alt="关键技术总结" style="max-width:100%;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/mimo_summary_cards.png" alt="关键技术总结" class="article-img">
 <h3>这个思路比模型本身更值钱</h3>
 <p>小米用8块通用GPU把1万亿参数的模型跑出了1000 tokens/s。这个数字本身迟早会被超越，但它背后的思路值得记住。</p>
 <p>真正的效率提升不来自于堆更多的资源，而来自于对系统每一层的极致理解。模型层知道哪些参数可以压缩、哪些必须保留；系统层知道每个算子在哪里浪费了时间、怎么把间隙填上。</p>
@@ -96,10 +178,92 @@ description: 小米用8块消费级GPU跑出万亿参数模型MiMo-V2.5-Pro-Ultr
         <div class="article-header__tags">
           <a href="/tags/小米/" class="tag-link">小米</a><a href="/tags/MiMo/" class="tag-link">MiMo</a><a href="/tags/AI/" class="tag-link">AI</a><a href="/tags/GPU/" class="tag-link">GPU</a><a href="/tags/大模型/" class="tag-link">大模型</a><a href="/tags/推理优化/" class="tag-link">推理优化</a>
         </div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
       </article>
     </div>
   </main>
 
-  <footer class="site-footer">...</footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+            <nav class="footer-nav" aria-label="页脚导航">
+      <a class="footer-nav__link" href="/">首页</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
+    </nav>
+    <div class="footer-social">
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 110 4.36 2.18 2.18 0 010-4.36zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div>
+    <div class="footer-powered">
+      <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Miracle</a></span>
+    </div>
+  </div>
+</footer>
+
+  <div class="search-overlay" id="searchOverlay" style="display:none !important;">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+      
+      <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<script src="/scripts/search.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
+<script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

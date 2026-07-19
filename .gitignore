@@ -1,0 +1,20 @@
+﻿# local / generated
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# agent experiment artifacts
+styles/_shots/
+styles/_unused/
+tools/_qa/
+tools/__pycache__/
+tools/_r*.py
+tools/_r*.css
+tools/_r*.txt
+tools/_tm_src.txt
+tools/_premium_r3.py
+tools/_qa_*.py
+tools/_final_sweep.py
+tools/_fix_*.py
+tools/_check_*.py

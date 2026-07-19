@@ -1,20 +1,95 @@
 <!--
 title: AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全
 date: 2026-07-13
-tags: AI, Agent安全, eBPF, SemaMesh, ClawShield
+tags: AI, Agent, 安全, eBPF, SemaMesh, ClawShield
 description: GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/styles/main.min.css">
-  <link rel="stylesheet" href="/styles/custom.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css?v=20260713e">
+<link rel="stylesheet" href="/styles/custom.css?v=20260713r4h">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<style>:root { --heatmap-color: #50fa7b; }</style>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
   <title>AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全 | Miracle</title>
+<meta name="description" content="GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全", "description": "GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。", "datePublished": "2026-07-13", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/post-images/semamesh-thumbnail.jpg", "mainEntityOfPage": "https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html", "url": "https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html"}</script>
+<meta property="og:title" content="AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全">
+<meta property="og:description" content="GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="https://miraclestar-w.github.io/post-images/semamesh-thumbnail.jpg">
+<meta property="article:published_time" content="2026-07-13">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="安全">
+<meta property="article:tag" content="eBPF">
+<meta property="article:tag" content="SemaMesh">
+<meta property="article:tag" content="ClawShield">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/ai-agent-security-frameworks-explode.html">
+<meta name="twitter:title" content="AI Agent 安全框架炸了：GitHub 上 10 万星的项目突然都在谈安全">
+<meta name="twitter:description" content="GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、ClawShield、Raypher-core 三大方案各有千秋，eBPF 成为标配。">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/post-images/semamesh-thumbnail.jpg">
 </head>
 <body class="flavor-theme">
-  <header class="site-header">...</header>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+                  <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path><path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path><path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path><path d="M18.367 16.9529C17.9765 16.5623 17.3433 16.5623 16.9528 16.9529C16.5623 17.3434 16.5623 17.9766 16.9528 18.3671L18.3628 19.7771C18.7533 20.1676 19.3865 20.1676 19.777 19.7771C20.1675 19.3866 20.1675 18.7534 19.777 18.3629L18.367 16.9529Z"></path><path d="M1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12Z"></path><path d="M20 11C19.4477 11 19 11.4477 19 12C19 12.5523 19.4477 13 20 13H22C22.5523 13 23 12.5523 23 12C23 11.4477 22.5523 11 22 11H20Z"></path><path d="M7.04704 16.9529C7.43756 17.3434 7.43756 17.9766 7.04704 18.3671L5.63704 19.7771C5.24651 20.1676 4.61335 20.1676 4.22282 19.7771C3.8323 19.3866 3.8323 18.7534 4.22283 18.3629L5.63283 16.9529C6.02335 16.5623 6.65651 16.5623 7.04704 16.9529Z"></path><path d="M19.777 5.6371C20.1675 5.24657 20.1675 4.61341 19.777 4.22289C19.3865 3.83236 18.7533 3.83236 18.3628 4.22289L16.9528 5.63289C16.5623 6.02341 16.5623 6.65658 16.9528 7.0471C17.3433 7.43762 17.9765 7.43762 18.367 7.0471L19.777 5.6371Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path><path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
 
   <main class="site-main" role="main">
     <div class="article-container">
@@ -24,11 +99,18 @@ description: GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、
           <div class="article-meta">
             <span class="article-meta__item">2026-07-13</span>
             <span class="article-meta__sep">·</span>
-            <span class="article-meta__item">AI, Agent安全, eBPF, SemaMesh, ClawShield</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/AI/" class="article-tag">AI</a>
+            <a href="/tags/Agent/" class="article-tag">Agent</a>
+            <a href="/tags/安全/" class="article-tag">安全</a>
+            <a href="/tags/eBPF/" class="article-tag">eBPF</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">SemaMesh</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">ClawShield</a>
+          </span>
           </div>
         </header>
         <div class="article-content">
-<img src="/post-images/semamesh-thumbnail.jpg" alt="AI Agent Security Thumbnail" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/semamesh-thumbnail.jpg" alt="AI Agent Security Thumbnail" class="article-img">
 <p>2026年7月，GitHub Trending 上最炸裂的现象不是某个大模型，也不是某个编程语言的新版本——而是整整一批 AI Agent 安全框架同时冲上热门。</p>
 <p><code>mattpocock/skills</code> 16万星，单日增长1712。<code>obra/superpowers</code> 25万星，单日增长1013。<code>addyosmani/agent-skills</code> 7.6万星，单日增长1116。这些项目有一个共同点：它们都在解决同一个问题——AI Agent 到底能做什么、不能做什么。</p>
 <p>但真正有意思的不是这些框架本身，而是围绕它们的争论。有人觉得 Agent 应该拥有自由探索的能力，有人觉得每个 Agent 都应该被关在笼子里。这场争论正在重塑整个 AI 基础设施的走向。</p>
@@ -39,7 +121,7 @@ description: GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、
 <p>SemaMesh 这个项目描述里只有一句话："sidecarless service mesh designed specifically for the era of autonomous AI agents"。它不关心 Agent 有多聪明，只关心 Agent 会不会把生产数据库的密码发到公开的 LLM API 上。这个项目的核心功能很简单——它拦截 K8s 集群里所有微服务对 OpenAI、Anthropic、Gemini 等外部 LLM 提供商的请求，记录谁发的、发了什么、花了多少钱。它甚至能做 PII 脱敏，在数据离开集群之前自动 scrub 掉敏感信息。</p>
 <p>ClawShield 更直接——它就是一个安全代理，拦截所有发给 LLM 的消息，扫描提示词注入、PII 泄露、密钥外泄。它的架构图画了三层：Go 代理、iptables 防火墙、eBPF 内核监控。三层独立运行，任何一层检测到威胁都会触发跨层自适应响应。比如 eBPF 检测到提权行为，代理层会自动把注入检测灵敏度调到最高五分钟；代理层发现 60 秒内拦截了 3 次注入攻击，整个系统会强制进入 deny-by-default 模式十五分钟。</p>
 
-<img src="/post-images/clawshield-proxy-layer.jpg" alt="ClawShield 三层安全架构" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/clawshield-proxy-layer.jpg" alt="ClawShield 三层安全架构" class="article-img">
 
 <p>Raypher-core 走得更远。它把 Agent 的身份绑定到 TPM 芯片上，用硬件级加密锁死 Agent 的运行环境。Agent 换了机器就瘫痪。它的信任评分系统从 0 到 1000，低于 500 分的 Agent 只能读不能写，高于 900 分的才能完全自主执行。它还内置了 Fleet Management 功能——CISO 可以一键向 10000 个端点推送策略，2 秒内生效。</p>
 <p>这不是巧合。当 AI Agent 开始接触真实的生产环境，安全问题从"锦上添花"变成了"生死攸关"。</p>
@@ -51,7 +133,7 @@ description: GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、
 <p>传统的安全方案要么在应用层加 SDK（开发者要改代码），要么在网络层做流量镜像（看不到进程内部行为）。eBPF 介于两者之间——它在内核里运行，能看到每个进程的 syscall，但又不需要修改任何用户态代码。这意味着你可以给一个跑了三年的老服务加上实时安全监控，不用重启，不用改一行代码。</p>
 <p>对于 AI Agent 这种需要深度观察的应用场景，eBPF 几乎是唯一可行的方案。Agent 的行为是非确定性的，传统的基于规则的安全策略根本跟不上它的变化节奏。只有在内核层面实时监控每一个系统调用，才能真正理解一个 Agent 在干什么。</p>
 
-<img src="/post-images/eBPF-security-concept.jpg" alt="eBPF 内核级安全监控" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/eBPF-security-concept.jpg" alt="eBPF 内核级安全监控" class="article-img">
 
 <h2>安全框架的架构分歧</h2>
 <p>虽然大家都在做 Agent 安全，但思路差异很大。</p>
@@ -72,11 +154,94 @@ description: GitHub Trending 上 AI Agent 安全框架集体爆发。SemaMesh、
 <p>未来半年，我们可能会看到更多类似的项目出现。eBPF + AI Agent 安全这个组合，大概率会成为 K8s 生态的下一个热点。</p>
 <p>至于那些还在讨论"Agent 该不该有自由"的人，也许该看看现实了——当 Agent 开始接触真实数据的时候，自由和安全从来不是二选一，而是先活下来再谈自由。</p>
 
-<img src="/post-images/agent-security-closing.jpg" alt="AI Agent 安全治理的未来" style="width:100%;max-width:800px;border-radius:12px;margin:20px auto;display:block;">
+<img src="/post-images/agent-security-closing.jpg" alt="AI Agent 安全治理的未来" class="article-img">
         </div>
-        <div class="article-cta">觉得有帮助？点赞收藏转发！</div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
       </article>
     </div>
   </main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+            <nav class="footer-nav" aria-label="页脚导航">
+      <a class="footer-nav__link" href="/">首页</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
+    </nav>
+    <div class="footer-social">
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 110 4.36 2.18 2.18 0 010-4.36zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div>
+    <div class="footer-powered">
+      <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Miracle</a></span>
+    </div>
+  </div>
+</footer>
+
+  <div class="search-overlay" id="searchOverlay" style="display:none !important;">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+      
+      <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<script src="/scripts/search.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
+<script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

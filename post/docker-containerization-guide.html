@@ -1,22 +1,19 @@
 <!--
 title: Docker容器化部署指南
 date: 2026-05-26
-tags: Docker,容器化,DevOps,部署,微服务
+tags: Docker, 容器化, DevOps, 部署, 微服务
 description: 从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="/styles/main.min.css">
-  <link rel="stylesheet" href="/styles/custom.css">
-
+<link rel="stylesheet" href="/styles/main.min.css?v=20260713e">
+<link rel="stylesheet" href="/styles/custom.css?v=20260713r4h">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
 <style>:root { --heatmap-color: #50fa7b; }</style>
-
 <script>
   (function () {
     try {
@@ -31,22 +28,29 @@ description: 从零开始掌握Docker容器化部署，包含Dockerfile编写最
   <meta name="generator" content="Miracle 1.1.1">
   <title>Docker容器化部署指南 | Miracle</title>
 <meta name="description" content="从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。">
-<link rel="canonical" href="https://miraclestar-w.github.io/post/docker-containerization-guide/">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/docker-containerization-guide.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Docker容器化部署指南", "description": "从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。", "datePublished": "2026-05-26", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/images/avatar.png", "mainEntityOfPage": "https://miraclestar-w.github.io/post/docker-containerization-guide.html", "url": "https://miraclestar-w.github.io/post/docker-containerization-guide.html"}</script>
 <meta property="og:title" content="Docker容器化部署指南">
 <meta property="og:description" content="从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。">
-<meta property="og:url" content="https://miraclestar-w.github.io/post/docker-containerization-guide/">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/docker-containerization-guide.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Miracle">
-<meta property="og:image" content="/images/avatar.png">
+<meta property="og:image" content="https://miraclestar-w.github.io/images/avatar.png">
+<meta property="article:published_time" content="2026-05-26">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="容器化">
+<meta property="article:tag" content="DevOps">
+<meta property="article:tag" content="部署">
+<meta property="article:tag" content="微服务">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://miraclestar-w.github.io/post/docker-containerization-guide/">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/docker-containerization-guide.html">
 <meta name="twitter:title" content="Docker容器化部署指南">
 <meta name="twitter:description" content="从零开始掌握Docker容器化部署，包含Dockerfile编写最佳实践、多阶段构建、Docker Compose编排、生产环境安全加固等核心内容。">
-<meta name="twitter:image" content="/images/avatar.png">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/images/avatar.png">
 </head>
 <body class="flavor-theme">
 
-  <header class="site-header" id="siteHeader">
+<header class="site-header" id="siteHeader">
   <div class="header-inner">
     <div class="top-bar">
       <div class="top-bar__left">
@@ -55,13 +59,11 @@ description: 从零开始掌握Docker容器化部署，包含Dockerfile编写最
         </a>
         <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
       </div>
-      <nav class="top-bar__nav" id="sectionBar">
-        <a class="nav-item" href="/memos">闪念</a>
+                  <nav class="top-bar__nav" id="sectionBar">
         <a class="nav-item" href="/">首页</a>
-        <a class="nav-item" href="/post">博客</a>
-        <a class="nav-item" href="/archives">归档</a>
-        <a class="nav-item" href="/tags">标签</a>
-        <a class="nav-item" href="/post/about">关于</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
       </nav>
       <div class="top-bar__right">
         <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
@@ -87,56 +89,26 @@ description: 从零开始掌握Docker容器化部署，包含Dockerfile编写最
   </div>
 </header>
 <div class="header-spacer"></div>
-<script>
-(function(){
-  var btn = document.getElementById('btnNavToggle');
-  var nav = document.getElementById('sectionBar');
-  var hamburger = document.getElementById('hamburger');
-  if (btn && nav) {
-    btn.addEventListener('click', function(){
-      nav.classList.toggle('top-bar__nav--open');
-      if (hamburger) hamburger.classList.toggle('is-active');
-    });
-    nav.querySelectorAll('.nav-item').forEach(function(item){
-      item.addEventListener('click', function(){
-        nav.classList.remove('top-bar__nav--open');
-        if (hamburger) hamburger.classList.remove('is-active');
-      });
-    });
-  }
-  var root = document.documentElement;
-  var applyTheme = function(theme, persist){
-    if (theme === 'light') {
-      root.classList.add('theme-light');
-    } else {
-      root.classList.remove('theme-light');
-    }
-    if (persist) {
-      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
-    }
-  };
-  document.querySelectorAll('.theme-toggle').forEach(function(el){
-    el.addEventListener('click', function(){
-      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
-    });
-  });
-})();
-</script>
 
   <main class="site-main" role="main">
     <div class="article-container">
-  <article>
-    <header class="article-header">
-      <h1 class="article-title">Docker容器化部署指南</h1>
-      <div class="article-meta">
-        <span class="article-meta__item">2026-05-26</span>
-        <span class="article-meta__sep">·</span>
-        <span class="article-meta__item">Docker, 容器化, DevOps, 部署, 微服务</span>
-      </div>
-    </header>
-
-    <div class="article-content">
-      <p>Docker容器化已经成为现代应用部署的标准方式。它将应用及其依赖打包在一个轻量级、可移植的容器中，实现了"一次构建，到处运行"。本文将从<strong>Dockerfile编写</strong>、<strong>多阶段构建</strong>、<strong>Docker Compose编排</strong>到<strong>生产环境加固</strong>，全面介绍容器化部署的最佳实践。</p>
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">Docker容器化部署指南</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-05-26</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">Docker</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">容器化</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">DevOps</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">部署</a>
+            <a href="/tags/" class="article-tag article-tag--soft" title="浏览全部标签">微服务</a>
+          </span>
+          </div>
+        </header>
+        <div class="article-content">
+<p>Docker容器化已经成为现代应用部署的标准方式。它将应用及其依赖打包在一个轻量级、可移植的容器中，实现了"一次构建，到处运行"。本文将从<strong>Dockerfile编写</strong>、<strong>多阶段构建</strong>、<strong>Docker Compose编排</strong>到<strong>生产环境加固</strong>，全面介绍容器化部署的最佳实践。</p>
 
       <h2>Dockerfile编写最佳实践</h2>
 
@@ -445,20 +417,21 @@ jobs:
       <a href="/tags/DevOps/" class="tag-link">DevOps</a>
       <a href="/tags/部署/" class="tag-link">部署</a>
       <a href="/tags/微服务/" class="tag-link">微服务</a>
+        </div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
+      </article>
     </div>
-  </article>
-</div>
   </main>
 
-  <footer class="site-footer">
+<footer class="site-footer">
   <div class="footer-inner">
-    <nav class="footer-nav" aria-label="页脚导航">
-      <a class="footer-nav__link" href="/memos">闪念</a>
+            <nav class="footer-nav" aria-label="页脚导航">
       <a class="footer-nav__link" href="/">首页</a>
-      <a class="footer-nav__link" href="/post">博客</a>
-      <a class="footer-nav__link" href="/archives">归档</a>
-      <a class="footer-nav__link" href="/tags">标签</a>
-      <a class="footer-nav__link" href="/post/about">关于</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
     </nav>
     <div class="footer-social">
       <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
@@ -496,7 +469,41 @@ jobs:
   </div>
 </div>
 <script src="/scripts/search.js"></script>
-
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
 <script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
