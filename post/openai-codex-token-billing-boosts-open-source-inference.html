@@ -1,0 +1,250 @@
+<!--
+title: OpenAI砍了Codex按消息计费，开源推理引擎反而炸了
+date: 2026-07-21
+tags: AI,OpenAI,Codex,SGLang,LLM推理
+description: OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/styles/main.min.css?v=20260713e">
+<link rel="stylesheet" href="/styles/custom.css?v=20260713r4h">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<style>:root { --heatmap-color: #50fa7b; }</style>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('flavor-theme');
+      var theme = saved || 'dark';
+      if (theme === 'light') {
+        document.documentElement.classList.add('theme-light');
+      }
+    } catch (e) { }
+  })();
+</script>
+  <meta name="generator" content="Miracle 1.1.1">
+  <title>OpenAI砍了Codex按消息计费，开源推理引擎反而炸了 | Miracle</title>
+<meta name="description" content="OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。">
+<link rel="canonical" href="https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "OpenAI砍了Codex按消息计费，开源推理引擎反而炸了", "description": "OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。", "datePublished": "2026-07-21", "author": {"@type": "Person", "name": "Miracle", "url": "https://miraclestar-w.github.io"}, "image": "https://miraclestar-w.github.io/post-images/codex-cli-splash.png", "mainEntityOfPage": "https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html", "url": "https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html"}</script>
+<meta property="og:title" content="OpenAI砍了Codex按消息计费，开源推理引擎反而炸了">
+<meta property="og:description" content="OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。">
+<meta property="og:url" content="https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Miracle">
+<meta property="og:image" content="https://miraclestar-w.github.io/post-images/codex-cli-splash.png">
+<meta property="article:published_time" content="2026-07-21">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="OpenAI">
+<meta property="article:tag" content="Codex">
+<meta property="article:tag" content="SGLang">
+<meta property="article:tag" content="LLM推理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html">
+<meta name="twitter:title" content="OpenAI砍了Codex按消息计费，开源推理引擎反而炸了">
+<meta name="twitter:description" content="OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。">
+<meta name="twitter:image" content="https://miraclestar-w.github.io/post-images/codex-cli-splash.png">
+</head>
+<body class="flavor-theme">
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="top-bar__left">
+        <a href="https://miraclestar-w.github.io" class="site-avatar-link" aria-label="返回首页">
+          <img class="site-avatar" src="/images/avatar.png" alt="Miracle" />
+        </a>
+        <a href="https://miraclestar-w.github.io" class="site-name-link">Miracle</a>
+      </div>
+                  <nav class="top-bar__nav" id="sectionBar">
+        <a class="nav-item" href="/">首页</a>
+        <a class="nav-item active" href="/post/">博客</a>
+        <a class="nav-item" href="/memos/">闪念</a>
+        <a class="nav-item" href="/post/about/">关于</a>
+      </nav>
+      <div class="top-bar__right">
+        <button class="btn-icon btn-search search-btn" id="btnSearch" type="button" aria-label="搜索">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-sun" id="themeToggleSun" type="button" aria-label="切换到浅色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11 1 12 1Z"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z"></path></svg>
+        </button>
+        <button class="btn-icon theme-toggle theme-toggle-moon" id="themeToggleMoon" type="button" aria-label="切换到深色模式">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 12c0-.23-.02-.45-.05-.67l2.04-1.33c.43-.28.55-.83.27-1.26l-1.73-2.38c-.28-.43-.83-.55-1.26-.27l-2.41.97c-.37-.28-.76-.53-1.17-.74L14.5 4.29v-2.7c0-.5-.4-.9-.9-.9h-2.8c-.5 0-.9.4-.9.9v2.7l-2.07 1.17c-.41.21-.8.46-1.17.74l-2.41-.97c-.43-.28-.98-.16-1.26.27L2.7 8.74c-.28.43-.16.98.27 1.26l2.04 1.33c-.03.22-.05.44-.05.67s.02.45.05.67l-2.04 1.33c-.43.28-.55.83-.27 1.26l1.73 2.38c.28.43.83.55 1.26.27l2.41-.97c.37.28.76.53 1.17.74l.63 2.07v2.7c0 .5.4.9.9.9h2.8c.5 0 .9-.4.9-.9v-2.7l2.07-1.17c.41-.21.8-.46 1.17-.74l2.41.97c.43.28.98.16 1.26-.27l1.73-2.38c.28-.43.16-.98-.27-1.26l-2.04-1.33c.03-.22.05-.44.05-.67zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"></path></svg>
+        </button>
+        <button class="btn-icon btn-nav-toggle mobile-only" id="btnNavToggle" type="button" aria-label="切换导航">
+          <div class="hamburger" id="hamburger">
+            <span class="hamburger__line hamburger__line--top"></span>
+            <span class="hamburger__line hamburger__line--bottom"></span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="header-spacer"></div>
+
+  <main class="site-main" role="main">
+    <div class="article-container">
+      <article>
+        <header class="article-header">
+          <h1 class="article-title">OpenAI砍了Codex按消息计费，开源推理引擎反而炸了</h1>
+          <div class="article-meta">
+            <span class="article-meta__item">2026-07-21</span>
+            <span class="article-meta__sep">·</span>
+            <span class="article-meta__tags" aria-label="标签">
+            <a href="/tags/AI/" class="article-tag">AI</a>
+            <a href="/tags/OpenAI/" class="article-tag">OpenAI</a>
+            <a href="/tags/Codex/" class="article-tag">Codex</a>
+            <a href="/tags/SGLang/" class="article-tag">SGLang</a>
+            <a href="/tags/LLM%E6%8E%A8%E7%90%86/" class="article-tag">LLM推理</a>
+          </span>
+          </div>
+        </header>
+        <div class="article-content">
+<img src="/post-images/codex-cli-splash.png" alt="OpenAI Codex CLI 界面截图" class="article-img">
+<p>2026年4月2日，OpenAI把ChatGPT Plus、Pro、Business和Enterprise的Codex计费方式从"按消息"改成了"按token"。没有预告，没有过渡期，开发者一觉醒来发现账单逻辑全变了。</p>
+<p>同一天，GitHub上SGLang的star数悄悄突破3万。这个由LMSYS非营利组织托管的开源LLM推理框架，已经在全球40万块GPU上跑着，每天生成万亿级token。</p>
+<p>一个闭源巨头的计费调整，为什么恰好撞上了开源基础设施的爆发期？</p>
+<hr>
+<h2>消息计费时代的幻觉</h2>
+<p>在token计费之前，Codex的定价逻辑很简单：你发一条消息，它处理一次，算一次钱。Plus用户每月有固定消息额度，Pro用户额度更大。对轻度使用者来说，这种模式直观、可控。</p>
+<p>问题出在重度场景。一个工程师用Codex做代码重构，一条消息可能触发数十轮上下文交互。按消息计费时，OpenAI收的是"对话次数"的钱；但实际消耗的计算资源是token。两套账本对不上。</p>
+<p>更麻烦的是，按消息计费制造了一种虚假的成本预期。你以为花1美元能跑100次调用，结果每次调用内部吃掉了5000个token。到月底一看账单，额度早没了。</p>
+<p>OpenAI的选择是：把定价权从"用户以为的消耗"拉回到"真实算力消耗"。token计费更精确，但也更透明——透明到让人 uncomfortable。</p>
+<h2>token计费之后，谁在受益</h2>
+<p>按token计费之后，开发者的成本结构发生了微妙变化。</p>
+<p>短对话变贵了。长对话里，输入token被缓存命中后，重复部分不再计费。这意味着高频复用prompt的工程场景反而省钱。CI/CD流水线、自动化测试、批量代码审查——这些场景突然变得经济可行。</p>
+<p>而这类场景，恰恰是开源推理引擎的主场。</p>
+<p>vLLM、SGLang、TensorRT-LLM这些框架的核心价值不是"更快生成一段文字"，而是"让大规模、高并发的推理请求变得便宜"。当OpenAI把Codex的成本结构暴露给开发者时，很多人开始算一笔账：我自己部署推理服务，真的比用API贵吗？</p>
+<p>答案取决于规模。日调用量超过一定阈值后，自部署的边际成本远低于API。而这个阈值，在token计费之后变得更低了。</p>
+<img src="/post-images/ai-code-review-flow.png" alt="AI代码审查流程示意图" class="article-img">
+<h2>SGLang的40万GPU是怎么来的</h2>
+<p>SGLang的故事不是从"开源替代闭源"开始的。它从一开始就是一个性能问题驱动的项目。</p>
+<p>LMSYS（Large Model System Organization）是一个专注于大模型系统的非营利研究组织。他们发现，现有推理框架在prefix caching、continuous batching、speculative decoding这些关键优化上各自为战，没有一个框架能把它们串起来。</p>
+<p>SGLang的核心创新是RadixAttention——一种基于前缀树的KV cache复用机制。传统方案要么完全重算，要么缓存所有历史token。RadixAttention把相同前缀的KV cache组织成树形结构，命中时直接复用，未命中时增量计算。</p>
+<p>这不是理论优化。在Llama 3.1 70B的基准测试中，RadixAttention让前缀缓存的命中率从30%提升到80%以上。对于多轮对话、批量代码生成这类高频复用prompt的场景，延迟直接砍半。</p>
+<p>40万GPU的部署规模不是营销数字。xAI、AMD、NVIDIA、LinkedIn、Cursor、Oracle Cloud、Google Cloud、Microsoft Azure、AWS都在用它。MIT、UCLA、Stanford、UC Berkeley、清华大学也在用。</p>
+<p>这个数字意味着什么？意味着全球相当一部分LLM推理流量，跑的其实是开源代码。</p>
+<h2>开源推理引擎的暗线竞争</h2>
+<p>SGLang、vLLM、TensorRT-LLM、TGI——这四个名字构成了2026年LLM推理引擎的基本盘。它们之间的竞争不是"谁更好"，而是"谁的架构更适合你的场景"。</p>
+<p>vLLM的优势在于PagedAttention和广泛的模型支持。它是第一个把操作系统内存分页思想引入KV cache管理的框架，概念简洁，工程成熟。很多生产环境的首选。</p>
+<p>TensorRT-LLM的优势在于NVIDIA生态的深度整合。如果你用的是A100/H100/GB200，TensorRT-LLM能提供最低的延迟和最高的吞吐。但代价是学习曲线陡峭，定制成本高。</p>
+<p>TGI（Text Generation Inference）是Hugging Face的官方推理服务。它的优势在于与Hugging Face模型生态无缝对接，适合快速原型和中小规模部署。</p>
+<p>SGLang的独特之处在于，它在RadixAttention的基础上，把prefill-decode分离、speculative decoding、multi-LoRA batching、chunked prefill这些高级特性全部整合到一个统一调度器里。它不是单一优化，而是一个完整的推理runtime设计。</p>
+<p>这种设计哲学让它特别适合复杂的多Agent场景——多个Agent同时发起推理请求，每个请求的prompt都有重叠前缀，RadixAttention能最大化缓存命中率。</p>
+<p>而这，恰好是OpenAI Codex计费改革后，开发者最关心的场景。</p>
+<img src="/post-images/agent-browser-github.png" alt="AI Agent浏览器自动化项目截图" class="article-img">
+<h2>计费改革背后的信号</h2>
+<p>OpenAI把Codex改成token计费，表面上是定价策略调整。深层看，这是一个信号：闭源API的成本结构正在被开源基础设施重新定义。</p>
+<p>当开发者发现自己用API的成本可以精确到每个token，他们会开始对比：这个token如果在我自己的GPU上跑，成本是多少？</p>
+<p>答案是：取决于GPU类型、模型大小、并发量、缓存命中率。但对于大规模部署，自部署推理服务的单位成本可以比API低一个数量级。</p>
+<p>这不是"开源打败闭源"的叙事。这是"成本透明度改变用户行为"的叙事。</p>
+<p>OpenAI可能没想到，token计费会让这么多开发者去研究SGLang和vLLM。它原本只是想让自己的定价更准确，结果意外地给开源推理引擎做了一次免费的市场教育。</p>
+<h2>接下来会怎样</h2>
+<p>2026年下半年，LLM推理引擎的竞争会从"单点性能"转向"整体调度"。</p>
+<p>SGLang v0.5已经引入了DFlash和Spec V2，进一步提升了speculative decoding的效率。vLLM的Model Runner V2也在追赶。TensorRT-LLM在GB300 NVL72上实现了25倍推理性能提升。</p>
+<p>但真正的变量不在这些框架本身，而在硬件层面。NVIDIA的Blackwell架构、AMD的MI355、Google的TPU v5e——每一代新硬件都会重新定义推理成本的下限。</p>
+<p>当硬件成本持续下降，开源推理引擎的自部署经济性会越来越好。OpenAI的token计费改革，只是把这个趋势提前暴露给了更多开发者。</p>
+<p>最后说个细节。SGLang的Slack频道里，有一个#pricing-calculator的讨论串。里面有人在算：用SGLang + A100自建推理服务，对比OpenAI API，日调用量多少以上开始省钱。</p>
+<p>最高赞的回答只有一行："取决于你的缓存命中率。"</p>
+        </div>
+
+        <div class="article-header__tags">
+          <a href="/tags/AI/" class="tag-link">AI</a>, <a href="/tags/OpenAI/" class="tag-link">OpenAI</a>, <a href="/tags/Codex/" class="tag-link">Codex</a>, <a href="/tags/SGLang/" class="tag-link">SGLang</a>, <a href="/tags/LLM%E6%8E%A8%E7%90%86/" class="tag-link">LLM推理</a>
+        </div>
+        <div class="article-cta">觉得有帮助？欢迎分享给更多人。</div>
+      </article>
+    </div>
+  </main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+            <nav class="footer-nav" aria-label="页脚导航">
+      <a class="footer-nav__link" href="/">首页</a>
+      <a class="footer-nav__link" href="/post/">博客</a>
+      <a class="footer-nav__link" href="/memos/">闪念</a>
+      <a class="footer-nav__link" href="/archives/">归档</a>
+      <a class="footer-nav__link" href="/tags/">标签</a>
+      <a class="footer-nav__link" href="/post/about/">关于</a>
+    </nav>
+    <div class="footer-social">
+      <a class="footer-social__link" href="/feed.xml" aria-label="RSS">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 110 4.36 2.18 2.18 0 010-4.36zM4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44zm0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/>
+        </svg>
+      </a>
+    </div>
+    <div class="footer-copyright">
+      <p>&copy; 2026 Miracle. All rights reserved.</p>
+    </div>
+    <div class="footer-powered">
+      <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Miracle</a></span>
+    </div>
+  </div>
+</footer>
+
+  <div class="search-overlay" id="searchOverlay" style="display:none !important;">
+  <div class="search-modal">
+    <div class="search-header">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+      
+      <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<script src="/scripts/search.js"></script>
+<script>
+(function(){
+  var btn = document.getElementById('btnNavToggle');
+  var nav = document.getElementById('sectionBar');
+  var hamburger = document.getElementById('hamburger');
+  if (btn && nav) {
+    btn.addEventListener('click', function(){
+      nav.classList.toggle('top-bar__nav--open');
+      if (hamburger) hamburger.classList.toggle('is-active');
+    });
+    nav.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        nav.classList.remove('top-bar__nav--open');
+        if (hamburger) hamburger.classList.remove('is-active');
+      });
+    });
+  }
+  var root = document.documentElement;
+  var applyTheme = function(theme, persist){
+    if (theme === 'light') {
+      root.classList.add('theme-light');
+    } else {
+      root.classList.remove('theme-light');
+    }
+    if (persist) {
+      try { localStorage.setItem('flavor-theme', theme); } catch (e) {}
+    }
+  };
+  document.querySelectorAll('.theme-toggle').forEach(function(el){
+    el.addEventListener('click', function(){
+      applyTheme(root.classList.contains('theme-light') ? 'dark' : 'light', true);
+    });
+  });
+})();
+</script>
+<script>console.log("\n%c ✦ Miracle v1.1.1 %c · Theme: flavor-theme v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

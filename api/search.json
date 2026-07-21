@@ -1,5 +1,18 @@
 [
   {
+    "title": "OpenAI砍了Codex按消息计费，开源推理引擎反而炸了",
+    "url": "/post/openai-codex-token-billing-boosts-open-source-inference.html",
+    "content": "OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。OpenAI in April 2026 switched Codex billing from per-message to token-based, inadvertently boosting open-source inference engines like SGLang. With 400K GPUs deployed globally, SGLang is redefining LLM inference cost structure.",
+    "date": "2026-07-21",
+    "tags": [
+      "AI",
+      "OpenAI",
+      "Codex",
+      "SGLang",
+      "LLM推理"
+    ]
+  },
+  {
     "title": "Langflow 15万星开源项目，3个RCE漏洞搞砸了",
     "url": "/post/langflow-three-rce-vulnerabilities.html",
     "content": "GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。CVE-2025-3248、CVE-2026-33017、CVE-2026-5027——三个漏洞，同一个根因。",
