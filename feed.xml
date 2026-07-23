@@ -5,7 +5,7 @@
     <link>https://miraclestar-w.github.io</link>
     <description>专注AI Agent、自动化运维、DevOps工具链的技术探索与实践</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 19 Jul 2026 00:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 23 Jul 2026 00:00:00 +0800</lastBuildDate>
     <item>
     <title>OpenAI砍了Codex按消息计费，开源推理引擎反而炸了</title>
     <link>https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html</link>
@@ -14,6 +14,15 @@
     <guid isPermaLink="true">https://miraclestar-w.github.io/post/openai-codex-token-billing-boosts-open-source-inference.html</guid>
     <dc:creator>Miracle</dc:creator>
   </item>
+    <item>
+    <title>Cursor砍了3万星开源项目，把反叛者关进了小黑屋</title>
+    <link>https://miraclestar-w.github.io/post/cursor-acquires-continue.html</link>
+    <description>Cursor收购34K star的开源编码助手Continue并直接关停。Apache 2.0的代码还在，但那个曾承诺'让你的数据留在你这里'的项目，已经不存在了。</description>
+    <pubDate>Sun, 23 Jul 2026 00:00:00 +0800</pubDate>
+    <guid isPermaLink="true">https://miraclestar-w.github.io/post/cursor-acquires-continue.html</guid>
+    <dc:creator>Miracle</dc:creator>
+  </item>
+
     <title>Langflow 15万星开源项目，3个RCE漏洞搞砸了</title>
     <link>https://miraclestar-w.github.io/post/langflow-three-rce-vulnerabilities.html</link>
     <description>GitHub上15万星的AI开发框架Langflow，2026年先后爆出3个严重RCE漏洞。每个都在披露后数小时内被大规模利用，根因都是同一个exec()调用。</description>

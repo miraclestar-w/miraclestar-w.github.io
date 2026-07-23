@@ -1,5 +1,19 @@
 [
   {
+    "title": "Cursor砍了3万星开源项目，把反叛者关进了小黑屋",
+    "url": "/post/cursor-acquires-continue.html",
+    "content": "Cursor收购34K star的开源编码助手Continue并直接关停。Apache 2.0的代码还在，但那个曾承诺'让你的数据留在你这里'的项目，已经不存在了。 Cursor acquired Continue, a 34K-star open-source coding assistant, and shut it down. The Apache 2.0 code remains, but the project that promised 'your data stays yours' no longer exists.",
+    "date": "2026-07-23",
+    "tags": [
+      "Cursor",
+      "Continue",
+      "GitHub",
+      "开源",
+      "AI编程",
+      "收购"
+    ]
+  },
+  {
     "title": "OpenAI砍了Codex按消息计费，开源推理引擎反而炸了",
     "url": "/post/openai-codex-token-billing-boosts-open-source-inference.html",
     "content": "OpenAI在2026年4月把Codex从按消息计费改为token计费，意外推动了SGLang等开源推理引擎的爆发。全球40万GPU部署的SGLang，正在重新定义LLM推理的成本结构。OpenAI in April 2026 switched Codex billing from per-message to token-based, inadvertently boosting open-source inference engines like SGLang. With 400K GPUs deployed globally, SGLang is redefining LLM inference cost structure.",
